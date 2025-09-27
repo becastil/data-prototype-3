@@ -20,6 +20,7 @@ import {
   Info 
 } from '@mui/icons-material';
 import { FeeStructure } from '@/types/healthcare';
+import { feesGridStyles } from '@/lib/dataGridStyles';
 
 interface FeesGridProps {
   data: FeeStructure[];
@@ -265,18 +266,7 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
               quickFilterProps: { debounceMs: 500 }
             }
           }}
-          sx={{
-            '& .calculated-total': {
-              backgroundColor: '#f0f8ff',
-              fontWeight: 'bold',
-            },
-            '& .MuiDataGrid-cell:focus': {
-              outline: 'none',
-            },
-            '& .MuiDataGrid-row:hover': {
-              backgroundColor: '#f5f5f5',
-            }
-          }}
+          sx={feesGridStyles}
         />
       </Box>
 

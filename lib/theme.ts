@@ -74,54 +74,6 @@ export const healthcareTheme = createTheme({
     borderRadius: 8,
   },
   components: {
-    MuiDataGrid: {
-      styleOverrides: {
-        root: {
-          border: 'none',
-          '& .MuiDataGrid-cell': {
-            borderBottom: '1px solid #e0e0e0',
-            fontSize: '0.875rem',
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: '#f5f5f5',
-            borderBottom: '2px solid #e0e0e0',
-            fontSize: '0.875rem',
-            fontWeight: 600,
-            color: '#1976d2',
-          },
-          '& .MuiDataGrid-row:hover': {
-            backgroundColor: '#f0f8ff',
-          },
-          '& .loss-ratio-high': {
-            backgroundColor: '#ffebee',
-            color: '#c62828',
-            fontWeight: 600,
-          },
-          '& .loss-ratio-medium': {
-            backgroundColor: '#fff3e0',
-            color: '#ef6c00',
-            fontWeight: 600,
-          },
-          '& .loss-ratio-good': {
-            backgroundColor: '#e8f5e8',
-            color: '#2e7d32',
-            fontWeight: 600,
-          },
-          '& .variance-positive': {
-            color: '#c62828',
-            fontWeight: 600,
-          },
-          '& .variance-negative': {
-            color: '#2e7d32',
-            fontWeight: 600,
-          },
-          '& .calculated-total': {
-            backgroundColor: '#f5f5f5',
-            fontWeight: 'bold',
-          },
-        },
-      },
-    },
     MuiCard: {
       styleOverrides: {
         root: {

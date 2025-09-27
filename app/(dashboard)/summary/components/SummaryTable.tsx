@@ -19,6 +19,7 @@ import {
   TrendingFlat 
 } from '@mui/icons-material';
 import { MonthlySummary } from '@/types/healthcare';
+import { summaryTableStyles } from '@/lib/dataGridStyles';
 import { useState } from 'react';
 
 interface SummaryTableProps {
@@ -216,31 +217,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
               }
             }
           }}
-          sx={{
-            '& .currency-cell': {
-              fontFamily: 'monospace',
-              fontSize: '0.875rem'
-            },
-            '& .total-cost-cell': {
-              backgroundColor: '#f0f8ff',
-              fontFamily: 'monospace',
-              fontSize: '0.875rem'
-            },
-            '& .MuiDataGrid-cell:focus': {
-              outline: 'none',
-            },
-            '& .MuiDataGrid-row:hover': {
-              backgroundColor: '#f5f5f5',
-            },
-            '& .MuiDataGrid-columnHeader': {
-              backgroundColor: '#f8f9fa',
-              borderBottom: '2px solid #dee2e6',
-            },
-            '& .MuiDataGrid-footerContainer': {
-              borderTop: '2px solid #dee2e6',
-              backgroundColor: '#f8f9fa',
-            }
-          }}
+          sx={summaryTableStyles}
           disableRowSelectionOnClick
           density="standard"
         />
