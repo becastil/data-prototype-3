@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ExperienceData, HighCostClaimant } from '@/types/healthcare';
 
 // Base validation schemas for healthcare data
 
@@ -187,10 +188,10 @@ export function validateGender(value: string): 'M' | 'F' {
 
 // Batch validation for arrays
 export function validateExperienceDataArray(data: unknown[]): {
-  validData: any[];
+  validData: ExperienceData[];
   errors: Array<{ row: number; errors: string[] }>;
 } {
-  const validData: any[] = [];
+  const validData: ExperienceData[] = [];
   const errors: Array<{ row: number; errors: string[] }> = [];
 
   data.forEach((item, index) => {
@@ -209,10 +210,10 @@ export function validateExperienceDataArray(data: unknown[]): {
 }
 
 export function validateHighCostClaimantArray(data: unknown[]): {
-  validData: any[];
+  validData: HighCostClaimant[];
   errors: Array<{ row: number; errors: string[] }>;
 } {
-  const validData: any[] = [];
+  const validData: HighCostClaimant[] = [];
   const errors: Array<{ row: number; errors: string[] }> = [];
 
   data.forEach((item, index) => {

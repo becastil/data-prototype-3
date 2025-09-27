@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   Container,
   Typography,
@@ -87,17 +87,7 @@ export default function SummaryPage() {
   const [viewMode, setViewMode] = useState<ViewMode>('monthly');
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Use context data or fallback to sample data for demo
-  const summaryData = monthlySummaries.length > 0 ? monthlySummaries : generateSampleData();
-
-  // Auto-generate summaries if we have experience data and fees but no summaries
-  useEffect(() => {
-    if (experienceData.length > 0 && feeStructures.length > 0 && monthlySummaries.length === 0) {
-      handleCalculateSummaries();
-    }
-  }, [experienceData, feeStructures, monthlySummaries]);
-
-  const handleCalculateSummaries = async () => {
+  const handleCalculateSummaries = useCallback(async () => {
     if (experienceData.length === 0 || feeStructures.length === 0) {
       actions.setError('Please upload experience data and configure fees first');
       return;
@@ -144,7 +134,17 @@ export default function SummaryPage() {
       setIsCalculating(false);
       actions.setLoading(false);
     }
-  };
+  }, [actions, experienceData, feeStructures]);
+
+  // Use context data or fallback to sample data for demo
+  const summaryData = monthlySummaries.length > 0 ? monthlySummaries : generateSampleData();
+
+  // Auto-generate summaries if we have experience data and fees but no summaries
+  useEffect(() => {
+    if (experienceData.length > 0 && feeStructures.length > 0 && monthlySummaries.length === 0) {
+      handleCalculateSummaries();
+    }
+  }, [experienceData, feeStructures, monthlySummaries.length, handleCalculateSummaries]);
 
   const filteredData = useMemo(() => {
     if (viewMode === 'quarterly') {

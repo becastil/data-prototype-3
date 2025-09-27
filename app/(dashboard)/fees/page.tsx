@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   Typography,
@@ -15,8 +15,7 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem,
-  Divider
+  MenuItem
 } from '@mui/material';
 import {
   ArrowBack,
@@ -166,21 +165,7 @@ export default function FeesPage() {
   const [saved, setSaved] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Update fee data from context when it changes
-  useEffect(() => {
-    if (existingFeeStructures.length > 0) {
-      setFeeData(existingFeeStructures);
-    }
-  }, [existingFeeStructures]);
-
-  // Generate fee data from experience data if no existing fees
-  useEffect(() => {
-    if (experienceData.length > 0 && existingFeeStructures.length === 0) {
-      generateFeeStructuresFromExperience();
-    }
-  }, [experienceData]);
-
-  const generateFeeStructuresFromExperience = () => {
+  const generateFeeStructuresFromExperience = useCallback(() => {
     const generatedFees: FeeStructure[] = experienceData.map((expData, index) => ({
       id: `gen-${index + 1}`,
       month: expData.month,
@@ -193,7 +178,21 @@ export default function FeesPage() {
     }));
     
     setFeeData(generatedFees);
-  };
+  }, [experienceData, premiumRate]);
+
+  // Update fee data from context when it changes
+  useEffect(() => {
+    if (existingFeeStructures.length > 0) {
+      setFeeData(existingFeeStructures);
+    }
+  }, [existingFeeStructures]);
+
+  // Generate fee data from experience data if no existing fees
+  useEffect(() => {
+    if (experienceData.length > 0 && existingFeeStructures.length === 0) {
+      generateFeeStructuresFromExperience();
+    }
+  }, [experienceData, existingFeeStructures.length, generateFeeStructuresFromExperience]);
 
   const handleSave = async () => {
     setIsCalculating(true);
@@ -275,12 +274,11 @@ export default function FeesPage() {
     
     // Calculate estimated premium total
     const totalPremiums = feeData.reduce((sum, fee) => sum + calculatePremiumAmount(fee), 0);
-    const avgPremiumPerMonth = feeData.length > 0 ? totalPremiums / feeData.length : 0;
     
-    return { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums, avgPremiumPerMonth };
+    return { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums };
   };
 
-  const { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums, avgPremiumPerMonth } = calculateTotals();
+  const { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums } = calculateTotals();
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>

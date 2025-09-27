@@ -32,23 +32,47 @@ import {
 import Link from 'next/link';
 import { CSVUploader } from './components/CSVUploader';
 import { useHealthcare } from '@/lib/store/HealthcareContext';
+import { ExperienceData, HighCostClaimant, CSVValidationError } from '@/types/healthcare';
+
+type UploadFileType = 'experience' | 'high-cost-claimant';
 
 interface UploadResult {
   fileName: string;
-  fileType?: string;
+  fileType?: UploadFileType;
   success: boolean;
-  data?: any[];
-  errors?: Array<{
-    row: number;
-    column: string;
-    message: string;
-    value: any;
-  }>;
+  data?: ExperienceData[] | HighCostClaimant[];
+  errors?: CSVValidationError[];
   totalRows?: number;
   validRows?: number;
   message?: string;
   error?: string;
+  detectedHeaders?: string[];
 }
+
+interface UploadApiResponse {
+  success: boolean;
+  data?: UploadResult[];
+  error?: string;
+  message?: string;
+}
+
+const isExperienceDataArray = (
+  data: UploadResult['data']
+): data is ExperienceData[] => Array.isArray(data) && data.every((item) => {
+  if (item && typeof item === 'object') {
+    return 'month' in item && 'enrollment' in item;
+  }
+  return false;
+});
+
+const isHighCostClaimantArray = (
+  data: UploadResult['data']
+): data is HighCostClaimant[] => Array.isArray(data) && data.every((item) => {
+  if (item && typeof item === 'object') {
+    return 'memberId' in item || 'Member_ID' in item;
+  }
+  return false;
+});
 
 const steps = ['Upload Files', 'Validate Data', 'Review & Confirm'];
 
@@ -82,17 +106,17 @@ export default function UploadPage() {
         body: formData,
       });
 
-      const result = await response.json();
+      const result: UploadApiResponse = await response.json();
 
       if (result.success) {
-        setUploadResults(result.data);
+        setUploadResults(result.data ?? []);
         
         // Process successful uploads and update context
-        for (const uploadResult of result.data) {
+        for (const uploadResult of result.data ?? []) {
           if (uploadResult.success && uploadResult.data) {
-            if (uploadResult.fileType === 'experience') {
+            if (uploadResult.fileType === 'experience' && isExperienceDataArray(uploadResult.data)) {
               actions.setExperienceData(uploadResult.data);
-            } else if (uploadResult.fileType === 'high-cost-claimant') {
+            } else if (uploadResult.fileType === 'high-cost-claimant' && isHighCostClaimantArray(uploadResult.data)) {
               actions.setHighCostClaimants(uploadResult.data);
             }
           }
@@ -101,7 +125,7 @@ export default function UploadPage() {
         handleNext();
       } else {
         actions.setError(result.error || 'Upload failed');
-        setUploadResults(result.data || []);
+        setUploadResults(result.data ?? []);
       }
     } catch (error) {
       console.error('Upload error:', error);

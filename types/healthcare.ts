@@ -106,7 +106,7 @@ export interface CSVValidationError {
   row: number;
   column: string;
   message: string;
-  value: any;
+  value: unknown;
 }
 
 // Calculation result types
@@ -188,7 +188,7 @@ export interface ChartDataPoint {
   label: string;
   value: number;
   color?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface LineChartData {
@@ -245,6 +245,6 @@ export interface AuditEntry {
   action: string;
   entityType: string;
   entityId: string;
-  changes: Record<string, any>;
+  changes: Record<string, unknown>;
   ipAddress?: string;
 }

@@ -6,17 +6,14 @@ import {
   validateDateString,
   validateGender
 } from '@/lib/validations/schemas';
-import { ExperienceData, HighCostClaimant } from '@/types/healthcare';
+import { ExperienceData, HighCostClaimant, CSVValidationError } from '@/types/healthcare';
+
+type ParsedCSVRow = Record<string, string>;
 
 export interface CSVParseResult<T> {
   success: boolean;
   data: T[];
-  errors: Array<{
-    row: number;
-    column: string;
-    message: string;
-    value: any;
-  }>;
+  errors: CSVValidationError[];
   totalRows: number;
   validRows: number;
   fileName: string;
@@ -203,10 +200,10 @@ export async function parseHighCostClaimantCSV(
  * Process Experience Data CSV parse results
  */
 function processExperienceDataResults(
-  results: Papa.ParseResult<any>,
+  results: Papa.ParseResult<ParsedCSVRow>,
   fileName: string
 ): CSVParseResult<ExperienceData> {
-  const errors: Array<{ row: number; column: string; message: string; value: any }> = [];
+  const errors: CSVValidationError[] = [];
   const validData: ExperienceData[] = [];
   
   // Check for parsing errors
@@ -242,7 +239,7 @@ function processExperienceDataResults(
   }
 
   // Process each row
-  results.data.forEach((row: any, index: number) => {
+  results.data.forEach((row: ParsedCSVRow, index: number) => {
     const rowNumber = index + 1;
     
     try {
@@ -254,7 +251,7 @@ function processExperienceDataResults(
             row: rowNumber,
             column: error.path.join('.'),
             message: error.message,
-            value: row[error.path[0]]
+            value: row[error.path[0] as keyof ParsedCSVRow]
           });
         });
         return;
@@ -307,10 +304,10 @@ function processExperienceDataResults(
  * Process High Cost Claimant CSV parse results
  */
 function processHighCostClaimantResults(
-  results: Papa.ParseResult<any>,
+  results: Papa.ParseResult<ParsedCSVRow>,
   fileName: string
 ): CSVParseResult<HighCostClaimant> {
-  const errors: Array<{ row: number; column: string; message: string; value: any }> = [];
+  const errors: CSVValidationError[] = [];
   const validData: HighCostClaimant[] = [];
   
   // Check for parsing errors
@@ -345,7 +342,7 @@ function processHighCostClaimantResults(
   }
 
   // Process each row
-  results.data.forEach((row: any, index: number) => {
+  results.data.forEach((row: ParsedCSVRow, index: number) => {
     const rowNumber = index + 1;
     
     try {
@@ -357,7 +354,7 @@ function processHighCostClaimantResults(
             row: rowNumber,
             column: error.path.join('.'),
             message: error.message,
-            value: row[error.path[0]]
+            value: row[error.path[0] as keyof ParsedCSVRow]
           });
         });
         return;

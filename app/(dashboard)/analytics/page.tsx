@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Container,
   Typography,
@@ -93,7 +93,7 @@ export default function AnalyticsPage() {
   const [dashboardData, setDashboardData] = useState(sampleDashboardData);
 
   // Generate dashboard data from context
-  const generateDashboardData = async () => {
+  const generateDashboardData = useCallback(async () => {
     if (monthlySummaries.length === 0) {
       return sampleDashboardData; // Fallback to sample data
     }
@@ -128,7 +128,7 @@ export default function AnalyticsPage() {
       console.error('Error generating dashboard data:', error);
       return sampleDashboardData;
     }
-  };
+  }, [experienceData, feeStructures, highCostClaimants, monthlySummaries]);
 
   // Update dashboard data when context changes
   useEffect(() => {
@@ -137,7 +137,7 @@ export default function AnalyticsPage() {
       setDashboardData(data);
     };
     updateDashboard();
-  }, [monthlySummaries, experienceData, feeStructures, highCostClaimants]);
+  }, [generateDashboardData]);
 
   const handleRefresh = async () => {
     setRefreshing(true);

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ApiResponse } from '@/types/api';
-import { ExperienceData, FeeStructure, MonthlySummary } from '@/types/healthcare';
+import { ExperienceData, FeeStructure, HighCostClaimant, MonthlySummary } from '@/types/healthcare';
 import { 
   generateMonthlySummaries, 
   generateDashboardKPIs, 
@@ -10,8 +10,6 @@ import {
   generatePremiumData
 } from '@/lib/utils/dataTransform';
 import { 
-  calculateMonthlyLossRatio, 
-  calculateRolling12LossRatio,
   generateLossRatioSummary,
   predictLossRatio,
   calculateLossRatioImpact
@@ -21,7 +19,7 @@ import { calculatePMPM, calculatePEPM } from '@/lib/calculations/pmpm';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { type, data } = body;
+    const { type } = body;
     
     switch (type) {
       case 'monthly-summaries':
@@ -198,7 +196,7 @@ async function handleTrendData(data: {
   }
 }
 
-async function handleDiagnosisBreakdown(data: { highCostClaimants: any[] }) {
+async function handleDiagnosisBreakdown(data: { highCostClaimants: HighCostClaimant[] }) {
   try {
     const { highCostClaimants } = data;
     
@@ -380,7 +378,7 @@ async function handleDashboardAnalytics(data: {
   experienceData: ExperienceData[];
   feeStructures: FeeStructure[];
   monthlySummaries: MonthlySummary[];
-  highCostClaimants?: any[];
+  highCostClaimants?: HighCostClaimant[];
 }) {
   try {
     const { experienceData, feeStructures, monthlySummaries, highCostClaimants = [] } = data;
@@ -393,24 +391,24 @@ async function handleDashboardAnalytics(data: {
     const kpis = generateDashboardKPIs(monthlySummaries);
     
     // Generate monthly trend data
-    const monthlyData = generateMonthlyTrendData(monthlySummaries);
+    const monthlyData = generateMonthlyTrendData(experienceData, feeStructures, monthlySummaries);
     
     // Generate category breakdown from experience data
     const categoryBreakdown = experienceData.length > 0 
       ? generateCategoryBreakdown(experienceData)
       : [];
     
-    // Generate diagnosis breakdown from experience data if available
-    const topDiagnoses = experienceData.length > 0 
-      ? generateDiagnosisBreakdown(experienceData)
+    // Generate diagnosis breakdown from high-cost claimants if available
+    const topDiagnoses = highCostClaimants.length > 0 
+      ? generateDiagnosisBreakdown(highCostClaimants)
       : [];
     
     // Generate high-cost members analysis
-    const highCostMembers = highCostClaimants.slice(0, 5).map(member => ({
-      memberId: member.memberId || member.id || 'Unknown',
-      totalCost: member.totalPaidAmount || member.totalCost || 0,
-      riskScore: member.riskScore || 2.5,
-      primaryDiagnosis: member.primaryDiagnosisDescription || member.primaryDiagnosis || 'Not specified'
+    const highCostMembers = highCostClaimants.slice(0, 5).map((member) => ({
+      memberId: member.memberId,
+      totalCost: member.totalPaidAmount,
+      riskScore: member.riskScore,
+      primaryDiagnosis: member.primaryDiagnosisDescription,
     }));
 
     const dashboardData = {

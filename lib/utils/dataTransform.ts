@@ -332,7 +332,7 @@ export function generatePremiumData(
 /**
  * Export data to CSV format
  */
-export function exportToCSV<T extends Record<string, any>>(
+export function exportToCSV<T extends Record<string, unknown>>(
   data: T[],
   filename: string,
   columns?: Array<{ key: keyof T; header: string }>
