@@ -28,6 +28,7 @@ interface FeesGridProps {
 
 export function FeesGrid({ data, onDataChange }: FeesGridProps) {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 12 });
 
   const calculateTotal = (
     feeType: string, 
@@ -250,8 +251,9 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
         <DataGrid
           rows={data}
           columns={columns}
-          pageSize={12}
-          rowsPerPageOptions={[12, 24]}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          pageSizeOptions={[12, 24]}
           processRowUpdate={handleProcessRowUpdate}
           onProcessRowUpdateError={(error) => {
             console.error('Row update error:', error);
