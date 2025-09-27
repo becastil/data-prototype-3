@@ -256,7 +256,6 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
           onProcessRowUpdateError={(error) => {
             console.error('Row update error:', error);
           }}
-          experimentalFeatures={{ newEditingApi: true }}
           slots={{ toolbar: GridToolbar }}
           slotProps={{
             toolbar: {
