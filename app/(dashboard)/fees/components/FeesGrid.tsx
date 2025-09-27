@@ -159,7 +159,7 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
       width: 120,
       editable: true,
       type: 'number',
-      valueFormatter: ({ value }: { value: number | undefined }) => (value ? `$${value.toLocaleString()}` : '$0')
+      valueFormatter: (value: number | undefined) => (value ? `$${value.toLocaleString()}` : '$0')
     },
     {
       field: 'enrollment',
@@ -167,14 +167,14 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
       width: 120,
       editable: true,
       type: 'number',
-      valueFormatter: ({ value }: { value: number | undefined }) => (value ? value.toLocaleString() : '')
+      valueFormatter: (value: number | undefined) => (value ? value.toLocaleString() : '')
     },
     {
       field: 'calculatedTotal',
       headerName: 'Calculated Total ($)',
       width: 180,
       editable: false,
-      valueFormatter: ({ value }: { value: number | undefined }) => `$${value?.toLocaleString() || '0'}`,
+      valueFormatter: (value: number | undefined) => `$${value?.toLocaleString() || '0'}`,
       cellClassName: 'calculated-total',
       renderCell: (params) => (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
