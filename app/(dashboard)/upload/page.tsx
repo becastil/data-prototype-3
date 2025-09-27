@@ -20,12 +20,17 @@ import {
 import Link from 'next/link';
 import { CSVUploader } from './components/CSVUploader';
 
+interface ValidationResult {
+  fileName: string;
+  status: 'success' | 'error';
+  records?: number;
+}
+
 const steps = ['Upload Files', 'Validate Data', 'Review & Confirm'];
 
 export default function UploadPage() {
   const [activeStep, setActiveStep] = useState(0);
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [validationResults, setValidationResults] = useState<any[]>([]);
+  const [validationResults, setValidationResults] = useState<ValidationResult[]>([]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -36,7 +41,6 @@ export default function UploadPage() {
   };
 
   const handleFileUpload = async (files: FileList) => {
-    setUploadedFiles(Array.from(files));
     // TODO: Implement actual file processing
     console.log('Files uploaded:', files);
     

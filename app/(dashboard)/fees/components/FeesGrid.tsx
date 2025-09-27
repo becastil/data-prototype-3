@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { 
   DataGrid, 
   GridColDef, 
-  GridRowsProp,
   GridRowModel,
   GridToolbar
 } from '@mui/x-data-grid';

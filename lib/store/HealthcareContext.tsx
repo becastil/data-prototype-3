@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import { ExperienceData, HighCostClaimant, FeeStructure, MonthlySummary, DashboardConfig } from '@/types/healthcare';
 
 interface HealthcareState {
@@ -131,10 +131,31 @@ const STORAGE_KEY = 'healthcare-dashboard-data';
 export function HealthcareProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(healthcareReducer, initialState);
 
+  const saveToStorage = useCallback(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+      console.error('Failed to save to localStorage:', error);
+    }
+  }, [state]);
+
+  const loadFromStorage = useCallback(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsedState: HealthcareState = JSON.parse(stored);
+        dispatch({ type: 'LOAD_FROM_STORAGE', payload: parsedState });
+      }
+    } catch (error) {
+      console.error('Failed to load from localStorage:', error);
+      dispatch({ type: 'SET_ERROR', payload: 'Failed to load saved data' });
+    }
+  }, [dispatch]);
+
   // Load data from localStorage on mount
   useEffect(() => {
     loadFromStorage();
-  }, []);
+  }, [loadFromStorage]);
 
   // Save to localStorage whenever state changes (debounced)
   useEffect(() => {
@@ -143,28 +164,7 @@ export function HealthcareProvider({ children }: { children: React.ReactNode }) 
     }, 1000);
 
     return () => clearTimeout(timeoutId);
-  }, [state]);
-
-  const saveToStorage = () => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (error) {
-      console.error('Failed to save to localStorage:', error);
-    }
-  };
-
-  const loadFromStorage = () => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsedState = JSON.parse(stored);
-        dispatch({ type: 'LOAD_FROM_STORAGE', payload: parsedState });
-      }
-    } catch (error) {
-      console.error('Failed to load from localStorage:', error);
-      dispatch({ type: 'SET_ERROR', payload: 'Failed to load saved data' });
-    }
-  };
+  }, [saveToStorage]);
 
   const actions = {
     setLoading: (loading: boolean) => dispatch({ type: 'SET_LOADING', payload: loading }),

@@ -16,6 +16,7 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import {
   ArrowBack,
   FileDownload,
@@ -43,7 +44,6 @@ const generateSampleData = (): MonthlySummary[] => {
     const monthlyLossRatio = totalCost / basePremiums;
     
     // Calculate rolling 12-month loss ratio (simplified)
-    const rollingData = months.slice(0, index + 1);
     const avgLossRatio = monthlyLossRatio * (0.9 + Math.random() * 0.2);
     
     const variance = ((monthlyLossRatio - 0.85) / 0.85) * 100;
@@ -65,9 +65,11 @@ const generateSampleData = (): MonthlySummary[] => {
   });
 };
 
+type ViewMode = 'monthly' | 'quarterly' | 'annual';
+
 export default function SummaryPage() {
   const [summaryData, setSummaryData] = useState<MonthlySummary[]>(generateSampleData());
-  const [viewMode, setViewMode] = useState<'monthly' | 'quarterly' | 'annual'>('monthly');
+  const [viewMode, setViewMode] = useState<ViewMode>('monthly');
 
   const filteredData = useMemo(() => {
     if (viewMode === 'quarterly') {
@@ -97,7 +99,7 @@ export default function SummaryPage() {
           rolling12LossRatio: lossRatio,
           variance: ((lossRatio - 0.85) / 0.85) * 100,
           memberMonths: totalMemberMonths,
-          pmmp: pmpm
+          pmpm
         };
       });
     } else if (viewMode === 'annual') {
@@ -147,6 +149,13 @@ export default function SummaryPage() {
 
   const kpis = calculateKPIs();
 
+  const handleViewModeChange = (event: SelectChangeEvent) => {
+    const nextViewMode = event.target.value;
+    if (nextViewMode === 'monthly' || nextViewMode === 'quarterly' || nextViewMode === 'annual') {
+      setViewMode(nextViewMode);
+    }
+  };
+
   const handleRefresh = () => {
     setSummaryData(generateSampleData());
   };
@@ -179,7 +188,7 @@ export default function SummaryPage() {
               <Select
                 value={viewMode}
                 label="View"
-                onChange={(e) => setViewMode(e.target.value as any)}
+                onChange={handleViewModeChange}
               >
                 <MenuItem value="monthly">Monthly</MenuItem>
                 <MenuItem value="quarterly">Quarterly</MenuItem>

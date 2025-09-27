@@ -9,7 +9,8 @@ import {
   Box, 
   Chip,
   Typography,
-  Tooltip
+  Tooltip,
+  ChipProps
 } from '@mui/material';
 import { 
   TrendingUp, 
@@ -43,7 +44,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
     return 'critical';
   };
 
-  const getLossRatioColor = (status: string) => {
+  const getLossRatioColor = (status: ReturnType<typeof getLossRatioStatus>): ChipProps['color'] => {
     switch (status) {
       case 'good': return 'success';
       case 'warning': return 'warning';
@@ -115,7 +116,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
         return (
           <Chip
             label={formatPercentage(params.value)}
-            color={getLossRatioColor(status) as any}
+            color={getLossRatioColor(status)}
             size="small"
             variant="filled"
           />
@@ -133,7 +134,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
           <Tooltip title="Rolling 12-month Loss Ratio">
             <Chip
               label={formatPercentage(params.value)}
-              color={getLossRatioColor(status) as any}
+              color={getLossRatioColor(status)}
               size="small"
               variant="outlined"
             />

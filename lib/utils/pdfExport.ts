@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { MonthlySummary, DashboardKPIs } from '@/types/healthcare';
 
 export interface PDFExportOptions {
   filename: string;
@@ -124,7 +125,6 @@ export class PDFExporter {
       this.addText(title, 12);
     }
 
-    const startY = this.currentY;
     const colWidth = (this.pageWidth - (this.margin * 2)) / headers.length;
     const rowHeight = 8;
 
@@ -231,9 +231,19 @@ export class PDFExporter {
   }
 }
 
+interface DashboardExportData {
+  kpis?: DashboardKPIs;
+  topDiagnoses?: Array<{
+    code: string;
+    description: string;
+    totalCost: number;
+    claimCount: number;
+  }>;
+}
+
 // Helper function to export summary table
 export async function exportSummaryTableToPDF(
-  summaryData: any[],
+  summaryData: MonthlySummary[],
   options: PDFExportOptions
 ) {
   const exporter = new PDFExporter(options.orientation);
@@ -269,7 +279,7 @@ export async function exportSummaryTableToPDF(
 
 // Helper function to export dashboard to PDF
 export async function exportDashboardToPDF(
-  dashboardData: any,
+  dashboardData: DashboardExportData,
   options: PDFExportOptions
 ) {
   const exporter = new PDFExporter(options.orientation);
@@ -303,9 +313,9 @@ export async function exportDashboardToPDF(
     exporter.addSection('Top Diagnoses');
     
     const headers = ['Code', 'Description', 'Total Cost', 'Claims'];
-    const rows = dashboardData.topDiagnoses.slice(0, 10).map((diagnosis: any) => [
+    const rows = dashboardData.topDiagnoses.slice(0, 10).map((diagnosis) => [
       diagnosis.code,
-      diagnosis.description.substring(0, 30) + '...',
+      diagnosis.description.length > 30 ? `${diagnosis.description.substring(0, 30)}...` : diagnosis.description,
       `$${diagnosis.totalCost?.toLocaleString() || '0'}`,
       diagnosis.claimCount?.toString() || '0'
     ]);

@@ -224,7 +224,11 @@ export function calculatePMPMBenchmarks(
   };
   ranking: 'excellent' | 'good' | 'average' | 'below-average' | 'poor';
 } {
-  const performance: any = {};
+  const performance: {
+    vsIndustry?: { difference: number; percentDifference: number; better: boolean };
+    vsTarget?: { difference: number; percentDifference: number; onTarget: boolean };
+    vsPrevious?: { difference: number; percentDifference: number; improved: boolean };
+  } = {};
   
   // Compare against industry benchmark
   if (benchmarks.industry !== undefined) {

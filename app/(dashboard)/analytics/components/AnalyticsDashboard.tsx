@@ -11,7 +11,6 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   Chip,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -20,7 +19,6 @@ import {
   TableRow
 } from '@mui/material';
 import { 
-  LineChart, 
   BarChart, 
   PieChart 
 } from '@mui/x-charts';

@@ -16,10 +16,13 @@ import {
 import { 
   CloudUpload, 
   InsertDriveFile,
-  CheckCircle,
-  Error as ErrorIcon
+  CheckCircle
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
+
+interface DropZoneProps {
+  isDragOver: boolean;
+}
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -33,7 +36,9 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const DropZone = styled(Paper)(({ theme, isDragOver }: { theme?: any; isDragOver: boolean }) => ({
+const DropZone = styled(Paper, {
+  shouldForwardProp: (prop) => prop !== 'isDragOver',
+})<DropZoneProps>(({ theme, isDragOver }) => ({
   border: `2px dashed ${isDragOver ? theme.palette.primary.main : theme.palette.grey[300]}`,
   borderRadius: theme.shape.borderRadius,
   padding: theme.spacing(4),
@@ -68,9 +73,10 @@ export function CSVUploader({
       return `Maximum ${maxFiles} files allowed`;
     }
 
-    const invalidFiles = Array.from(files).filter(
-      file => !acceptedTypes.some(type => file.name.toLowerCase().endsWith(type.slice(1)))
-    );
+    const invalidFiles = Array.from(files).filter((file) => {
+      const fileName = file.name.toLowerCase();
+      return !acceptedTypes.some((type) => fileName.endsWith(type.toLowerCase()));
+    });
 
     if (invalidFiles.length > 0) {
       return `Invalid file types: ${invalidFiles.map(f => f.name).join(', ')}. Only CSV files are allowed.`;
