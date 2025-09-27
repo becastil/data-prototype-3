@@ -3,7 +3,8 @@
 import { 
   DataGrid, 
   GridColDef, 
-  GridToolbar 
+  GridToolbar,
+  GridPaginationModel
 } from '@mui/x-data-grid';
 import { 
   Box, 
@@ -18,12 +19,17 @@ import {
   TrendingFlat 
 } from '@mui/icons-material';
 import { MonthlySummary } from '@/types/healthcare';
+import { useState } from 'react';
 
 interface SummaryTableProps {
   data: MonthlySummary[];
 }
 
 export function SummaryTable({ data }: SummaryTableProps) {
+  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
+    page: 0,
+    pageSize: 12,
+  });
 
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -74,7 +80,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Claims',
       width: 130,
       type: 'number',
-      valueFormatter: (value: number | undefined) => formatCurrency(value ?? 0),
+      valueFormatter: (value: number | undefined, row, column, apiRef) => formatCurrency(value ?? 0),
       cellClassName: 'currency-cell'
     },
     {
@@ -82,7 +88,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Fees',
       width: 120,
       type: 'number',
-      valueFormatter: (value: number | undefined) => formatCurrency(value ?? 0),
+      valueFormatter: (value: number | undefined, row, column, apiRef) => formatCurrency(value ?? 0),
       cellClassName: 'currency-cell'
     },
     {
@@ -90,7 +96,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Premiums',
       width: 140,
       type: 'number',
-      valueFormatter: (value: number | undefined) => formatCurrency(value ?? 0),
+      valueFormatter: (value: number | undefined, row, column, apiRef) => formatCurrency(value ?? 0),
       cellClassName: 'currency-cell'
     },
     {
@@ -98,7 +104,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Total Cost',
       width: 140,
       type: 'number',
-      valueFormatter: (value: number | undefined) => formatCurrency(value ?? 0),
+      valueFormatter: (value: number | undefined, row, column, apiRef) => formatCurrency(value ?? 0),
       cellClassName: 'total-cost-cell',
       renderCell: (params) => (
         <Typography variant="body2" fontWeight="bold">
@@ -171,14 +177,14 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Member Months',
       width: 130,
       type: 'number',
-      valueFormatter: (value: number | undefined) => (value ?? 0).toLocaleString()
+      valueFormatter: (value: number | undefined, row, column, apiRef) => (value ?? 0).toLocaleString()
     },
     {
       field: 'pmpm',
       headerName: 'PMPM',
       width: 100,
       type: 'number',
-      valueFormatter: (value: number | undefined) => `$${(value ?? 0).toFixed(2)}`,
+      valueFormatter: (value: number | undefined, row, column, apiRef) => `$${(value ?? 0).toFixed(2)}`,
       renderCell: (params) => (
         <Tooltip title="Per Member Per Month">
           <Typography variant="body2" fontWeight="medium">
@@ -195,8 +201,9 @@ export function SummaryTable({ data }: SummaryTableProps) {
         <DataGrid
           rows={data}
           columns={columns}
-          pageSize={12}
-          rowsPerPageOptions={[12, 24, 50]}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          pageSizeOptions={[12, 24, 50]}
           slots={{ toolbar: GridToolbar }}
           slotProps={{
             toolbar: {
