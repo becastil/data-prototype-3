@@ -112,14 +112,15 @@ export const feesGridStyles: SxProps<Theme> = {
 };
 
 // Utility function to merge custom styles with base styles
+// Use array spreading to properly handle SxProps type union
 export const mergeDataGridStyles = (
   baseStyles: SxProps<Theme>,
   customStyles: SxProps<Theme> = {}
 ): SxProps<Theme> => {
-  return {
-    ...baseStyles,
-    ...customStyles,
-  };
+  return [
+    ...(Array.isArray(baseStyles) ? baseStyles : [baseStyles]),
+    ...(Array.isArray(customStyles) ? customStyles : [customStyles]),
+  ];
 };
 
 // Export individual style objects for granular control
