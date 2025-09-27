@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -14,17 +14,27 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  CircularProgress
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import {
   ArrowBack,
   FileDownload,
-  Refresh
+  Refresh,
+  Calculate
 } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
 import Link from 'next/link';
 import { SummaryTable } from './components/SummaryTable';
 import { MonthlySummary } from '@/types/healthcare';
+import { 
+  useHealthcare, 
+  useMonthlySummaries, 
+  useExperienceData, 
+  useFeeStructures, 
+  useLoadingState 
+} from '@/lib/store/HealthcareContext';
 
 // Sample data based on templates
 const generateSampleData = (): MonthlySummary[] => {
@@ -68,8 +78,73 @@ const generateSampleData = (): MonthlySummary[] => {
 type ViewMode = 'monthly' | 'quarterly' | 'annual';
 
 export default function SummaryPage() {
-  const [summaryData, setSummaryData] = useState<MonthlySummary[]>(generateSampleData());
+  const { actions } = useHealthcare();
+  const monthlySummaries = useMonthlySummaries();
+  const experienceData = useExperienceData();
+  const feeStructures = useFeeStructures();
+  const { loading, error } = useLoadingState();
+  
   const [viewMode, setViewMode] = useState<ViewMode>('monthly');
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  // Use context data or fallback to sample data for demo
+  const summaryData = monthlySummaries.length > 0 ? monthlySummaries : generateSampleData();
+
+  // Auto-generate summaries if we have experience data and fees but no summaries
+  useEffect(() => {
+    if (experienceData.length > 0 && feeStructures.length > 0 && monthlySummaries.length === 0) {
+      handleCalculateSummaries();
+    }
+  }, [experienceData, feeStructures, monthlySummaries]);
+
+  const handleCalculateSummaries = async () => {
+    if (experienceData.length === 0 || feeStructures.length === 0) {
+      actions.setError('Please upload experience data and configure fees first');
+      return;
+    }
+
+    setIsCalculating(true);
+    actions.setLoading(true);
+
+    try {
+      // Generate premium data
+      const premiumData = feeStructures.map(fee => ({
+        month: fee.month,
+        premiumAmount: fee.calculatedTotal / 0.85, // Assume 85% target loss ratio
+        enrollment: fee.enrollment || 0
+      }));
+
+      const response = await fetch('/api/calculations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'monthly-summaries',
+          data: {
+            experienceData,
+            feeStructures,
+            premiumData,
+            targetLossRatio: 0.85
+          }
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        actions.setMonthlySummaries(result.data);
+      } else {
+        actions.setError(`Calculation failed: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Calculation error:', error);
+      actions.setError('Failed to calculate summaries');
+    } finally {
+      setIsCalculating(false);
+      actions.setLoading(false);
+    }
+  };
 
   const filteredData = useMemo(() => {
     if (viewMode === 'quarterly') {
@@ -79,14 +154,16 @@ export default function SummaryPage() {
         const startMonth = qIndex * 3;
         const quarterData = summaryData.slice(startMonth, startMonth + 3);
         
+        if (quarterData.length === 0) return null;
+        
         const totalClaims = quarterData.reduce((sum, month) => sum + month.claims, 0);
         const totalFees = quarterData.reduce((sum, month) => sum + month.fees, 0);
         const totalPremiums = quarterData.reduce((sum, month) => sum + month.premiums, 0);
         const totalMemberMonths = quarterData.reduce((sum, month) => sum + month.memberMonths, 0);
         
         const totalCost = totalClaims + totalFees;
-        const lossRatio = totalCost / totalPremiums;
-        const pmpm = totalCost / totalMemberMonths;
+        const lossRatio = totalPremiums > 0 ? totalCost / totalPremiums : 0;
+        const pmpm = totalMemberMonths > 0 ? totalCost / totalMemberMonths : 0;
         
         return {
           id: `2024-${quarter}`,
@@ -101,16 +178,18 @@ export default function SummaryPage() {
           memberMonths: totalMemberMonths,
           pmpm
         };
-      });
+      }).filter(Boolean) as MonthlySummary[];
     } else if (viewMode === 'annual') {
+      if (summaryData.length === 0) return [];
+      
       const totalClaims = summaryData.reduce((sum, month) => sum + month.claims, 0);
       const totalFees = summaryData.reduce((sum, month) => sum + month.fees, 0);
       const totalPremiums = summaryData.reduce((sum, month) => sum + month.premiums, 0);
       const totalMemberMonths = summaryData.reduce((sum, month) => sum + month.memberMonths, 0);
       
       const totalCost = totalClaims + totalFees;
-      const lossRatio = totalCost / totalPremiums;
-      const pmpm = totalCost / totalMemberMonths;
+      const lossRatio = totalPremiums > 0 ? totalCost / totalPremiums : 0;
+      const pmpm = totalMemberMonths > 0 ? totalCost / totalMemberMonths : 0;
       
       return [{
         id: '2024-annual',
@@ -130,12 +209,23 @@ export default function SummaryPage() {
   }, [summaryData, viewMode]);
 
   const calculateKPIs = () => {
+    if (summaryData.length === 0) {
+      return {
+        totalClaims: 0,
+        totalFees: 0,
+        totalPremiums: 0,
+        avgLossRatio: 0,
+        avgPMPM: 0,
+        totalMemberMonths: 0
+      };
+    }
+
     const totalClaims = summaryData.reduce((sum, month) => sum + month.claims, 0);
     const totalFees = summaryData.reduce((sum, month) => sum + month.fees, 0);
     const totalPremiums = summaryData.reduce((sum, month) => sum + month.premiums, 0);
-    const avgLossRatio = (totalClaims + totalFees) / totalPremiums;
+    const avgLossRatio = totalPremiums > 0 ? (totalClaims + totalFees) / totalPremiums : 0;
     const totalMemberMonths = summaryData.reduce((sum, month) => sum + month.memberMonths, 0);
-    const avgPMPM = (totalClaims + totalFees) / totalMemberMonths;
+    const avgPMPM = totalMemberMonths > 0 ? (totalClaims + totalFees) / totalMemberMonths : 0;
     
     return {
       totalClaims,
@@ -157,12 +247,12 @@ export default function SummaryPage() {
   };
 
   const handleRefresh = () => {
-    setSummaryData(generateSampleData());
+    handleCalculateSummaries();
   };
 
   const handleExport = () => {
     // TODO: Implement PDF export functionality
-    console.log('Exporting summary data...');
+    console.log('Exporting summary data:', filteredData);
   };
 
   return (
@@ -195,13 +285,22 @@ export default function SummaryPage() {
                 <MenuItem value="annual">Annual</MenuItem>
               </Select>
             </FormControl>
-            <Button
-              variant="outlined"
-              startIcon={<Refresh />}
-              onClick={handleRefresh}
-            >
-              Refresh
-            </Button>
+            <Tooltip title={
+              experienceData.length === 0 ? "Upload experience data first" : 
+              feeStructures.length === 0 ? "Configure fees first" : 
+              "Recalculate monthly summaries"
+            }>
+              <span>
+                <Button
+                  variant="outlined"
+                  startIcon={isCalculating ? <CircularProgress size={16} /> : <Refresh />}
+                  onClick={handleRefresh}
+                  disabled={isCalculating || experienceData.length === 0 || feeStructures.length === 0}
+                >
+                  {isCalculating ? 'Calculating...' : 'Refresh'}
+                </Button>
+              </span>
+            </Tooltip>
             <Button
               variant="contained"
               startIcon={<FileDownload />}
@@ -212,6 +311,34 @@ export default function SummaryPage() {
           </Box>
         </Box>
       </Box>
+
+      {/* Data Status Alerts */}
+      {experienceData.length === 0 && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          No experience data found. Please upload your CSV files first to see calculated summaries.
+        </Alert>
+      )}
+      
+      {feeStructures.length === 0 && experienceData.length > 0 && (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          No fee structures configured. Please configure your fees to see calculated summaries.
+        </Alert>
+      )}
+      
+      {loading && (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <CircularProgress size={20} />
+            <Typography>Calculating monthly summaries...</Typography>
+          </Box>
+        </Alert>
+      )}
+      
+      {error && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {error}
+        </Alert>
+      )}
 
       {/* KPI Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -284,7 +411,41 @@ export default function SummaryPage() {
           {viewMode === 'monthly' ? 'Monthly' : viewMode === 'quarterly' ? 'Quarterly' : 'Annual'} Summary Table
         </Typography>
         
-        <SummaryTable data={filteredData} />
+        {filteredData.length > 0 ? (
+          <SummaryTable data={filteredData} />
+        ) : (
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            py: 8,
+            textAlign: 'center'
+          }}>
+            <Calculate sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+            <Typography variant="h6" color="text.secondary" gutterBottom>
+              No Data Available
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              {experienceData.length === 0 
+                ? "Upload your experience data to see monthly summaries"
+                : feeStructures.length === 0 
+                ? "Configure your fee structures to generate summaries"
+                : "Click 'Refresh' to calculate monthly summaries"
+              }
+            </Typography>
+            {experienceData.length > 0 && feeStructures.length > 0 && (
+              <Button 
+                variant="contained" 
+                startIcon={<Calculate />}
+                onClick={handleCalculateSummaries}
+                disabled={isCalculating}
+              >
+                {isCalculating ? 'Calculating...' : 'Calculate Summaries'}
+              </Button>
+            )}
+          </Box>
+        )}
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
           <Link href="/dashboard/fees" passHref>

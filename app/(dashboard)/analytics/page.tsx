@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -10,16 +10,26 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Alert
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import {
   ArrowBack,
   FileDownload,
   Refresh,
-  Dashboard as DashboardIcon
+  Dashboard as DashboardIcon,
+  Calculate
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
+import { 
+  useHealthcare, 
+  useExperienceData, 
+  useFeeStructures, 
+  useMonthlySummaries,
+  useHighCostClaimants,
+  useLoadingState 
+} from '@/lib/store/HealthcareContext';
 
 // Sample dashboard data
 const sampleDashboardData = {
@@ -71,14 +81,78 @@ const sampleDashboardData = {
 };
 
 export default function AnalyticsPage() {
+  const { actions } = useHealthcare();
+  const experienceData = useExperienceData();
+  const feeStructures = useFeeStructures();
+  const monthlySummaries = useMonthlySummaries();
+  const highCostClaimants = useHighCostClaimants();
+  const { loading, error } = useLoadingState();
+  
   const [dateRange, setDateRange] = useState('2024');
   const [refreshing, setRefreshing] = useState(false);
+  const [dashboardData, setDashboardData] = useState(sampleDashboardData);
+
+  // Generate dashboard data from context
+  const generateDashboardData = async () => {
+    if (monthlySummaries.length === 0) {
+      return sampleDashboardData; // Fallback to sample data
+    }
+
+    try {
+      // Call the calculations API to get KPIs and analytics data
+      const response = await fetch('/api/calculations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'dashboard-analytics',
+          data: {
+            experienceData,
+            feeStructures,
+            monthlySummaries,
+            highCostClaimants
+          }
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        return result.data;
+      } else {
+        console.error('Failed to generate dashboard data:', result.error);
+        return sampleDashboardData;
+      }
+    } catch (error) {
+      console.error('Error generating dashboard data:', error);
+      return sampleDashboardData;
+    }
+  };
+
+  // Update dashboard data when context changes
+  useEffect(() => {
+    const updateDashboard = async () => {
+      const data = await generateDashboardData();
+      setDashboardData(data);
+    };
+    updateDashboard();
+  }, [monthlySummaries, experienceData, feeStructures, highCostClaimants]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    // Simulate data refresh
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setRefreshing(false);
+    actions.setLoading(true);
+    
+    try {
+      const data = await generateDashboardData();
+      setDashboardData(data);
+    } catch (error) {
+      console.error('Refresh error:', error);
+      actions.setError('Failed to refresh dashboard data');
+    } finally {
+      setRefreshing(false);
+      actions.setLoading(false);
+    }
   };
 
   const handleExport = () => {
@@ -152,7 +226,44 @@ export default function AnalyticsPage() {
         </Typography>
       </Alert>
 
-      <AnalyticsDashboard data={sampleDashboardData} />
+      {/* Data Status Alerts */}
+      {experienceData.length === 0 && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          No experience data found. Please upload your CSV files first to see real analytics.
+        </Alert>
+      )}
+      
+      {monthlySummaries.length === 0 && experienceData.length > 0 && (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography>
+              No calculated summaries found. Please configure fees and generate summaries to see analytics.
+            </Typography>
+            <Link href="/dashboard/summary" passHref>
+              <Button size="small" variant="outlined" startIcon={<Calculate />}>
+                Generate Summaries
+              </Button>
+            </Link>
+          </Box>
+        </Alert>
+      )}
+      
+      {loading && (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <CircularProgress size={20} />
+            <Typography>Loading analytics data...</Typography>
+          </Box>
+        </Alert>
+      )}
+      
+      {error && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {error}
+        </Alert>
+      )}
+
+      <AnalyticsDashboard data={dashboardData} />
 
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
         <Link href="/dashboard/summary" passHref>

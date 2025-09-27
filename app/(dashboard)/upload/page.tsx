@@ -11,26 +11,52 @@ import {
   StepLabel,
   Button,
   Alert,
-  Link as MuiLink
+  Link as MuiLink,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
 } from '@mui/material';
 import {
   ArrowBack,
-  GetApp
+  GetApp,
+  ExpandMore,
+  ErrorOutline,
+  CheckCircle
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { CSVUploader } from './components/CSVUploader';
+import { useHealthcare } from '@/lib/store/HealthcareContext';
 
-interface ValidationResult {
+interface UploadResult {
   fileName: string;
-  status: 'success' | 'error';
-  records?: number;
+  fileType?: string;
+  success: boolean;
+  data?: any[];
+  errors?: Array<{
+    row: number;
+    column: string;
+    message: string;
+    value: any;
+  }>;
+  totalRows?: number;
+  validRows?: number;
+  message?: string;
+  error?: string;
 }
 
 const steps = ['Upload Files', 'Validate Data', 'Review & Confirm'];
 
 export default function UploadPage() {
   const [activeStep, setActiveStep] = useState(0);
-  const [validationResults, setValidationResults] = useState<ValidationResult[]>([]);
+  const [uploadResults, setUploadResults] = useState<UploadResult[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { actions } = useHealthcare();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -41,17 +67,49 @@ export default function UploadPage() {
   };
 
   const handleFileUpload = async (files: FileList) => {
-    // TODO: Implement actual file processing
-    console.log('Files uploaded:', files);
+    setIsProcessing(true);
+    actions.setLoading(true);
+    actions.setError(null);
     
-    // Simulate validation results
-    setTimeout(() => {
-      setValidationResults([
-        { fileName: 'experience-data.csv', status: 'success', records: 12 },
-        { fileName: 'high-cost-claimants.csv', status: 'success', records: 20 }
-      ]);
-      handleNext();
-    }, 2000);
+    try {
+      const formData = new FormData();
+      Array.from(files).forEach(file => {
+        formData.append('files', file);
+      });
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setUploadResults(result.data);
+        
+        // Process successful uploads and update context
+        for (const uploadResult of result.data) {
+          if (uploadResult.success && uploadResult.data) {
+            if (uploadResult.fileType === 'experience') {
+              actions.setExperienceData(uploadResult.data);
+            } else if (uploadResult.fileType === 'high-cost-claimant') {
+              actions.setHighCostClaimants(uploadResult.data);
+            }
+          }
+        }
+        
+        handleNext();
+      } else {
+        actions.setError(result.error || 'Upload failed');
+        setUploadResults(result.data || []);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      actions.setError('Network error during upload');
+    } finally {
+      setIsProcessing(false);
+      actions.setLoading(false);
+    }
   };
 
   return (
@@ -91,16 +149,16 @@ export default function UploadPage() {
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
                 <MuiLink 
-                  href="/templates/experience-data-template.csv" 
-                  download
+                  href="/api/upload?template=experience" 
+                  download="experience-data-template.csv"
                   sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
                 >
                   <GetApp fontSize="small" />
                   Experience Data Template
                 </MuiLink>
                 <MuiLink 
-                  href="/templates/high-cost-claimants-template.csv" 
-                  download
+                  href="/api/upload?template=high-cost-claimant" 
+                  download="high-cost-claimants-template.csv"
                   sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
                 >
                   <GetApp fontSize="small" />
@@ -109,7 +167,7 @@ export default function UploadPage() {
               </Box>
             </Alert>
 
-            <CSVUploader onUpload={handleFileUpload} />
+            <CSVUploader onUpload={handleFileUpload} disabled={isProcessing} />
           </Box>
         )}
 
@@ -118,29 +176,83 @@ export default function UploadPage() {
             <Typography variant="h6" gutterBottom>
               Step 2: Validation Results
             </Typography>
-            {validationResults.map((result, index) => (
-              <Alert 
-                key={index}
-                severity={result.status === 'success' ? 'success' : 'error'}
-                sx={{ mb: 2 }}
-              >
-                <Typography variant="subtitle2">
-                  {result.fileName}
-                </Typography>
-                <Typography variant="body2">
-                  {result.status === 'success' 
-                    ? `Successfully processed ${result.records} records` 
-                    : 'Validation failed'
-                  }
-                </Typography>
-              </Alert>
+            
+            {uploadResults.map((result, index) => (
+              <Box key={index} sx={{ mb: 3 }}>
+                <Alert 
+                  severity={result.success ? 'success' : 'error'}
+                  icon={result.success ? <CheckCircle /> : <ErrorOutline />}
+                  sx={{ mb: 2 }}
+                >
+                  <Typography variant="subtitle2" gutterBottom>
+                    {result.fileName} {result.fileType && `(${result.fileType.replace('-', ' ')})`}
+                  </Typography>
+                  <Typography variant="body2">
+                    {result.message || result.error}
+                  </Typography>
+                  {result.success && result.validRows && result.totalRows && (
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                      Processed: {result.validRows} of {result.totalRows} rows
+                    </Typography>
+                  )}
+                </Alert>
+
+                {result.errors && result.errors.length > 0 && (
+                  <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                      <Typography variant="body2" color="error">
+                        {result.errors.length} validation errors found
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <TableContainer>
+                        <Table size="small">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Row</TableCell>
+                              <TableCell>Column</TableCell>
+                              <TableCell>Error</TableCell>
+                              <TableCell>Value</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {result.errors.slice(0, 10).map((error, errorIndex) => (
+                              <TableRow key={errorIndex}>
+                                <TableCell>{error.row}</TableCell>
+                                <TableCell>{error.column}</TableCell>
+                                <TableCell>{error.message}</TableCell>
+                                <TableCell sx={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                  {typeof error.value === 'string' ? error.value : JSON.stringify(error.value)}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                            {result.errors.length > 10 && (
+                              <TableRow>
+                                <TableCell colSpan={4} align="center">
+                                  <Typography variant="body2" color="text.secondary">
+                                    ... and {result.errors.length - 10} more errors
+                                  </Typography>
+                                </TableCell>
+                              </TableRow>
+                            )}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </AccordionDetails>
+                  </Accordion>
+                )}
+              </Box>
             ))}
             
             <Box sx={{ display: 'flex', pt: 2 }}>
               <Button onClick={handleBack} sx={{ mr: 1 }}>
                 Back
               </Button>
-              <Button variant="contained" onClick={handleNext}>
+              <Button 
+                variant="contained" 
+                onClick={handleNext}
+                disabled={uploadResults.every(result => !result.success)}
+              >
                 Continue
               </Button>
             </Box>

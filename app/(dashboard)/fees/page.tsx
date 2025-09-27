@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -10,16 +10,24 @@ import {
   Alert,
   Grid,
   Card,
-  CardContent
+  CardContent,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Divider
 } from '@mui/material';
 import {
   ArrowBack,
   Save,
-  Calculate
+  Calculate,
+  TrendingUp
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { FeesGrid } from './components/FeesGrid';
 import { FeeStructure } from '@/types/healthcare';
+import { useHealthcare, useExperienceData, useFeeStructures } from '@/lib/store/HealthcareContext';
 
 const initialFeeData: FeeStructure[] = [
   {
@@ -145,25 +153,134 @@ const initialFeeData: FeeStructure[] = [
 ];
 
 export default function FeesPage() {
-  const [feeData, setFeeData] = useState<FeeStructure[]>(initialFeeData);
+  const { actions } = useHealthcare();
+  const experienceData = useExperienceData();
+  const existingFeeStructures = useFeeStructures();
+  
+  const [feeData, setFeeData] = useState<FeeStructure[]>(
+    existingFeeStructures.length > 0 ? existingFeeStructures : initialFeeData
+  );
+  const [premiumRate, setPremiumRate] = useState<number>(500);
+  const [premiumCalculationMethod, setPremiumCalculationMethod] = useState<string>('pmpm');
+  const [targetLossRatio, setTargetLossRatio] = useState<number>(0.85);
   const [saved, setSaved] = useState(false);
+  const [isCalculating, setIsCalculating] = useState(false);
 
-  const handleSave = () => {
-    // TODO: Implement actual save to API
-    console.log('Saving fee data:', feeData);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  // Update fee data from context when it changes
+  useEffect(() => {
+    if (existingFeeStructures.length > 0) {
+      setFeeData(existingFeeStructures);
+    }
+  }, [existingFeeStructures]);
+
+  // Generate fee data from experience data if no existing fees
+  useEffect(() => {
+    if (experienceData.length > 0 && existingFeeStructures.length === 0) {
+      generateFeeStructuresFromExperience();
+    }
+  }, [experienceData]);
+
+  const generateFeeStructuresFromExperience = () => {
+    const generatedFees: FeeStructure[] = experienceData.map((expData, index) => ({
+      id: `gen-${index + 1}`,
+      month: expData.month,
+      feeType: 'pmpm' as const,
+      amount: premiumRate,
+      enrollment: expData.enrollment,
+      calculatedTotal: premiumRate * expData.enrollment,
+      effectiveDate: `${expData.month}-01`,
+      description: 'Auto-generated from experience data'
+    }));
+    
+    setFeeData(generatedFees);
+  };
+
+  const handleSave = async () => {
+    setIsCalculating(true);
+    actions.setLoading(true);
+    
+    try {
+      // Save fee structures to context
+      actions.setFeeStructures(feeData);
+      
+      // Generate premium data for calculations
+      const premiumData = feeData.map(fee => ({
+        month: fee.month,
+        premiumAmount: calculatePremiumAmount(fee),
+        enrollment: fee.enrollment || 0
+      }));
+
+      // Call calculations API to generate monthly summaries
+      const calculationsResponse = await fetch('/api/calculations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'monthly-summaries',
+          data: {
+            experienceData,
+            feeStructures: feeData,
+            premiumData,
+            targetLossRatio
+          }
+        }),
+      });
+
+      const calculationsResult = await calculationsResponse.json();
+      
+      if (calculationsResult.success) {
+        actions.setMonthlySummaries(calculationsResult.data);
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      } else {
+        actions.setError(`Calculation failed: ${calculationsResult.error}`);
+      }
+    } catch (error) {
+      console.error('Save error:', error);
+      actions.setError('Failed to save configuration');
+    } finally {
+      setIsCalculating(false);
+      actions.setLoading(false);
+    }
+  };
+
+  const calculatePremiumAmount = (fee: FeeStructure): number => {
+    // Calculate premium to achieve target loss ratio
+    const totalCosts = fee.calculatedTotal; // This is the fee amount
+    // Premium should be higher than costs to achieve target loss ratio
+    return totalCosts / targetLossRatio;
+  };
+
+  const recalculateWithNewRates = () => {
+    const updatedFees = feeData.map(fee => ({
+      ...fee,
+      amount: premiumRate,
+      calculatedTotal: fee.feeType === 'pmpm' || fee.feeType === 'pepm' 
+        ? premiumRate * (fee.enrollment || 0)
+        : fee.feeType === 'flat'
+        ? premiumRate
+        : fee.calculatedTotal
+    }));
+    
+    setFeeData(updatedFees);
   };
 
   const calculateTotals = () => {
     const totalFees = feeData.reduce((sum, fee) => sum + fee.calculatedTotal, 0);
-    const avgFeePerMonth = totalFees / feeData.length;
-    const avgEnrollment = feeData.reduce((sum, fee) => sum + (fee.enrollment || 0), 0) / feeData.length;
+    const avgFeePerMonth = feeData.length > 0 ? totalFees / feeData.length : 0;
+    const avgEnrollment = feeData.length > 0 
+      ? feeData.reduce((sum, fee) => sum + (fee.enrollment || 0), 0) / feeData.length 
+      : 0;
     
-    return { totalFees, avgFeePerMonth, avgEnrollment };
+    // Calculate estimated premium total
+    const totalPremiums = feeData.reduce((sum, fee) => sum + calculatePremiumAmount(fee), 0);
+    const avgPremiumPerMonth = feeData.length > 0 ? totalPremiums / feeData.length : 0;
+    
+    return { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums, avgPremiumPerMonth };
   };
 
-  const { totalFees, avgFeePerMonth, avgEnrollment } = calculateTotals();
+  const { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums, avgPremiumPerMonth } = calculateTotals();
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -183,44 +300,133 @@ export default function FeesPage() {
 
       {saved && (
         <Alert severity="success" sx={{ mb: 3 }}>
-          Fee configuration saved successfully!
+          Fee configuration saved successfully! Monthly summaries have been calculated.
         </Alert>
       )}
 
+      {experienceData.length === 0 && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          No experience data found. Please upload your data first to automatically generate fee structures.
+        </Alert>
+      )}
+
+      {/* Premium Configuration */}
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h6" gutterBottom>
+          Premium & Target Configuration
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Base Premium Rate"
+              type="number"
+              value={premiumRate}
+              onChange={(e) => setPremiumRate(Number(e.target.value))}
+              helperText="Base rate for PMPM calculations"
+              InputProps={{
+                startAdornment: '$'
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <FormControl fullWidth>
+              <InputLabel>Premium Method</InputLabel>
+              <Select
+                value={premiumCalculationMethod}
+                onChange={(e) => setPremiumCalculationMethod(e.target.value)}
+                label="Premium Method"
+              >
+                <MenuItem value="pmpm">Per Member Per Month</MenuItem>
+                <MenuItem value="pepm">Per Employee Per Month</MenuItem>
+                <MenuItem value="flat">Flat Rate</MenuItem>
+                <MenuItem value="calculated">Calculated from Loss Ratio</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Target Loss Ratio"
+              type="number"
+              value={targetLossRatio}
+              onChange={(e) => setTargetLossRatio(Number(e.target.value))}
+              helperText="Target (e.g., 0.85 = 85%)"
+              inputProps={{ min: 0.1, max: 1.0, step: 0.01 }}
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<TrendingUp />}
+              onClick={recalculateWithNewRates}
+              sx={{ height: 56 }}
+            >
+              Apply New Rates
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+
       {/* Summary Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={2.4}>
           <Card>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 Total Annual Fees
               </Typography>
-              <Typography variant="h4" color="primary">
+              <Typography variant="h5" color="primary">
                 ${totalFees.toLocaleString()}
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={2.4}>
           <Card>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
-                Average Monthly Fee
+                Avg Monthly Fee
               </Typography>
-              <Typography variant="h4" color="primary">
-                ${avgFeePerMonth.toLocaleString()}
+              <Typography variant="h5" color="primary">
+                ${Math.round(avgFeePerMonth).toLocaleString()}
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={2.4}>
           <Card>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
-                Average Enrollment
+                Estimated Premiums
               </Typography>
-              <Typography variant="h4" color="primary">
+              <Typography variant="h5" color="secondary">
+                ${Math.round(totalPremiums).toLocaleString()}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={2.4}>
+          <Card>
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>
+                Avg Enrollment
+              </Typography>
+              <Typography variant="h5" color="primary">
                 {Math.round(avgEnrollment).toLocaleString()}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={2.4}>
+          <Card>
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>
+                Projected Loss Ratio
+              </Typography>
+              <Typography variant="h5" color={targetLossRatio > 0.9 ? "error" : "success"}>
+                {(targetLossRatio * 100).toFixed(0)}%
               </Typography>
             </CardContent>
           </Card>
@@ -233,19 +439,22 @@ export default function FeesPage() {
             Monthly Fee Structure
           </Typography>
           <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button
-              variant="outlined"
-              startIcon={<Calculate />}
-              onClick={() => setFeeData([...feeData])} // Trigger recalculation
-            >
-              Recalculate
-            </Button>
+            {experienceData.length > 0 && (
+              <Button
+                variant="outlined"
+                startIcon={<Calculate />}
+                onClick={generateFeeStructuresFromExperience}
+              >
+                Auto-Generate from Data
+              </Button>
+            )}
             <Button
               variant="contained"
               startIcon={<Save />}
               onClick={handleSave}
+              disabled={isCalculating}
             >
-              Save Configuration
+              {isCalculating ? 'Calculating...' : 'Save & Calculate Summaries'}
             </Button>
           </Box>
         </Box>

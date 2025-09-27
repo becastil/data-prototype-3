@@ -5,7 +5,8 @@ import {
   DataGrid, 
   GridColDef, 
   GridRowModel,
-  GridToolbar
+  GridToolbar,
+  GridValueFormatterParams
 } from '@mui/x-data-grid';
 import { 
   Box, 
@@ -158,7 +159,7 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
       width: 120,
       editable: true,
       type: 'number',
-      valueFormatter: (value: any) => value ? `$${value.toLocaleString()}` : '$0'
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => (value ? `$${value.toLocaleString()}` : '$0')
     },
     {
       field: 'enrollment',
@@ -166,14 +167,14 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
       width: 120,
       editable: true,
       type: 'number',
-      valueFormatter: (value: any) => value ? value.toLocaleString() : ''
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => (value ? value.toLocaleString() : '')
     },
     {
       field: 'calculatedTotal',
       headerName: 'Calculated Total ($)',
       width: 180,
       editable: false,
-      valueFormatter: (value: any) => `$${value?.toLocaleString() || '0'}`,
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => `$${value?.toLocaleString() || '0'}`,
       cellClassName: 'calculated-total',
       renderCell: (params) => (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

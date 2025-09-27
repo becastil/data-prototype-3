@@ -56,12 +56,14 @@ interface CSVUploaderProps {
   onUpload: (files: FileList) => void;
   maxFiles?: number;
   acceptedTypes?: string[];
+  disabled?: boolean;
 }
 
 export function CSVUploader({ 
   onUpload, 
   maxFiles = 5, 
-  acceptedTypes = ['.csv'] 
+  acceptedTypes = ['.csv'],
+  disabled = false
 }: CSVUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -152,11 +154,12 @@ export function CSVUploader({
   return (
     <Box sx={{ width: '100%' }}>
       <DropZone
-        isDragOver={isDragOver}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onClick={() => document.getElementById('file-input')?.click()}
+        isDragOver={isDragOver && !disabled}
+        onDrop={disabled ? undefined : handleDrop}
+        onDragOver={disabled ? undefined : handleDragOver}
+        onDragLeave={disabled ? undefined : handleDragLeave}
+        onClick={disabled ? undefined : () => document.getElementById('file-input')?.click()}
+        sx={disabled ? { opacity: 0.6, cursor: 'not-allowed' } : {}}
       >
         <CloudUpload sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
         <Typography variant="h6" gutterBottom>
@@ -170,15 +173,16 @@ export function CSVUploader({
           component="label"
           variant="contained"
           startIcon={<CloudUpload />}
-          disabled={uploading}
+          disabled={uploading || disabled}
         >
-          Choose Files
+          {uploading ? 'Processing...' : 'Choose Files'}
           <VisuallyHiddenInput
             id="file-input"
             type="file"
             multiple
             accept={acceptedTypes.join(',')}
             onChange={handleFileInputChange}
+            disabled={disabled}
           />
         </Button>
       </DropZone>
