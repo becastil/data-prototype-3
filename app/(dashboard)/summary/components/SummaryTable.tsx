@@ -3,7 +3,8 @@
 import { 
   DataGrid, 
   GridColDef, 
-  GridToolbar 
+  GridToolbar, 
+  GridValueFormatterParams 
 } from '@mui/x-data-grid';
 import { 
   Box, 
@@ -74,7 +75,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Claims',
       width: 130,
       type: 'number',
-      valueFormatter: (value) => formatCurrency(value),
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatCurrency(value ?? 0),
       cellClassName: 'currency-cell'
     },
     {
@@ -82,7 +83,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Fees',
       width: 120,
       type: 'number',
-      valueFormatter: (value) => formatCurrency(value),
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatCurrency(value ?? 0),
       cellClassName: 'currency-cell'
     },
     {
@@ -90,7 +91,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Premiums',
       width: 140,
       type: 'number',
-      valueFormatter: (value) => formatCurrency(value),
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatCurrency(value ?? 0),
       cellClassName: 'currency-cell'
     },
     {
@@ -98,7 +99,7 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Total Cost',
       width: 140,
       type: 'number',
-      valueFormatter: (value) => formatCurrency(value),
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatCurrency(value ?? 0),
       cellClassName: 'total-cost-cell',
       renderCell: (params) => (
         <Typography variant="body2" fontWeight="bold">
@@ -171,14 +172,14 @@ export function SummaryTable({ data }: SummaryTableProps) {
       headerName: 'Member Months',
       width: 130,
       type: 'number',
-      valueFormatter: (value) => value?.toLocaleString() || '0'
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => (value ?? 0).toLocaleString()
     },
     {
       field: 'pmpm',
       headerName: 'PMPM',
       width: 100,
       type: 'number',
-      valueFormatter: (value) => `$${value?.toFixed(2) || '0.00'}`,
+      valueFormatter: ({ value }: GridValueFormatterParams<number>) => `$${(value ?? 0).toFixed(2)}`,
       renderCell: (params) => (
         <Tooltip title="Per Member Per Month">
           <Typography variant="body2" fontWeight="medium">
