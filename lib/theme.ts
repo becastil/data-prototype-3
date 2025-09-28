@@ -1,5 +1,16 @@
 import { createTheme } from '@mui/material/styles';
 
+// ⚠️ WARNING: DO NOT USE THESE THEMES IN SERVER COMPONENTS
+// 
+// This file is kept for reference only. MUI themes contain internal functions
+// that cannot be serialized when passed from server to client components in Next.js App Router.
+// 
+// The actual theme is created client-side in components/theme/ClientThemeProvider.tsx
+// to avoid the serialization error:
+// "Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with 'use server'"
+//
+// If you need to use the theme, import it from the ClientThemeProvider component instead.
+
 // Create a static theme that's safe for static generation
 export const healthcareTheme = createTheme({
   palette: {
