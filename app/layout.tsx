@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { ClientThemeProvider } from '@/components/theme/ClientThemeProvider';
 import { HealthcareProvider } from '@/lib/store/HealthcareContext';
 import "./globals.css";
 
@@ -27,9 +28,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <AppRouterCacheProvider>
-          <HealthcareProvider>
-            {children}
-          </HealthcareProvider>
+          <ClientThemeProvider>
+            <HealthcareProvider>
+              {children}
+            </HealthcareProvider>
+          </ClientThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

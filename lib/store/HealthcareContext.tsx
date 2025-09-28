@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import { ExperienceData, HighCostClaimant, FeeStructure, MonthlySummary, DashboardConfig } from '@/types/healthcare';
-import { ClientThemeProvider } from '@/components/theme/ClientThemeProvider';
 
 interface HealthcareState {
   experienceData: ExperienceData[];
@@ -181,11 +180,9 @@ export function HealthcareProvider({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <ClientThemeProvider>
-      <HealthcareContext.Provider value={{ state, actions }}>
-        {children}
-      </HealthcareContext.Provider>
-    </ClientThemeProvider>
+    <HealthcareContext.Provider value={{ state, actions }}>
+      {children}
+    </HealthcareContext.Provider>
   );
 }
 
