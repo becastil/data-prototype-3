@@ -9,6 +9,10 @@
     "lint": "eslint",
     "postinstall": "npm list --depth=0"
   },
+  "engines": {
+    "node": ">=18.18.0",
+    "npm": ">=9.0.0"
+  },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.14.0",

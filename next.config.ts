@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
     // turbo: false, // Disabled for production builds
   },
   
+  // Output configuration for Render deployment
+  output: 'standalone',
+  
   // Compiler options
   compiler: {
     // Remove console.log statements in production
