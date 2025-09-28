@@ -80,7 +80,7 @@ export async function parseExperienceDataCSV(
     const csvText = await file.text();
     
     return new Promise((resolve) => {
-      Papa.parse(csvText, {
+      Papa.parse<ParsedCSVRow>(csvText, {
         header: true,
         skipEmptyLines: opts.skipEmptyLines,
         delimiter: opts.delimiter,
@@ -153,7 +153,7 @@ export async function parseHighCostClaimantCSV(
     const csvText = await file.text();
     
     return new Promise((resolve) => {
-      Papa.parse(csvText, {
+      Papa.parse<ParsedCSVRow>(csvText, {
         header: true,
         skipEmptyLines: opts.skipEmptyLines,
         delimiter: opts.delimiter,
