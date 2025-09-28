@@ -3,9 +3,12 @@ import { Roboto } from "next/font/google";
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { healthcareTheme } from '@/lib/theme';
+import { staticHealthcareTheme } from '@/lib/theme';
 import { HealthcareProvider } from '@/lib/store/HealthcareContext';
 import "./globals.css";
+
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -27,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={healthcareTheme}>
+          <ThemeProvider theme={staticHealthcareTheme}>
             <CssBaseline />
             <HealthcareProvider>
               {children}

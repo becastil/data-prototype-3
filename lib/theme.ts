@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
+// Create a static theme that's safe for static generation
 export const healthcareTheme = createTheme({
   palette: {
     primary: {
@@ -72,6 +73,16 @@ export const healthcareTheme = createTheme({
   },
   shape: {
     borderRadius: 8,
+  },
+  // Ensure breakpoints are static and don't contain functions
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
   },
   components: {
     MuiCard: {
@@ -186,4 +197,91 @@ export const healthcareDarkTheme = createTheme({
       secondary: '#b0b0b0',
     },
   },
+});
+
+// Static theme for static generation (avoids function serialization issues)
+export const staticHealthcareTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+      light: '#42a5f5',
+      dark: '#1565c0',
+    },
+    secondary: {
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark: '#1b5e20',
+    },
+    background: {
+      default: '#f5f5f5',
+      paper: '#ffffff',
+    },
+    error: {
+      main: '#d32f2f',
+    },
+    warning: {
+      main: '#ff6f00',
+    },
+    info: {
+      main: '#0288d1',
+    },
+    success: {
+      main: '#2e7d32',
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, Arial, sans-serif',
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 500,
+      color: '#1976d2',
+    },
+    h2: {
+      fontSize: '2rem',
+      fontWeight: 500,
+      color: '#1976d2',
+    },
+    h3: {
+      fontSize: '1.75rem',
+      fontWeight: 500,
+      color: '#1976d2',
+    },
+    h4: {
+      fontSize: '1.5rem',
+      fontWeight: 500,
+      color: '#1976d2',
+    },
+    h5: {
+      fontSize: '1.25rem',
+      fontWeight: 500,
+      color: '#1976d2',
+    },
+    h6: {
+      fontSize: '1.1rem',
+      fontWeight: 500,
+      color: '#1976d2',
+    },
+    body1: {
+      fontSize: '1rem',
+      lineHeight: 1.5,
+    },
+    body2: {
+      fontSize: '0.875rem',
+      lineHeight: 1.43,
+    },
+  },
+  shape: {
+    borderRadius: 8,
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+  // Remove components that might contain functions
+  components: {},
 });
