@@ -89,7 +89,7 @@ export async function parseExperienceDataCSV(
           const parseResult = processExperienceDataResults(results, file.name);
           resolve(parseResult);
         },
-        error: (error) => {
+        error: (error: Error) => {
           resolve({
             success: false,
             data: [],
@@ -162,7 +162,7 @@ export async function parseHighCostClaimantCSV(
           const parseResult = processHighCostClaimantResults(results, file.name);
           resolve(parseResult);
         },
-        error: (error) => {
+        error: (error: Error) => {
           resolve({
             success: false,
             data: [],
