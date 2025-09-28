@@ -4,6 +4,7 @@ import { ExperienceData, HighCostClaimant } from '@/types/healthcare';
 // Base validation schemas for healthcare data
 
 export const ExperienceDataSchema = z.object({
+  id: z.string(),
   month: z.string()
     .regex(/^\d{4}-\d{2}$/, 'Month must be in YYYY-MM format')
     .refine((val) => {
@@ -29,6 +30,7 @@ export const ExperienceDataSchema = z.object({
 });
 
 export const HighCostClaimantSchema = z.object({
+  id: z.string(),
   memberId: z.string().min(1, 'Member ID is required'),
   age: z.number().min(0).max(150, 'Age must be between 0 and 150'),
   gender: z.enum(['M', 'F'], { 

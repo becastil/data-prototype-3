@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Optimize for production builds
-  swcMinify: true,
-  
   // TypeScript configuration
   typescript: {
     ignoreBuildErrors: false,
