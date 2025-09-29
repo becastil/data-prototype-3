@@ -33,6 +33,7 @@ import Link from 'next/link';
 import { CSVUploader } from './components/CSVUploader';
 import { useHealthcare } from '@/lib/store/HealthcareContext';
 import { ExperienceData, HighCostClaimant, CSVValidationError } from '@/types/healthcare';
+import { ClientOnly } from '@/components/ClientOnly';
 
 type UploadFileType = 'experience' | 'high-cost-claimant';
 
@@ -137,7 +138,8 @@ export default function UploadPage() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <ClientOnly>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
         <Link href="/" passHref>
           <Button startIcon={<ArrowBack />} sx={{ mb: 2 }}>
@@ -312,5 +314,6 @@ export default function UploadPage() {
         )}
       </Paper>
     </Container>
+    </ClientOnly>
   );
 }

@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
     // turbo: false, // Disabled for production builds
   },
   
+  // Transpile packages that might have issues
+  transpilePackages: [
+    '@mui/x-charts', 
+    '@mui/x-data-grid', 
+    '@mui/material', 
+    '@mui/icons-material', 
+    '@mui/system', 
+    '@mui/material-nextjs'
+  ],
+  
   // Output configuration for Render deployment
   output: 'standalone',
   
@@ -23,6 +33,25 @@ const nextConfig: NextConfig = {
   compiler: {
     // Remove console.log statements in production
     removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
+  // Webpack configuration for better ESM module handling
+  webpack: (config, { isServer }) => {
+    // Handle ESM packages properly
+    config.resolve.extensionAlias = {
+      '.js': ['.ts', '.tsx', '.js', '.jsx'],
+      '.mjs': ['.mts', '.mjs'],
+    };
+    
+    // Ensure proper module resolution for MUI packages
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      path: false,
+      crypto: false,
+    };
+    
+    return config;
   },
   
   // Output configuration for static exports if needed

@@ -3,10 +3,11 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 
-// Create theme on client side to avoid serialization issues
-const healthcareTheme = createTheme({
+export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
+  // Create theme on client side to avoid serialization issues
+  const healthcareTheme = useMemo(() => createTheme({
   palette: {
     primary: {
       main: '#1976d2', // Medical blue
@@ -184,17 +185,16 @@ const healthcareTheme = createTheme({
       },
     },
   },
-});
+  }), []);
 
-interface ClientThemeProviderProps {
-  children: ReactNode;
-}
-
-export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
   return (
     <ThemeProvider theme={healthcareTheme}>
       <CssBaseline />
       {children}
     </ThemeProvider>
   );
+}
+
+interface ClientThemeProviderProps {
+  children: ReactNode;
 }

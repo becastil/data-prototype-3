@@ -30,6 +30,7 @@ import {
   useHighCostClaimants,
   useLoadingState 
 } from '@/lib/store/HealthcareContext';
+import { ClientOnly } from '@/components/ClientOnly';
 
 // Sample dashboard data
 const sampleDashboardData = {
@@ -161,7 +162,8 @@ export default function AnalyticsPage() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <ClientOnly>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
         <Link href="/" passHref>
           <Button startIcon={<ArrowBack />} sx={{ mb: 2 }}>
@@ -287,5 +289,6 @@ export default function AnalyticsPage() {
         </Box>
       </Box>
     </Container>
+    </ClientOnly>
   );
 }

@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ClientThemeProvider } from '@/components/theme/ClientThemeProvider';
 import { HealthcareProvider } from '@/lib/store/HealthcareContext';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import "./globals.css";
 
 // Force dynamic rendering to avoid static generation issues
@@ -27,13 +28,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <AppRouterCacheProvider>
-          <ClientThemeProvider>
-            <HealthcareProvider>
-              {children}
-            </HealthcareProvider>
-          </ClientThemeProvider>
-        </AppRouterCacheProvider>
+        <ErrorBoundary>
+          <AppRouterCacheProvider>
+            <ClientThemeProvider>
+              <HealthcareProvider>
+                {children}
+              </HealthcareProvider>
+            </ClientThemeProvider>
+          </AppRouterCacheProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

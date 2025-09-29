@@ -19,10 +19,11 @@ import {
   Assessment 
 } from '@mui/icons-material';
 import Link from 'next/link';
+import { ClientOnly } from '@/components/ClientOnly';
 
 export default function Home() {
   return (
-    <>
+    <ClientOnly>
       <AppBar position="static" elevation={1}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -144,6 +145,6 @@ export default function Home() {
           </Paper>
         </Box>
       </Container>
-    </>
+    </ClientOnly>
   );
 }

@@ -27,6 +27,7 @@ import Link from 'next/link';
 import { FeesGrid } from './components/FeesGrid';
 import { FeeStructure } from '@/types/healthcare';
 import { useHealthcare, useExperienceData, useFeeStructures } from '@/lib/store/HealthcareContext';
+import { ClientOnly } from '@/components/ClientOnly';
 
 const initialFeeData: FeeStructure[] = [
   {
@@ -281,7 +282,8 @@ export default function FeesPage() {
   const { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums } = calculateTotals();
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <ClientOnly>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
         <Link href="/" passHref>
           <Button startIcon={<ArrowBack />} sx={{ mb: 2 }}>
@@ -492,5 +494,6 @@ export default function FeesPage() {
         </Box>
       </Paper>
     </Container>
+    </ClientOnly>
   );
 }

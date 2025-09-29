@@ -152,18 +152,22 @@ export function HealthcareProvider({ children }: { children: React.ReactNode }) 
     }
   }, [dispatch]);
 
-  // Load data from localStorage on mount
+  // Load data from localStorage on mount (client-side only)
   useEffect(() => {
-    loadFromStorage();
+    if (typeof window !== 'undefined') {
+      loadFromStorage();
+    }
   }, [loadFromStorage]);
 
-  // Save to localStorage whenever state changes (debounced)
+  // Save to localStorage whenever state changes (debounced, client-side only)
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      saveToStorage();
-    }, 1000);
+    if (typeof window !== 'undefined') {
+      const timeoutId = setTimeout(() => {
+        saveToStorage();
+      }, 1000);
 
-    return () => clearTimeout(timeoutId);
+      return () => clearTimeout(timeoutId);
+    }
   }, [saveToStorage]);
 
   const actions = {
