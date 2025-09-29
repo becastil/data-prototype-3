@@ -163,7 +163,7 @@ export default function AnalyticsPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Link href="/" passHref>
+        <Link href="/" legacyBehavior>
           <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
@@ -239,7 +239,7 @@ export default function AnalyticsPage() {
             <Typography>
               No calculated summaries found. Please configure fees and generate summaries to see analytics.
             </Typography>
-            <Link href="/dashboard/summary" passHref>
+            <Link href="/dashboard/summary" legacyBehavior>
               <Button size="small" variant="outlined" startIcon={<CalculateIcon />}>
                 Generate Summaries
               </Button>
@@ -266,13 +266,13 @@ export default function AnalyticsPage() {
       <AnalyticsDashboard data={dashboardData} />
 
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
-        <Link href="/dashboard/summary" passHref>
+        <Link href="/dashboard/summary" legacyBehavior>
           <Button variant="outlined">
             Previous: Summary Table
           </Button>
         </Link>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Link href="/dashboard/upload" passHref>
+          <Link href="/dashboard/upload" legacyBehavior>
             <Button variant="outlined">
               Upload New Data
             </Button>

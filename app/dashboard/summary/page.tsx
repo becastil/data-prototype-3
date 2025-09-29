@@ -258,7 +258,7 @@ export default function SummaryPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Link href="/" passHref>
+        <Link href="/" legacyBehavior>
           <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
@@ -448,12 +448,12 @@ export default function SummaryPage() {
         )}
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-          <Link href="/dashboard/fees" passHref>
+          <Link href="/dashboard/fees" legacyBehavior>
             <Button variant="outlined">
               Previous: Configure Fees
             </Button>
           </Link>
-          <Link href="/dashboard/analytics" passHref>
+          <Link href="/dashboard/analytics" legacyBehavior>
             <Button variant="contained">
               Next: View Analytics
             </Button>

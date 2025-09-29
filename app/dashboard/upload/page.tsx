@@ -139,7 +139,7 @@ export default function UploadPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Link href="/" passHref>
+        <Link href="/" legacyBehavior>
           <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
@@ -297,12 +297,12 @@ export default function UploadPage() {
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, pt: 2 }}>
-              <Link href="/dashboard/fees" passHref>
+              <Link href="/dashboard/fees" legacyBehavior>
                 <Button variant="contained">
                   Configure Fees
                 </Button>
               </Link>
-              <Link href="/dashboard/summary" passHref>
+              <Link href="/dashboard/summary" legacyBehavior>
                 <Button variant="outlined">
                   View Summary
                 </Button>
