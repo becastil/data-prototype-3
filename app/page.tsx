@@ -52,7 +52,7 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Upload experience data and high-cost claimant CSV files with automatic validation
                 </Typography>
-                <Link href="/dashboard/upload">
+                <Link href="/dashboard/upload" passHref>
                   <Button variant="contained" fullWidth>
                     Start Upload
                   </Button>
@@ -71,7 +71,7 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Set up fee structures with automatic calculations and enrollment data
                 </Typography>
-                <Link href="/dashboard/fees">
+                <Link href="/dashboard/fees" passHref>
                   <Button variant="contained" fullWidth>
                     Configure Fees
                   </Button>
@@ -90,7 +90,7 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   View calculated loss ratios, PMPM metrics, and performance indicators
                 </Typography>
-                <Link href="/dashboard/summary">
+                <Link href="/dashboard/summary" passHref>
                   <Button variant="contained" fullWidth>
                     View Summary
                   </Button>
@@ -109,7 +109,7 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Interactive charts, KPIs, and detailed analytics with export capabilities
                 </Typography>
-                <Link href="/dashboard/analytics">
+                <Link href="/dashboard/analytics" passHref>
                   <Button variant="contained" fullWidth>
                     View Analytics
                   </Button>
