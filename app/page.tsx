@@ -18,12 +18,13 @@ import {
   Analytics, 
   Assessment 
 } from '@mui/icons-material';
-import Link from 'next/link';
-import { ClientOnly } from '@/components/ClientOnly';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
-    <ClientOnly>
+    <>
       <AppBar position="static" elevation={1}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -53,11 +54,13 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Upload experience data and high-cost claimant CSV files with automatic validation
                 </Typography>
-                <Link href="/dashboard/upload" passHref>
-                  <Button variant="contained" fullWidth>
-                    Start Upload
-                  </Button>
-                </Link>
+                <Button 
+                  variant="contained" 
+                  fullWidth
+                  onClick={() => router.push('/dashboard/upload')}
+                >
+                  Start Upload
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -72,11 +75,13 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Set up fee structures with automatic calculations and enrollment data
                 </Typography>
-                <Link href="/dashboard/fees" passHref>
-                  <Button variant="contained" fullWidth>
-                    Configure Fees
-                  </Button>
-                </Link>
+                <Button 
+                  variant="contained" 
+                  fullWidth
+                  onClick={() => router.push('/dashboard/fees')}
+                >
+                  Configure Fees
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -91,11 +96,13 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   View calculated loss ratios, PMPM metrics, and performance indicators
                 </Typography>
-                <Link href="/dashboard/summary" passHref>
-                  <Button variant="contained" fullWidth>
-                    View Summary
-                  </Button>
-                </Link>
+                <Button 
+                  variant="contained" 
+                  fullWidth
+                  onClick={() => router.push('/dashboard/summary')}
+                >
+                  View Summary
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -110,11 +117,13 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Interactive charts, KPIs, and detailed analytics with export capabilities
                 </Typography>
-                <Link href="/dashboard/analytics" passHref>
-                  <Button variant="contained" fullWidth>
-                    View Analytics
-                  </Button>
-                </Link>
+                <Button 
+                  variant="contained" 
+                  fullWidth
+                  onClick={() => router.push('/dashboard/analytics')}
+                >
+                  View Analytics
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -145,6 +154,6 @@ export default function Home() {
           </Paper>
         </Box>
       </Container>
-    </ClientOnly>
+    </>
   );
 }

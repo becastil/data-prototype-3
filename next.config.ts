@@ -19,15 +19,8 @@ const nextConfig: NextConfig = {
   // Transpile packages that might have issues
   transpilePackages: [
     '@mui/x-charts', 
-    '@mui/x-data-grid', 
-    '@mui/material', 
-    '@mui/icons-material', 
-    '@mui/system', 
-    '@mui/material-nextjs'
+    '@mui/x-data-grid'
   ],
-  
-  // Output configuration for Render deployment
-  output: 'standalone',
   
   // Compiler options
   compiler: {
@@ -37,19 +30,14 @@ const nextConfig: NextConfig = {
   
   // Webpack configuration for better ESM module handling
   webpack: (config, { isServer }) => {
-    // Handle ESM packages properly
-    config.resolve.extensionAlias = {
-      '.js': ['.ts', '.tsx', '.js', '.jsx'],
-      '.mjs': ['.mts', '.mjs'],
-    };
-    
-    // Ensure proper module resolution for MUI packages
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      path: false,
-      crypto: false,
-    };
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        crypto: false,
+      };
+    }
     
     return config;
   },
