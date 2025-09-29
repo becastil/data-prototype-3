@@ -18,12 +18,10 @@ import {
   CircularProgress
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import {
-  ArrowBack,
-  FileDownload,
-  Refresh,
-  Calculate
-} from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import CalculateIcon from '@mui/icons-material/Calculate';
 import { Tooltip } from '@mui/material';
 import Link from 'next/link';
 import { SummaryTable } from './components/SummaryTable';
@@ -261,7 +259,7 @@ export default function SummaryPage() {
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
         <Link href="/" passHref>
-          <Button startIcon={<ArrowBack />} sx={{ mb: 2 }}>
+          <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
         </Link>
@@ -295,7 +293,7 @@ export default function SummaryPage() {
               <span>
                 <Button
                   variant="outlined"
-                  startIcon={isCalculating ? <CircularProgress size={16} /> : <Refresh />}
+                  startIcon={isCalculating ? <CircularProgress size={16} /> : <RefreshIcon />}
                   onClick={handleRefresh}
                   disabled={isCalculating || experienceData.length === 0 || feeStructures.length === 0}
                 >
@@ -305,7 +303,7 @@ export default function SummaryPage() {
             </Tooltip>
             <Button
               variant="contained"
-              startIcon={<FileDownload />}
+              startIcon={<FileDownloadIcon />}
               onClick={handleExport}
             >
               Export PDF
@@ -424,7 +422,7 @@ export default function SummaryPage() {
             py: 8,
             textAlign: 'center'
           }}>
-            <Calculate sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+            <CalculateIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
             <Typography variant="h6" color="text.secondary" gutterBottom>
               No Data Available
             </Typography>
@@ -439,7 +437,7 @@ export default function SummaryPage() {
             {experienceData.length > 0 && feeStructures.length > 0 && (
               <Button 
                 variant="contained" 
-                startIcon={<Calculate />}
+                startIcon={<CalculateIcon />}
                 onClick={handleCalculateSummaries}
                 disabled={isCalculating}
               >

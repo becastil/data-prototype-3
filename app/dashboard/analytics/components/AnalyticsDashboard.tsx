@@ -22,14 +22,12 @@ import {
   BarChart, 
   PieChart 
 } from '@mui/x-charts';
-import {
-  TrendingUp,
-  TrendingDown,
-  Warning,
-  CheckCircle,
-  Person,
-  LocalHospital
-} from '@mui/icons-material';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import WarningIcon from '@mui/icons-material/Warning';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PersonIcon from '@mui/icons-material/Person';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 interface DashboardData {
   kpis: {
@@ -120,9 +118,9 @@ export function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         </Typography>
         {trend && trendValue && (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {trend === 'up' && <TrendingUp color="success" fontSize="small" />}
-            {trend === 'down' && <TrendingDown color="error" fontSize="small" />}
-            {trend === 'stable' && <CheckCircle color="info" fontSize="small" />}
+            {trend === 'up' && <TrendingUpIcon color="success" fontSize="small" />}
+            {trend === 'down' && <TrendingDownIcon color="error" fontSize="small" />}
+            {trend === 'stable' && <CheckCircleIcon color="info" fontSize="small" />}
             <Typography 
               variant="body2" 
               color={trend === 'up' ? 'success.main' : trend === 'down' ? 'error.main' : 'info.main'}
@@ -143,7 +141,7 @@ export function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         <KPICard
           title="Total Claims"
           value={formatCurrency(data.kpis.totalClaims)}
-          icon={<LocalHospital color="primary" />}
+          icon={<LocalHospitalIcon color="primary" />}
           trend="up"
           trendValue="+5.2% YoY"
         />
@@ -152,7 +150,7 @@ export function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         <KPICard
           title="Total Cost"
           value={formatCurrency(data.kpis.totalCost)}
-          icon={<TrendingUp color="primary" />}
+          icon={<TrendingUpIcon color="primary" />}
           trend="up"
           trendValue="+3.8% YoY"
         />
@@ -161,7 +159,7 @@ export function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         <KPICard
           title="Average Loss Ratio"
           value={formatPercentage(data.kpis.avgLossRatio)}
-          icon={<Warning color={data.kpis.avgLossRatio > 1 ? 'error' : 'warning'} />}
+          icon={<WarningIcon color={data.kpis.avgLossRatio > 1 ? 'error' : 'warning'} />}
           trend={data.kpis.avgLossRatio > 0.95 ? 'up' : 'down'}
           trendValue={data.kpis.avgLossRatio > 0.95 ? 'Above Target' : 'Within Target'}
           color={data.kpis.avgLossRatio > 1 ? 'error' : data.kpis.avgLossRatio > 0.85 ? 'warning' : 'success'}
@@ -173,7 +171,7 @@ export function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         <KPICard
           title="Average Claim"
           value={formatCurrency(data.kpis.avgClaim)}
-          icon={<LocalHospital color="primary" />}
+          icon={<LocalHospitalIcon color="primary" />}
           trend="up"
           trendValue="+2.1%"
         />
@@ -182,7 +180,7 @@ export function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         <KPICard
           title="Total Members"
           value={data.kpis.totalMembers.toLocaleString()}
-          icon={<Person color="primary" />}
+          icon={<PersonIcon color="primary" />}
           trend="up"
           trendValue="+3.4%"
         />
@@ -191,7 +189,7 @@ export function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         <KPICard
           title="Average PMPM"
           value={formatCurrency(data.kpis.avgPMPM)}
-          icon={<TrendingUp color="primary" />}
+          icon={<TrendingUpIcon color="primary" />}
           trend="up"
           trendValue="+4.7%"
         />

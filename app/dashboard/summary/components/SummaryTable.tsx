@@ -13,11 +13,9 @@ import {
   Tooltip,
   ChipProps
 } from '@mui/material';
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  TrendingFlat 
-} from '@mui/icons-material';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { MonthlySummary } from '@/types/healthcare';
 import { summaryTableStyles } from '@/lib/dataGridStyles';
 import { useState } from 'react';
@@ -61,8 +59,8 @@ export function SummaryTable({ data }: SummaryTableProps) {
   };
 
   const getVarianceTrend = (variance: number) => {
-    if (Math.abs(variance) < 2) return <TrendingFlat fontSize="small" />;
-    return variance > 0 ? <TrendingUp fontSize="small" /> : <TrendingDown fontSize="small" />;
+    if (Math.abs(variance) < 2) return <TrendingFlatIcon fontSize="small" />;
+    return variance > 0 ? <TrendingUpIcon fontSize="small" /> : <TrendingDownIcon fontSize="small" />;
   };
 
   const columns: GridColDef[] = [

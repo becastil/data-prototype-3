@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Box, Button, Typography, Alert, Paper } from '@mui/material';
-import { ErrorOutline, Refresh } from '@mui/icons-material';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -44,7 +45,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
       return (
         <Box sx={{ p: 4, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
           <Paper sx={{ p: 4, maxWidth: 600, textAlign: 'center' }}>
-            <ErrorOutline sx={{ fontSize: 64, color: 'error.main', mb: 2 }} />
+            <ErrorOutlineIcon sx={{ fontSize: 64, color: 'error.main', mb: 2 }} />
             <Typography variant="h5" gutterBottom>
               Something went wrong
             </Typography>
@@ -67,7 +68,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
             <Box sx={{ mt: 3, display: 'flex', gap: 2, justifyContent: 'center' }}>
               <Button
                 variant="contained"
-                startIcon={<Refresh />}
+                startIcon={<RefreshIcon />}
                 onClick={this.resetError}
               >
                 Try Again

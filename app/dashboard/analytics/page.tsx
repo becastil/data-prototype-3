@@ -13,13 +13,11 @@ import {
   Alert,
   CircularProgress
 } from '@mui/material';
-import {
-  ArrowBack,
-  FileDownload,
-  Refresh,
-  Dashboard as DashboardIcon,
-  Calculate
-} from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CalculateIcon from '@mui/icons-material/Calculate';
 import Link from 'next/link';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { 
@@ -166,7 +164,7 @@ export default function AnalyticsPage() {
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
         <Link href="/" passHref>
-          <Button startIcon={<ArrowBack />} sx={{ mb: 2 }}>
+          <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
         </Link>
@@ -197,7 +195,7 @@ export default function AnalyticsPage() {
             </FormControl>
             <Button
               variant="outlined"
-              startIcon={<Refresh />}
+              startIcon={<RefreshIcon />}
               onClick={handleRefresh}
               disabled={refreshing}
             >
@@ -205,7 +203,7 @@ export default function AnalyticsPage() {
             </Button>
             <Button
               variant="contained"
-              startIcon={<FileDownload />}
+              startIcon={<FileDownloadIcon />}
               onClick={handleExport}
             >
               Export PDF
@@ -242,7 +240,7 @@ export default function AnalyticsPage() {
               No calculated summaries found. Please configure fees and generate summaries to see analytics.
             </Typography>
             <Link href="/dashboard/summary" passHref>
-              <Button size="small" variant="outlined" startIcon={<Calculate />}>
+              <Button size="small" variant="outlined" startIcon={<CalculateIcon />}>
                 Generate Summaries
               </Button>
             </Link>
@@ -282,7 +280,7 @@ export default function AnalyticsPage() {
           <Button 
             variant="contained" 
             onClick={handleExport}
-            startIcon={<FileDownload />}
+            startIcon={<FileDownloadIcon />}
           >
             Generate Report
           </Button>

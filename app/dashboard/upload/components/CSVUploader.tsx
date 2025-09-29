@@ -13,11 +13,9 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material';
-import { 
-  CloudUpload, 
-  InsertDriveFile,
-  CheckCircle
-} from '@mui/icons-material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { styled } from '@mui/material/styles';
 
 interface DropZoneProps {
@@ -161,7 +159,7 @@ export function CSVUploader({
         onClick={disabled ? undefined : () => document.getElementById('file-input')?.click()}
         sx={disabled ? { opacity: 0.6, cursor: 'not-allowed' } : {}}
       >
-        <CloudUpload sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
+        <CloudUploadIcon sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
         <Typography variant="h6" gutterBottom>
           Drop CSV files here or click to browse
         </Typography>
@@ -172,7 +170,7 @@ export function CSVUploader({
         <Button
           component="label"
           variant="contained"
-          startIcon={<CloudUpload />}
+            startIcon={<CloudUploadIcon />}
           disabled={uploading || disabled}
         >
           {uploading ? 'Processing...' : 'Choose Files'}
@@ -212,13 +210,13 @@ export function CSVUploader({
               {uploadedFiles.map((file, index) => (
                 <ListItem key={index}>
                   <ListItemIcon>
-                    <InsertDriveFile color="primary" />
+                    <InsertDriveFileIcon color="primary" />
                   </ListItemIcon>
                   <ListItemText
                     primary={file.name}
                     secondary={`${formatFileSize(file.size)} • Last modified: ${new Date(file.lastModified).toLocaleDateString()}`}
                   />
-                  <CheckCircle color="success" />
+                  <CheckCircleIcon color="success" />
                 </ListItem>
               ))}
             </List>

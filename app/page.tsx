@@ -12,12 +12,10 @@ import {
   Grid,
   Paper
 } from '@mui/material';
-import { 
-  UploadFile, 
-  Settings, 
-  Analytics, 
-  Assessment 
-} from '@mui/icons-material';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -47,7 +45,7 @@ export default function Home() {
           <Grid item xs={12} sm={6} md={3}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flex: 1, textAlign: 'center' }}>
-                <UploadFile sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
+                <UploadFileIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
                 <Typography variant="h6" component="h2" gutterBottom>
                   Upload Data
                 </Typography>
@@ -68,7 +66,7 @@ export default function Home() {
           <Grid item xs={12} sm={6} md={3}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flex: 1, textAlign: 'center' }}>
-                <Settings sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
+                <SettingsIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
                 <Typography variant="h6" component="h2" gutterBottom>
                   Configure Fees
                 </Typography>
@@ -89,7 +87,7 @@ export default function Home() {
           <Grid item xs={12} sm={6} md={3}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flex: 1, textAlign: 'center' }}>
-                <Assessment sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
+                <AssessmentIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
                 <Typography variant="h6" component="h2" gutterBottom>
                   Summary Table
                 </Typography>
@@ -110,7 +108,7 @@ export default function Home() {
           <Grid item xs={12} sm={6} md={3}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flex: 1, textAlign: 'center' }}>
-                <Analytics sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
+                <AnalyticsIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
                 <Typography variant="h6" component="h2" gutterBottom>
                   Analytics Dashboard
                 </Typography>

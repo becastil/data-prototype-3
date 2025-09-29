@@ -17,12 +17,10 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import {
-  ArrowBack,
-  Save,
-  Calculate,
-  TrendingUp
-} from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SaveIcon from '@mui/icons-material/Save';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Link from 'next/link';
 import { FeesGrid } from './components/FeesGrid';
 import { FeeStructure } from '@/types/healthcare';
@@ -286,7 +284,7 @@ export default function FeesPage() {
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
         <Link href="/" passHref>
-          <Button startIcon={<ArrowBack />} sx={{ mb: 2 }}>
+          <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
         </Link>
@@ -359,7 +357,7 @@ export default function FeesPage() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<TrendingUp />}
+              startIcon={<TrendingUpIcon />}
               onClick={recalculateWithNewRates}
               sx={{ height: 56 }}
             >
@@ -442,7 +440,7 @@ export default function FeesPage() {
             {experienceData.length > 0 && (
               <Button
                 variant="outlined"
-                startIcon={<Calculate />}
+                startIcon={<CalculateIcon />}
                 onClick={generateFeeStructuresFromExperience}
               >
                 Auto-Generate from Data
@@ -450,7 +448,7 @@ export default function FeesPage() {
             )}
             <Button
               variant="contained"
-              startIcon={<Save />}
+              startIcon={<SaveIcon />}
               onClick={handleSave}
               disabled={isCalculating}
             >

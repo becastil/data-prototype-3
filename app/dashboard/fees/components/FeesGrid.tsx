@@ -14,11 +14,9 @@ import {
   Alert,
   Chip
 } from '@mui/material';
-import { 
-  Add, 
-  Delete, 
-  Info 
-} from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InfoIcon from '@mui/icons-material/Info';
 import { FeeStructure } from '@/types/healthcare';
 import { feesGridStyles } from '@/lib/dataGridStyles';
 
@@ -181,7 +179,7 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <strong>${params.value?.toLocaleString() || '0'}</strong>
           <Tooltip title="Auto-calculated based on fee type and enrollment">
-            <Info fontSize="small" color="action" />
+            <InfoIcon fontSize="small" color="action" />
           </Tooltip>
         </Box>
       )
@@ -214,7 +212,7 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
           color="error"
           size="small"
         >
-          <Delete />
+          <DeleteIcon />
         </IconButton>
       )
     }
@@ -244,7 +242,7 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
             borderRadius: 1
           }}
         >
-          <Add />
+          <AddIcon />
         </IconButton>
       </Box>
 

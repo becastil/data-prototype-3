@@ -22,13 +22,11 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
-import {
-  ArrowBack,
-  GetApp,
-  ExpandMore,
-  ErrorOutline,
-  CheckCircle
-} from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Link from 'next/link';
 import { CSVUploader } from './components/CSVUploader';
 import { useHealthcare } from '@/lib/store/HealthcareContext';
@@ -142,7 +140,7 @@ export default function UploadPage() {
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
         <Link href="/" passHref>
-          <Button startIcon={<ArrowBack />} sx={{ mb: 2 }}>
+          <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
         </Link>
@@ -179,7 +177,7 @@ export default function UploadPage() {
                   download="experience-data-template.csv"
                   sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
                 >
-                  <GetApp fontSize="small" />
+                  <GetAppIcon fontSize="small" />
                   Experience Data Template
                 </MuiLink>
                 <MuiLink 
@@ -187,7 +185,7 @@ export default function UploadPage() {
                   download="high-cost-claimants-template.csv"
                   sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
                 >
-                  <GetApp fontSize="small" />
+                  <GetAppIcon fontSize="small" />
                   High-Cost Claimants Template
                 </MuiLink>
               </Box>
@@ -207,7 +205,7 @@ export default function UploadPage() {
               <Box key={index} sx={{ mb: 3 }}>
                 <Alert 
                   severity={result.success ? 'success' : 'error'}
-                  icon={result.success ? <CheckCircle /> : <ErrorOutline />}
+                  icon={result.success ? <CheckCircleIcon /> : <ErrorOutlineIcon />}
                   sx={{ mb: 2 }}
                 >
                   <Typography variant="subtitle2" gutterBottom>
@@ -225,7 +223,7 @@ export default function UploadPage() {
 
                 {result.errors && result.errors.length > 0 && (
                   <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMore />}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography variant="body2" color="error">
                         {result.errors.length} validation errors found
                       </Typography>
