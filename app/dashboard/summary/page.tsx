@@ -448,13 +448,13 @@ export default function SummaryPage() {
         )}
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-          <Link href="/dashboard/fees" legacyBehavior>
-            <Button variant="outlined">
+          <Link href="/dashboard/fees" passHref legacyBehavior>
+            <Button component="a" variant="outlined">
               Previous: Configure Fees
             </Button>
           </Link>
-          <Link href="/dashboard/analytics" legacyBehavior>
-            <Button variant="contained">
+          <Link href="/dashboard/analytics" passHref legacyBehavior>
+            <Button component="a" variant="contained">
               Next: View Analytics
             </Button>
           </Link>
