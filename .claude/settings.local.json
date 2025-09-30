@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npm install:*)",
+      "Bash(rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(true)",
+      "Bash(npm run build:*)",
+      "Bash(npx next:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node:*)",
+      "Bash(yarn tsc:*)",
+      "WebSearch",
+      "Bash(yarn build)",
+      "Bash(cat:*)",
+      "Bash(git fetch:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(cp:*)",
+      "Bash(timeout 30s npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(git clone:*)",
+      "Bash(npx --yes create-next-app@latest temp-app --typescript --tailwind --app --no-src-dir --import-alias \"@/*\")",
+      "Bash(npx --yes create-next-app@latest temp-app --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --no-linter)",
+      "Bash(yarn:*)",
+      "Bash(git restore:*)",
+      "Bash(npm test)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

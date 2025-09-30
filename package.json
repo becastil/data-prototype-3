@@ -7,6 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose",
+    "test:ci": "jest --ci --coverage --maxWorkers=2",
     "postinstall": "npm list --depth=0"
   },
   "engines": {
