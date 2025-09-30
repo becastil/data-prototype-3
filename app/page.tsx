@@ -50,9 +50,10 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Upload experience data and high-cost claimant CSV files with automatic validation
                 </Typography>
-                <Link href="/dashboard/upload" legacyBehavior>
-                  <Button 
-                    variant="contained" 
+                <Link href="/dashboard/upload" passHref legacyBehavior>
+                  <Button
+                    component="a"
+                    variant="contained"
                     fullWidth
                   >
                     Start Upload
@@ -72,9 +73,10 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Set up fee structures with automatic calculations and enrollment data
                 </Typography>
-                <Link href="/dashboard/fees" legacyBehavior>
-                  <Button 
-                    variant="contained" 
+                <Link href="/dashboard/fees" passHref legacyBehavior>
+                  <Button
+                    component="a"
+                    variant="contained"
                     fullWidth
                   >
                     Configure Fees
@@ -94,9 +96,10 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   View calculated loss ratios, PMPM metrics, and performance indicators
                 </Typography>
-                <Link href="/dashboard/summary" legacyBehavior>
-                  <Button 
-                    variant="contained" 
+                <Link href="/dashboard/summary" passHref legacyBehavior>
+                  <Button
+                    component="a"
+                    variant="contained"
                     fullWidth
                   >
                     View Summary
@@ -116,9 +119,10 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Interactive charts, KPIs, and detailed analytics with export capabilities
                 </Typography>
-                <Link href="/dashboard/analytics" legacyBehavior>
-                  <Button 
-                    variant="contained" 
+                <Link href="/dashboard/analytics" passHref legacyBehavior>
+                  <Button
+                    component="a"
+                    variant="contained"
                     fullWidth
                   >
                     View Analytics

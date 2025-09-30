@@ -258,8 +258,8 @@ export default function SummaryPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Link href="/" legacyBehavior>
-          <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
+        <Link href="/" passHref legacyBehavior>
+          <Button component="a" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
             Back to Home
           </Button>
         </Link>
