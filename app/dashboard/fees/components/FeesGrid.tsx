@@ -254,8 +254,8 @@ export function FeesGrid({ data, onDataChange }: FeesGridProps) {
           onPaginationModelChange={setPaginationModel}
           pageSizeOptions={[12, 24]}
           processRowUpdate={handleProcessRowUpdate}
-          onProcessRowUpdateError={(error) => {
-            console.error('Row update error:', error);
+          onProcessRowUpdateError={() => {
+            // Error already handled in handleProcessRowUpdate
           }}
           slots={{ toolbar: GridToolbar }}
           slotProps={{

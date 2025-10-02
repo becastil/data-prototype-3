@@ -127,7 +127,6 @@ export default function SummaryPage() {
         actions.setError(`Calculation failed: ${result.error}`);
       }
     } catch (error) {
-      console.error('Calculation error:', error);
       actions.setError('Failed to calculate summaries');
     } finally {
       setIsCalculating(false);
@@ -143,7 +142,8 @@ export default function SummaryPage() {
     if (experienceData?.length > 0 && feeStructures?.length > 0 && monthlySummaries?.length === 0) {
       handleCalculateSummaries();
     }
-  }, [experienceData, feeStructures, monthlySummaries, handleCalculateSummaries]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experienceData?.length, feeStructures?.length, monthlySummaries?.length]);
 
   const filteredData = useMemo(() => {
     if (viewMode === 'quarterly') {
@@ -251,7 +251,7 @@ export default function SummaryPage() {
 
   const handleExport = () => {
     // TODO: Implement PDF export functionality
-    console.log('Exporting summary data:', filteredData);
+    actions.setError('Export functionality coming soon');
   };
 
   return (

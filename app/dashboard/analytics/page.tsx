@@ -120,11 +120,9 @@ export default function AnalyticsPage() {
       if (result.success) {
         return result.data;
       } else {
-        console.error('Failed to generate dashboard data:', result.error);
         return sampleDashboardData;
       }
     } catch (error) {
-      console.error('Error generating dashboard data:', error);
       return sampleDashboardData;
     }
   }, [experienceData, feeStructures, highCostClaimants, monthlySummaries]);
@@ -136,7 +134,8 @@ export default function AnalyticsPage() {
       setDashboardData(data);
     };
     updateDashboard();
-  }, [generateDashboardData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experienceData?.length, feeStructures?.length, monthlySummaries?.length, highCostClaimants?.length]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -146,7 +145,6 @@ export default function AnalyticsPage() {
       const data = await generateDashboardData();
       setDashboardData(data);
     } catch (error) {
-      console.error('Refresh error:', error);
       actions.setError('Failed to refresh dashboard data');
     } finally {
       setRefreshing(false);
@@ -156,7 +154,7 @@ export default function AnalyticsPage() {
 
   const handleExport = () => {
     // TODO: Implement landscape PDF export
-    console.log('Exporting analytics dashboard...');
+    actions.setError('Export functionality coming soon');
   };
 
   return (

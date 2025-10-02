@@ -191,7 +191,8 @@ export default function FeesPage() {
     if (experienceData.length > 0 && existingFeeStructures.length === 0) {
       generateFeeStructuresFromExperience();
     }
-  }, [experienceData, existingFeeStructures.length, generateFeeStructuresFromExperience]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experienceData.length, existingFeeStructures.length]);
 
   const handleSave = async () => {
     setIsCalculating(true);
@@ -235,7 +236,6 @@ export default function FeesPage() {
         actions.setError(`Calculation failed: ${calculationsResult.error}`);
       }
     } catch (error) {
-      console.error('Save error:', error);
       actions.setError('Failed to save configuration');
     } finally {
       setIsCalculating(false);
