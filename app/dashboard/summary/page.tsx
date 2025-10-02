@@ -136,14 +136,14 @@ export default function SummaryPage() {
   }, [actions, experienceData, feeStructures]);
 
   // Use context data or fallback to sample data for demo
-  const summaryData = monthlySummaries.length > 0 ? monthlySummaries : generateSampleData();
+  const summaryData = monthlySummaries?.length > 0 ? monthlySummaries : generateSampleData();
 
   // Auto-generate summaries if we have experience data and fees but no summaries
   useEffect(() => {
-    if (experienceData.length > 0 && feeStructures.length > 0 && monthlySummaries.length === 0) {
+    if (experienceData?.length > 0 && feeStructures?.length > 0 && monthlySummaries?.length === 0) {
       handleCalculateSummaries();
     }
-  }, [experienceData, feeStructures, monthlySummaries.length, handleCalculateSummaries]);
+  }, [experienceData, feeStructures, monthlySummaries, handleCalculateSummaries]);
 
   const filteredData = useMemo(() => {
     if (viewMode === 'quarterly') {
@@ -208,7 +208,7 @@ export default function SummaryPage() {
   }, [summaryData, viewMode]);
 
   const calculateKPIs = () => {
-    if (summaryData.length === 0) {
+    if (!summaryData || summaryData.length === 0) {
       return {
         totalClaims: 0,
         totalFees: 0,
@@ -219,13 +219,13 @@ export default function SummaryPage() {
       };
     }
 
-    const totalClaims = summaryData.reduce((sum, month) => sum + month.claims, 0);
-    const totalFees = summaryData.reduce((sum, month) => sum + month.fees, 0);
-    const totalPremiums = summaryData.reduce((sum, month) => sum + month.premiums, 0);
+    const totalClaims = summaryData.reduce((sum, month) => sum + (month?.claims || 0), 0);
+    const totalFees = summaryData.reduce((sum, month) => sum + (month?.fees || 0), 0);
+    const totalPremiums = summaryData.reduce((sum, month) => sum + (month?.premiums || 0), 0);
     const avgLossRatio = totalPremiums > 0 ? (totalClaims + totalFees) / totalPremiums : 0;
-    const totalMemberMonths = summaryData.reduce((sum, month) => sum + month.memberMonths, 0);
+    const totalMemberMonths = summaryData.reduce((sum, month) => sum + (month?.memberMonths || 0), 0);
     const avgPMPM = totalMemberMonths > 0 ? (totalClaims + totalFees) / totalMemberMonths : 0;
-    
+
     return {
       totalClaims,
       totalFees,
@@ -413,15 +413,15 @@ export default function SummaryPage() {
         <Typography variant="h6" sx={{ mb: 3 }}>
           {viewMode === 'monthly' ? 'Monthly' : viewMode === 'quarterly' ? 'Quarterly' : 'Annual'} Summary Table
         </Typography>
-        
-        {filteredData.length > 0 ? (
+
+        {filteredData && filteredData.length > 0 ? (
           <SummaryTable data={filteredData} />
         ) : (
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
             py: 8,
             textAlign: 'center'
           }}>
@@ -430,16 +430,16 @@ export default function SummaryPage() {
               No Data Available
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              {experienceData.length === 0 
+              {!experienceData || experienceData.length === 0
                 ? "Upload your experience data to see monthly summaries"
-                : feeStructures.length === 0 
+                : !feeStructures || feeStructures.length === 0
                 ? "Configure your fee structures to generate summaries"
                 : "Click 'Refresh' to calculate monthly summaries"
               }
             </Typography>
-            {experienceData.length > 0 && feeStructures.length > 0 && (
-              <Button 
-                variant="contained" 
+            {experienceData?.length > 0 && feeStructures?.length > 0 && (
+              <Button
+                variant="contained"
                 startIcon={<CalculateIcon />}
                 onClick={handleCalculateSummaries}
                 disabled={isCalculating}

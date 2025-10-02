@@ -154,15 +154,16 @@ export default function FeesPage() {
   const { actions } = useHealthcare();
   const experienceData = useExperienceData();
   const existingFeeStructures = useFeeStructures();
-  
+
   const [feeData, setFeeData] = useState<FeeStructure[]>(
-    existingFeeStructures.length > 0 ? existingFeeStructures : initialFeeData
+    existingFeeStructures?.length > 0 ? existingFeeStructures : initialFeeData
   );
   const [premiumRate, setPremiumRate] = useState<number>(500);
   const [premiumCalculationMethod, setPremiumCalculationMethod] = useState<string>('pmpm');
   const [targetLossRatio, setTargetLossRatio] = useState<number>(0.85);
   const [saved, setSaved] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const generateFeeStructuresFromExperience = useCallback(() => {
     const generatedFees: FeeStructure[] = experienceData.map((expData, index) => ({
@@ -476,10 +477,16 @@ export default function FeesPage() {
           </Typography>
         </Alert>
 
-        <FeesGrid 
-          data={feeData} 
-          onDataChange={setFeeData}
-        />
+        {feeData && feeData.length > 0 ? (
+          <FeesGrid
+            data={feeData}
+            onDataChange={setFeeData}
+          />
+        ) : (
+          <Alert severity="info">
+            <Typography>No fee data available. Click "Auto-Generate from Data" to create fee structures.</Typography>
+          </Alert>
+        )}
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
           <Link href="/dashboard/upload" style={{ textDecoration: 'none' }}>

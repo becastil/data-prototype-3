@@ -93,7 +93,7 @@ export default function AnalyticsPage() {
 
   // Generate dashboard data from context
   const generateDashboardData = useCallback(async () => {
-    if (monthlySummaries.length === 0) {
+    if (!monthlySummaries || monthlySummaries.length === 0) {
       return sampleDashboardData; // Fallback to sample data
     }
 
@@ -107,10 +107,10 @@ export default function AnalyticsPage() {
         body: JSON.stringify({
           type: 'dashboard-analytics',
           data: {
-            experienceData,
-            feeStructures,
-            monthlySummaries,
-            highCostClaimants
+            experienceData: experienceData || [],
+            feeStructures: feeStructures || [],
+            monthlySummaries: monthlySummaries || [],
+            highCostClaimants: highCostClaimants || []
           }
         }),
       });
@@ -230,13 +230,13 @@ export default function AnalyticsPage() {
       </Alert>
 
       {/* Data Status Alerts */}
-      {experienceData.length === 0 && (
+      {(!experienceData || experienceData.length === 0) && (
         <Alert severity="warning" sx={{ mb: 3 }}>
           No experience data found. Please upload your CSV files first to see real analytics.
         </Alert>
       )}
-      
-      {monthlySummaries.length === 0 && experienceData.length > 0 && (
+
+      {(!monthlySummaries || monthlySummaries.length === 0) && experienceData && experienceData.length > 0 && (
         <Alert severity="info" sx={{ mb: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography>
@@ -270,7 +270,13 @@ export default function AnalyticsPage() {
         </Alert>
       )}
 
-      <AnalyticsDashboard data={dashboardData} />
+      {dashboardData ? (
+        <AnalyticsDashboard data={dashboardData} />
+      ) : (
+        <Alert severity="info">
+          <Typography>Loading analytics dashboard...</Typography>
+        </Alert>
+      )}
 
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
         <Link href="/dashboard/summary" style={{ textDecoration: 'none' }}>
