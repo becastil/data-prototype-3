@@ -258,14 +258,14 @@ export default function SummaryPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Button
-          component={Link}
-          href="/"
-          startIcon={<ArrowBackIcon />}
-          sx={{ mb: 2 }}
-        >
-          Back to Home
-        </Button>
+        <Link href="/" style={{ textDecoration: 'none' }}>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            sx={{ mb: 2 }}
+          >
+            Back to Home
+          </Button>
+        </Link>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
             <Typography variant="h4" component="h1" gutterBottom>
@@ -451,20 +451,16 @@ export default function SummaryPage() {
         )}
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-          <Button
-            component={Link}
-            href="/dashboard/fees"
-            variant="outlined"
-          >
-            Previous: Configure Fees
-          </Button>
-          <Button
-            component={Link}
-            href="/dashboard/analytics"
-            variant="contained"
-          >
-            Next: View Analytics
-          </Button>
+          <Link href="/dashboard/fees" style={{ textDecoration: 'none' }}>
+            <Button variant="outlined">
+              Previous: Configure Fees
+            </Button>
+          </Link>
+          <Link href="/dashboard/analytics" style={{ textDecoration: 'none' }}>
+            <Button variant="contained">
+              Next: View Analytics
+            </Button>
+          </Link>
         </Box>
       </Paper>
     </Container>

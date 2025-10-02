@@ -283,14 +283,14 @@ export default function FeesPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Button
-          component={Link}
-          href="/"
-          startIcon={<ArrowBackIcon />}
-          sx={{ mb: 2 }}
-        >
-          Back to Home
-        </Button>
+        <Link href="/" style={{ textDecoration: 'none' }}>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            sx={{ mb: 2 }}
+          >
+            Back to Home
+          </Button>
+        </Link>
         <Typography variant="h4" component="h1" gutterBottom>
           Fee Configuration
         </Typography>
@@ -482,20 +482,16 @@ export default function FeesPage() {
         />
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-          <Button
-            component={Link}
-            href="/dashboard/upload"
-            variant="outlined"
-          >
-            Previous: Upload Data
-          </Button>
-          <Button
-            component={Link}
-            href="/dashboard/summary"
-            variant="contained"
-          >
-            Next: View Summary
-          </Button>
+          <Link href="/dashboard/upload" style={{ textDecoration: 'none' }}>
+            <Button variant="outlined">
+              Previous: Upload Data
+            </Button>
+          </Link>
+          <Link href="/dashboard/summary" style={{ textDecoration: 'none' }}>
+            <Button variant="contained">
+              Next: View Summary
+            </Button>
+          </Link>
         </Box>
       </Paper>
     </Container>
