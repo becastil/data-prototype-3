@@ -3,7 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Output configuration for Docker deployment
   output: 'standalone',
-  
+
+  // Fix workspace root detection (resolve multiple lockfile warning)
+  outputFileTracingRoot: __dirname,
+
   // TypeScript configuration
   typescript: {
     ignoreBuildErrors: false,
