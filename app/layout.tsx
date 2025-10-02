@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { Box } from '@mui/material';
 import { ClientThemeProvider } from '@/components/theme/ClientThemeProvider';
 import { HealthcareProvider } from '@/lib/store/HealthcareContext';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { Navigation } from '@/components/Navigation';
+import { Footer } from '@/components/Footer';
 import "./globals.css";
 
 // Force dynamic rendering to avoid static generation issues
@@ -16,8 +19,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Healthcare Analytics Dashboard",
-  description: "Professional C&E reporting and analytics platform for healthcare data",
+  title: "C&E Reporting Platform",
+  description: "Professional claims and expenses reporting with automated calculations and interactive analytics",
 };
 
 export default function RootLayout({
@@ -32,7 +35,19 @@ export default function RootLayout({
           <AppRouterCacheProvider>
             <ClientThemeProvider>
               <HealthcareProvider>
-                {children}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: '100vh'
+                  }}
+                >
+                  <Navigation />
+                  <Box component="main" sx={{ flex: 1 }}>
+                    {children}
+                  </Box>
+                  <Footer />
+                </Box>
               </HealthcareProvider>
             </ClientThemeProvider>
           </AppRouterCacheProvider>
