@@ -33,7 +33,16 @@
       "Bash(npx --yes create-next-app@latest temp-app --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --no-linter)",
       "Bash(yarn:*)",
       "Bash(git restore:*)",
-      "Bash(npm test)"
+      "Bash(npm test)",
+      "Bash(pkill:*)",
+      "Read(//c/Users/becas/**)",
+      "Bash(tasklist)",
+      "mcp__render__list_workspaces",
+      "mcp__render__list_services",
+      "mcp__render__list_deploys",
+      "mcp__render__get_deploy",
+      "mcp__render__list_logs",
+      "Bash(npx eslint:*)"
     ],
     "deny": [],
     "ask": []

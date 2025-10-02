@@ -163,7 +163,6 @@ export default function FeesPage() {
   const [targetLossRatio, setTargetLossRatio] = useState<number>(0.85);
   const [saved, setSaved] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
-  const [hasError, setHasError] = useState(false);
 
   const generateFeeStructuresFromExperience = useCallback(() => {
     const generatedFees: FeeStructure[] = experienceData.map((expData, index) => ({
@@ -484,7 +483,7 @@ export default function FeesPage() {
           />
         ) : (
           <Alert severity="info">
-            <Typography>No fee data available. Click "Auto-Generate from Data" to create fee structures.</Typography>
+            <Typography>No fee data available. Click &quot;Auto-Generate from Data&quot; to create fee structures.</Typography>
           </Alert>
         )}
 
