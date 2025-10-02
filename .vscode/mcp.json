@@ -5,7 +5,6 @@
       "url": "https://mcp.render.com/mcp",
       "headers": {
         "RENDER_API_KEY": "rnd_Bd1yT2lyG4XJsQJAiqAtCcCmVJ6S"
-        "Authorization": "Bearer "
       }
     }
   }
