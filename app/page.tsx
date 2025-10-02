@@ -50,15 +50,14 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Upload experience data and high-cost claimant CSV files with automatic validation
                 </Typography>
-                <Link href="/dashboard/upload" passHref legacyBehavior>
-                  <Button
-                    component="a"
-                    variant="contained"
-                    fullWidth
-                  >
-                    Start Upload
-                  </Button>
-                </Link>
+                <Button
+                  component={Link}
+                  href="/dashboard/upload"
+                  variant="contained"
+                  fullWidth
+                >
+                  Start Upload
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -73,15 +72,14 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Set up fee structures with automatic calculations and enrollment data
                 </Typography>
-                <Link href="/dashboard/fees" passHref legacyBehavior>
-                  <Button
-                    component="a"
-                    variant="contained"
-                    fullWidth
-                  >
-                    Configure Fees
-                  </Button>
-                </Link>
+                <Button
+                  component={Link}
+                  href="/dashboard/fees"
+                  variant="contained"
+                  fullWidth
+                >
+                  Configure Fees
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -96,15 +94,14 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   View calculated loss ratios, PMPM metrics, and performance indicators
                 </Typography>
-                <Link href="/dashboard/summary" passHref legacyBehavior>
-                  <Button
-                    component="a"
-                    variant="contained"
-                    fullWidth
-                  >
-                    View Summary
-                  </Button>
-                </Link>
+                <Button
+                  component={Link}
+                  href="/dashboard/summary"
+                  variant="contained"
+                  fullWidth
+                >
+                  View Summary
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -119,15 +116,14 @@ export default function Home() {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   Interactive charts, KPIs, and detailed analytics with export capabilities
                 </Typography>
-                <Link href="/dashboard/analytics" passHref legacyBehavior>
-                  <Button
-                    component="a"
-                    variant="contained"
-                    fullWidth
-                  >
-                    View Analytics
-                  </Button>
-                </Link>
+                <Button
+                  component={Link}
+                  href="/dashboard/analytics"
+                  variant="contained"
+                  fullWidth
+                >
+                  View Analytics
+                </Button>
               </CardContent>
             </Card>
           </Grid>

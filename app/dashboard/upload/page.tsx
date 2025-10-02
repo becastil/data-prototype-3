@@ -139,11 +139,14 @@ export default function UploadPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Link href="/" passHref legacyBehavior>
-          <Button component="a" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
-            Back to Home
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          href="/"
+          startIcon={<ArrowBackIcon />}
+          sx={{ mb: 2 }}
+        >
+          Back to Home
+        </Button>
         <Typography variant="h4" component="h1" gutterBottom>
           Upload Healthcare Data
         </Typography>
@@ -297,16 +300,20 @@ export default function UploadPage() {
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, pt: 2 }}>
-              <Link href="/dashboard/fees" passHref legacyBehavior>
-                <Button component="a" variant="contained">
-                  Configure Fees
-                </Button>
-              </Link>
-              <Link href="/dashboard/summary" passHref legacyBehavior>
-                <Button component="a" variant="outlined">
-                  View Summary
-                </Button>
-              </Link>
+              <Button
+                component={Link}
+                href="/dashboard/fees"
+                variant="contained"
+              >
+                Configure Fees
+              </Button>
+              <Button
+                component={Link}
+                href="/dashboard/summary"
+                variant="outlined"
+              >
+                View Summary
+              </Button>
             </Box>
           </Box>
         )}

@@ -283,11 +283,14 @@ export default function FeesPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Link href="/" passHref legacyBehavior>
-          <Button component="a" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
-            Back to Home
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          href="/"
+          startIcon={<ArrowBackIcon />}
+          sx={{ mb: 2 }}
+        >
+          Back to Home
+        </Button>
         <Typography variant="h4" component="h1" gutterBottom>
           Fee Configuration
         </Typography>
@@ -479,16 +482,20 @@ export default function FeesPage() {
         />
 
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-          <Link href="/dashboard/upload" passHref legacyBehavior>
-            <Button component="a" variant="outlined">
-              Previous: Upload Data
-            </Button>
-          </Link>
-          <Link href="/dashboard/summary" passHref legacyBehavior>
-            <Button component="a" variant="contained">
-              Next: View Summary
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            href="/dashboard/upload"
+            variant="outlined"
+          >
+            Previous: Upload Data
+          </Button>
+          <Button
+            component={Link}
+            href="/dashboard/summary"
+            variant="contained"
+          >
+            Next: View Summary
+          </Button>
         </Box>
       </Paper>
     </Container>
