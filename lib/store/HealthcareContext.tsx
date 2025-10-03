@@ -131,6 +131,37 @@ const STORAGE_KEY = 'healthcare-dashboard-data';
 export function HealthcareProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(healthcareReducer, initialState);
 
+  // Load data from localStorage on mount (client-side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsedState: HealthcareState = JSON.parse(stored);
+          dispatch({ type: 'LOAD_FROM_STORAGE', payload: parsedState });
+        }
+      } catch (error) {
+        console.error('Failed to load from localStorage:', error);
+        dispatch({ type: 'SET_ERROR', payload: 'Failed to load saved data' });
+      }
+    }
+  }, []); // Only run once on mount
+
+  // Save to localStorage whenever state changes (debounced, client-side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const timeoutId = setTimeout(() => {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (error) {
+          console.error('Failed to save to localStorage:', error);
+        }
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [state]); // Depend on state directly
+
   const saveToStorage = useCallback(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -150,25 +181,7 @@ export function HealthcareProvider({ children }: { children: React.ReactNode }) 
       console.error('Failed to load from localStorage:', error);
       dispatch({ type: 'SET_ERROR', payload: 'Failed to load saved data' });
     }
-  }, [dispatch]);
-
-  // Load data from localStorage on mount (client-side only)
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      loadFromStorage();
-    }
-  }, [loadFromStorage]);
-
-  // Save to localStorage whenever state changes (debounced, client-side only)
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const timeoutId = setTimeout(() => {
-        saveToStorage();
-      }, 1000);
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [saveToStorage]);
+  }, []);
 
   const actions = {
     setLoading: (loading: boolean) => dispatch({ type: 'SET_LOADING', payload: loading }),
