@@ -115,8 +115,7 @@ export function calculateMonthlyFee(
     // Step 5: Apply pro-rating if needed
     const proRatedAmount = applyProRating(
       baseCalculation + seasonalAdjustment + escalationAdjustment + constraintAdjustment,
-      feeStructure.proRating,
-      request.month
+      feeStructure.proRating
     );
 
     // Calculate final amount
@@ -449,14 +448,12 @@ function applyConstraints(
  */
 function applyProRating(
   amount: number,
-  proRating: FeeStructureV2['proRating'],
-  _month: string
+  proRating: FeeStructureV2['proRating']
 ): number {
   if (!proRating || !proRating.enabled) return 0;
 
   // For simplicity, assuming full month
   // In production, you'd check actual enrollment dates and calculate partial days
-  // The _month parameter would be used to calculate partial month pro-rating
   return 0;
 }
 

@@ -134,11 +134,12 @@ export function useCalculatedBudgetData(
 
     // Calculate fixed costs and budget
     const defaultFixedCost = fixedCostRate || 100000;
-    const avgClaims = Object.values(monthlyData).reduce((sum, d) => sum + d.totalClaims, 0) / Object.keys(monthlyData).length;
+    const monthlyValues = Object.values(monthlyData) as Array<{ period: string; totalClaims: number; claimCount: number }>;
+    const avgClaims = monthlyValues.reduce((sum, d) => sum + d.totalClaims, 0) / Object.keys(monthlyData).length;
     const defaultBudget = budgetAmount || avgClaims * 1.15; // 15% buffer over average
 
     // Convert to BudgetDataPoint array
-    return Object.values(monthlyData)
+    return monthlyValues
       .sort((a, b) => a.period.localeCompare(b.period))
       .map(monthData => ({
         period: monthData.period,
