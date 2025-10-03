@@ -126,7 +126,7 @@ export default function SummaryPage() {
       } else {
         actions.setError(`Calculation failed: ${result.error}`);
       }
-    } catch (error) {
+    } catch {
       actions.setError('Failed to calculate summaries');
     } finally {
       setIsCalculating(false);

@@ -235,7 +235,7 @@ export default function FeesPage() {
       } else {
         actions.setError(`Calculation failed: ${calculationsResult.error}`);
       }
-    } catch (error) {
+    } catch {
       actions.setError('Failed to save configuration');
     } finally {
       setIsCalculating(false);

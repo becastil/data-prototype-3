@@ -17,9 +17,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import CalculateIcon from '@mui/icons-material/Calculate';
 import Link from 'next/link';
-import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { ComprehensiveAnalyticsDashboard } from './components/ComprehensiveAnalyticsDashboard';
 import {
   useHealthcare,
@@ -90,7 +88,7 @@ export default function AnalyticsPage() {
   
   const [dateRange, setDateRange] = useState('2024');
   const [refreshing, setRefreshing] = useState(false);
-  const [dashboardData, setDashboardData] = useState(sampleDashboardData);
+  const [, setDashboardData] = useState(sampleDashboardData);
 
   // Generate dashboard data from context
   const generateDashboardData = useCallback(async () => {
@@ -123,7 +121,7 @@ export default function AnalyticsPage() {
       } else {
         return sampleDashboardData;
       }
-    } catch (error) {
+    } catch {
       return sampleDashboardData;
     }
   }, [experienceData, feeStructures, highCostClaimants, monthlySummaries]);
@@ -145,7 +143,7 @@ export default function AnalyticsPage() {
     try {
       const data = await generateDashboardData();
       setDashboardData(data);
-    } catch (error) {
+    } catch {
       actions.setError('Failed to refresh dashboard data');
     } finally {
       setRefreshing(false);

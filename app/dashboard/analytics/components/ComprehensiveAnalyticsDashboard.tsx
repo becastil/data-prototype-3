@@ -27,7 +27,6 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import WarningIcon from '@mui/icons-material/Warning';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import PersonIcon from '@mui/icons-material/Person';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import MedicationIcon from '@mui/icons-material/Medication';
 import BudgetVsActualsChart from '@/components/charts/BudgetVsActualsChart';
@@ -389,7 +388,7 @@ export function ComprehensiveAnalyticsDashboard() {
                 Member Distribution
               </Typography>
               <Box sx={{ height: 350, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                {dashboardData.memberDistribution.map((dist, index) => (
+                {dashboardData.memberDistribution.map((dist) => (
                   <Box key={dist.range} sx={{ mb: 2 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                       <Typography variant="body2" fontWeight="medium">{dist.range}</Typography>
@@ -469,7 +468,7 @@ export function ComprehensiveAnalyticsDashboard() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dashboardData.topClaimants.map((claimant, index) => (
+                {dashboardData.topClaimants.map((claimant) => (
                   <TableRow key={claimant.id} sx={{ '&:nth-of-type(odd)': { bgcolor: '#fafafa' } }}>
                     <TableCell>
                       <Typography variant="body2" fontFamily="monospace">{claimant.id}</Typography>

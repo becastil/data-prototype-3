@@ -75,7 +75,7 @@ export default function TierBuilder({
   };
 
   // Update tier field
-  const handleTierUpdate = (id: string, field: keyof FeeTier, value: any) => {
+  const handleTierUpdate = (id: string, field: keyof FeeTier, value: string | number | null) => {
     const updatedTiers = tiers.map(tier => {
       if (tier.id === id) {
         return { ...tier, [field]: value };

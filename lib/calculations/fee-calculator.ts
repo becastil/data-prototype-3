@@ -7,7 +7,6 @@ import {
   FeeStructureV2,
   FeeTier,
   MonthlyFeeInstance,
-  BlendedRateComponent,
   FeeCalculationRequest,
   FeeCalculationResult,
   SeasonalModifier,
@@ -451,12 +450,13 @@ function applyConstraints(
 function applyProRating(
   amount: number,
   proRating: FeeStructureV2['proRating'],
-  month: string
+  _month: string
 ): number {
   if (!proRating || !proRating.enabled) return 0;
 
   // For simplicity, assuming full month
   // In production, you'd check actual enrollment dates and calculate partial days
+  // The _month parameter would be used to calculate partial month pro-rating
   return 0;
 }
 
