@@ -186,13 +186,13 @@ export default function FeesPage() {
     }
   }, [existingFeeStructures]);
 
-  // Generate fee data from experience data if no existing fees
+  // Generate fee data from experience data if no existing fees (runs once on mount)
   useEffect(() => {
-    if (experienceData.length > 0 && existingFeeStructures.length === 0) {
+    if (experienceData.length > 0 && existingFeeStructures.length === 0 && feeData.length === 0) {
       generateFeeStructuresFromExperience();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [experienceData.length, existingFeeStructures.length]);
+  }, []); // Only run once on mount
 
   const handleSave = async () => {
     setIsCalculating(true);

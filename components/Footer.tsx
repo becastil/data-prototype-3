@@ -68,13 +68,31 @@ export function Footer() {
               Legal
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <MuiLink href="#" variant="body2" color="text.secondary">
+              <MuiLink
+                component={Link}
+                href="/legal/privacy"
+                variant="body2"
+                color="text.secondary"
+                sx={{ textDecoration: 'none' }}
+              >
                 Privacy Policy
               </MuiLink>
-              <MuiLink href="#" variant="body2" color="text.secondary">
+              <MuiLink
+                component={Link}
+                href="/legal/terms"
+                variant="body2"
+                color="text.secondary"
+                sx={{ textDecoration: 'none' }}
+              >
                 Terms of Service
               </MuiLink>
-              <MuiLink href="#" variant="body2" color="text.secondary">
+              <MuiLink
+                component={Link}
+                href="/contact"
+                variant="body2"
+                color="text.secondary"
+                sx={{ textDecoration: 'none' }}
+              >
                 Contact Support
               </MuiLink>
             </Box>

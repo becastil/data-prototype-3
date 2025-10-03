@@ -137,13 +137,13 @@ export default function SummaryPage() {
   // Use context data or fallback to sample data for demo
   const summaryData = monthlySummaries?.length > 0 ? monthlySummaries : generateSampleData();
 
-  // Auto-generate summaries if we have experience data and fees but no summaries
+  // Auto-generate summaries if we have experience data and fees but no summaries (runs once on mount)
   useEffect(() => {
-    if (experienceData?.length > 0 && feeStructures?.length > 0 && monthlySummaries?.length === 0) {
+    if (experienceData?.length > 0 && feeStructures?.length > 0 && monthlySummaries?.length === 0 && !isCalculating) {
       handleCalculateSummaries();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [experienceData?.length, feeStructures?.length, monthlySummaries?.length]);
+  }, []); // Only run once on mount
 
   const filteredData = useMemo(() => {
     if (viewMode === 'quarterly') {

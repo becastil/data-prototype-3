@@ -127,7 +127,7 @@ export default function AnalyticsPage() {
     }
   }, [experienceData, feeStructures, highCostClaimants, monthlySummaries]);
 
-  // Update dashboard data when context changes
+  // Update dashboard data when context changes (runs once on mount)
   useEffect(() => {
     const updateDashboard = async () => {
       const data = await generateDashboardData();
@@ -135,7 +135,7 @@ export default function AnalyticsPage() {
     };
     updateDashboard();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [experienceData?.length, feeStructures?.length, monthlySummaries?.length, highCostClaimants?.length]);
+  }, []); // Only run once on mount
 
   const handleRefresh = async () => {
     setRefreshing(true);
