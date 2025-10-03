@@ -28,6 +28,7 @@ import {
   useLoadingState
 } from '@/lib/store/HealthcareContext';
 import { ClientOnly } from '@/components/ClientOnly';
+import { AnalyticsDropZone } from '@/components/AnalyticsDropZone';
 
 // Sample dashboard data
 const sampleDashboardData = {
@@ -89,6 +90,7 @@ export default function AnalyticsPage() {
   const [dateRange, setDateRange] = useState('2024');
   const [refreshing, setRefreshing] = useState(false);
   const [, setDashboardData] = useState(sampleDashboardData);
+  const [, setUploadedFiles] = useState<File[]>([]);
 
   // Generate dashboard data from context
   const generateDashboardData = useCallback(async () => {
@@ -155,6 +157,13 @@ export default function AnalyticsPage() {
     // TODO: Implement landscape PDF export
     actions.setError('Export functionality coming soon');
   };
+
+  const handleFilesAccepted = useCallback((files: File[]) => {
+    setUploadedFiles(files);
+    // TODO: Process uploaded files and update dashboard
+    console.log('Files uploaded:', files);
+    actions.setError('File processing will be implemented. Files received: ' + files.map(f => f.name).join(', '));
+  }, [actions]);
 
   return (
     <ClientOnly>
@@ -228,6 +237,9 @@ export default function AnalyticsPage() {
           • Preventive screening participation trends year-over-year
         </Typography>
       </Alert>
+
+      {/* Drag and Drop File Upload */}
+      <AnalyticsDropZone onFilesAccepted={handleFilesAccepted} />
 
       {loading && (
         <Alert severity="info" sx={{ mb: 3 }}>
