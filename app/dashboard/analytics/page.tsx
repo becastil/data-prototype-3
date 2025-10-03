@@ -20,13 +20,14 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import Link from 'next/link';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
-import { 
-  useHealthcare, 
-  useExperienceData, 
-  useFeeStructures, 
+import { ComprehensiveAnalyticsDashboard } from './components/ComprehensiveAnalyticsDashboard';
+import {
+  useHealthcare,
+  useExperienceData,
+  useFeeStructures,
   useMonthlySummaries,
   useHighCostClaimants,
-  useLoadingState 
+  useLoadingState
 } from '@/lib/store/HealthcareContext';
 import { ClientOnly } from '@/components/ClientOnly';
 
@@ -215,44 +216,21 @@ export default function AnalyticsPage() {
 
       <Alert severity="info" sx={{ mb: 3 }}>
         <Typography variant="subtitle2" gutterBottom>
-          Dashboard Features:
+          Comprehensive Healthcare Analytics Dashboard
         </Typography>
         <Typography variant="body2">
-          • Real-time KPI monitoring with performance indicators
-          • Interactive monthly trend analysis with loss ratio overlay
-          • Category breakdown with drill-down capabilities
-          • High-cost member identification and risk stratification
-          • Top diagnosis analysis with cost and utilization metrics
-          • Exportable reports in landscape PDF format
+          • Executive summary with key insights and actionable recommendations
+          • Financial metrics tracking with monthly trends and member enrollment
+          • High-cost claimant identification with predictive cost modeling
+          • Diagnosis analysis by both cost and utilization patterns
+          • Place of service breakdown and medical episode tracking
+          • Drug class utilization and prescription cost analysis
+          • Emergency room utilization patterns and avoidable visit identification
+          • Chronic condition care compliance monitoring
+          • Preventive screening participation trends year-over-year
         </Typography>
       </Alert>
 
-      {/* Data Status Alerts */}
-      {(!experienceData || experienceData.length === 0) && (
-        <Alert severity="warning" sx={{ mb: 3 }}>
-          No experience data found. Please upload your CSV files first to see real analytics.
-        </Alert>
-      )}
-
-      {(!monthlySummaries || monthlySummaries.length === 0) && experienceData && experienceData.length > 0 && (
-        <Alert severity="info" sx={{ mb: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Typography>
-              No calculated summaries found. Please configure fees and generate summaries to see analytics.
-            </Typography>
-            <Button
-              component={Link}
-              href="/dashboard/summary"
-              size="small"
-              variant="outlined"
-              startIcon={<CalculateIcon />}
-            >
-              Generate Summaries
-            </Button>
-          </Box>
-        </Alert>
-      )}
-      
       {loading && (
         <Alert severity="info" sx={{ mb: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -261,20 +239,15 @@ export default function AnalyticsPage() {
           </Box>
         </Alert>
       )}
-      
+
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
       )}
 
-      {dashboardData ? (
-        <AnalyticsDashboard data={dashboardData} />
-      ) : (
-        <Alert severity="info">
-          <Typography>Loading analytics dashboard...</Typography>
-        </Alert>
-      )}
+      {/* Comprehensive Analytics Dashboard with Static Demo Data */}
+      <ComprehensiveAnalyticsDashboard />
 
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
         <Button
