@@ -48,15 +48,15 @@ export default function Home() {
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2, flex: 1 }}>
                 Upload experience data and high-cost claimant CSV files with automatic validation and error detection
               </Typography>
-              <Link href="/dashboard/upload" style={{ textDecoration: 'none', width: '100%' }}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{ mt: 'auto' }}
-                >
-                  Get Started
-                </Button>
-              </Link>
+              <Button
+                component={Link}
+                href="/dashboard/upload"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 'auto' }}
+              >
+                Get Started
+              </Button>
             </CardContent>
           </Card>
         </Grid>
@@ -71,15 +71,15 @@ export default function Home() {
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2, flex: 1 }}>
                 Set up fee structures with automatic calculations and enrollment data integration
               </Typography>
-              <Link href="/dashboard/fees" style={{ textDecoration: 'none', width: '100%' }}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{ mt: 'auto' }}
-                >
-                  Set Up Fees
-                </Button>
-              </Link>
+              <Button
+                component={Link}
+                href="/dashboard/fees"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 'auto' }}
+              >
+                Set Up Fees
+              </Button>
             </CardContent>
           </Card>
         </Grid>
@@ -94,15 +94,15 @@ export default function Home() {
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2, flex: 1 }}>
                 View calculated loss ratios, PMPM metrics, and performance indicators with color-coded alerts
               </Typography>
-              <Link href="/dashboard/summary" style={{ textDecoration: 'none', width: '100%' }}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{ mt: 'auto' }}
-                >
-                  View Summary
-                </Button>
-              </Link>
+              <Button
+                component={Link}
+                href="/dashboard/summary"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 'auto' }}
+              >
+                View Summary
+              </Button>
             </CardContent>
           </Card>
         </Grid>
@@ -117,15 +117,15 @@ export default function Home() {
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2, flex: 1 }}>
                 Interactive charts, KPIs, and detailed analytics with export capabilities and drill-down features
               </Typography>
-              <Link href="/dashboard/analytics" style={{ textDecoration: 'none', width: '100%' }}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{ mt: 'auto' }}
-                >
-                  Explore Analytics
-                </Button>
-              </Link>
+              <Button
+                component={Link}
+                href="/dashboard/analytics"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 'auto' }}
+              >
+                Explore Analytics
+              </Button>
             </CardContent>
           </Card>
         </Grid>

@@ -42,7 +42,9 @@
       "mcp__render__list_deploys",
       "mcp__render__get_deploy",
       "mcp__render__list_logs",
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "Bash(findstr:*)",
+      "Bash(code --version)"
     ],
     "deny": [],
     "ask": []

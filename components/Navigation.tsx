@@ -49,12 +49,15 @@ export function Navigation() {
       <List>
         {navigationItems.map((item) => (
           <ListItem key={item.href} disablePadding>
-            <Link href={item.href} style={{ textDecoration: 'none', width: '100%', color: 'inherit' }}>
-              <ListItemButton selected={pathname === item.href}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.label} />
-              </ListItemButton>
-            </Link>
+            <ListItemButton
+              component={Link}
+              href={item.href}
+              selected={pathname === item.href}
+              sx={{ color: 'inherit' }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.label} />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
@@ -86,19 +89,20 @@ export function Navigation() {
           {!isMobile && (
             <Box sx={{ display: 'flex', gap: 1 }}>
               {navigationItems.map((item) => (
-                <Link key={item.href} href={item.href} style={{ textDecoration: 'none' }}>
-                  <Button
-                    color="inherit"
-                    sx={{
-                      backgroundColor: pathname === item.href ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                      '&:hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.25)'
-                      }
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                </Link>
+                <Button
+                  key={item.href}
+                  component={Link}
+                  href={item.href}
+                  color="inherit"
+                  sx={{
+                    backgroundColor: pathname === item.href ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.25)'
+                    }
+                  }}
+                >
+                  {item.label}
+                </Button>
               ))}
             </Box>
           )}

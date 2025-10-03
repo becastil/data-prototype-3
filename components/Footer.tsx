@@ -34,21 +34,33 @@ export function Footer() {
               Quick Links
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Link href="/" style={{ textDecoration: 'none' }}>
-                <MuiLink component="span" variant="body2" color="text.secondary" sx={{ cursor: 'pointer' }}>
-                  Home
-                </MuiLink>
-              </Link>
-              <Link href="/dashboard/upload" style={{ textDecoration: 'none' }}>
-                <MuiLink component="span" variant="body2" color="text.secondary" sx={{ cursor: 'pointer' }}>
-                  Upload Data
-                </MuiLink>
-              </Link>
-              <Link href="/dashboard/analytics" style={{ textDecoration: 'none' }}>
-                <MuiLink component="span" variant="body2" color="text.secondary" sx={{ cursor: 'pointer' }}>
-                  Analytics
-                </MuiLink>
-              </Link>
+              <MuiLink
+                component={Link}
+                href="/"
+                variant="body2"
+                color="text.secondary"
+                sx={{ textDecoration: 'none' }}
+              >
+                Home
+              </MuiLink>
+              <MuiLink
+                component={Link}
+                href="/dashboard/upload"
+                variant="body2"
+                color="text.secondary"
+                sx={{ textDecoration: 'none' }}
+              >
+                Upload Data
+              </MuiLink>
+              <MuiLink
+                component={Link}
+                href="/dashboard/analytics"
+                variant="body2"
+                color="text.secondary"
+                sx={{ textDecoration: 'none' }}
+              >
+                Analytics
+              </MuiLink>
             </Box>
           </Grid>
           <Grid item xs={12} sm={4}>

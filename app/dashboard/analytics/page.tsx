@@ -161,14 +161,14 @@ export default function AnalyticsPage() {
     <ClientOnly>
       <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Link href="/" style={{ textDecoration: 'none' }}>
-          <Button
-            startIcon={<ArrowBackIcon />}
-            sx={{ mb: 2 }}
-          >
-            Back to Home
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          href="/"
+          startIcon={<ArrowBackIcon />}
+          sx={{ mb: 2 }}
+        >
+          Back to Home
+        </Button>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
             <Typography variant="h4" component="h1" gutterBottom>
@@ -240,15 +240,15 @@ export default function AnalyticsPage() {
             <Typography>
               No calculated summaries found. Please configure fees and generate summaries to see analytics.
             </Typography>
-            <Link href="/dashboard/summary" style={{ textDecoration: 'none' }}>
-              <Button
-                size="small"
-                variant="outlined"
-                startIcon={<CalculateIcon />}
-              >
-                Generate Summaries
-              </Button>
-            </Link>
+            <Button
+              component={Link}
+              href="/dashboard/summary"
+              size="small"
+              variant="outlined"
+              startIcon={<CalculateIcon />}
+            >
+              Generate Summaries
+            </Button>
           </Box>
         </Alert>
       )}
@@ -277,17 +277,21 @@ export default function AnalyticsPage() {
       )}
 
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
-        <Link href="/dashboard/summary" style={{ textDecoration: 'none' }}>
-          <Button variant="outlined">
-            Previous: Summary Table
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          href="/dashboard/summary"
+          variant="outlined"
+        >
+          Previous: Summary Table
+        </Button>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Link href="/dashboard/upload" style={{ textDecoration: 'none' }}>
-            <Button variant="outlined">
-              Upload New Data
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            href="/dashboard/upload"
+            variant="outlined"
+          >
+            Upload New Data
+          </Button>
           <Button
             variant="contained"
             onClick={handleExport}
