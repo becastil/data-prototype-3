@@ -1,0 +1,13 @@
+drug_class,typical_usage,related_conditions,tier
+ANTIHYPERTENSIVES,Blood pressure management,"Hypertension,Ischemic Heart Disease",Tier 1
+ANTIDEPRESSANTS,Mental health treatment,Depression,Tier 2
+ANTIHYPERLIPIDEMICS,Cholesterol management,Lipid Metabolism,Tier 1
+ANTIDIABETICS,Diabetes management,Diabetes,Tier 2
+ANTINEOPLASTICS,Cancer treatment,Cancer,Tier 3
+BRONCHODILATORS,Respiratory management,Asthma,Tier 2
+THYROID AGENTS,Hormone replacement,Hypothyroidism,Tier 1
+ANALGESICS,Pain management,"Back pain,Injury",Tier 1
+ANTICOAGULANTS,Blood clot prevention,Ischemic Heart Disease,Tier 2
+IMMUNOSUPPRESSANTS,Immune system management,Various,Tier 3
+ANTICONVULSANTS,Seizure management,Neurological,Tier 2
+ANTIBIOTICS,Infection treatment,Septicemia,Tier 1

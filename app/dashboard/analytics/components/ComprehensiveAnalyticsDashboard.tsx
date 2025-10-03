@@ -30,6 +30,8 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import PersonIcon from '@mui/icons-material/Person';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import MedicationIcon from '@mui/icons-material/Medication';
+import BudgetVsActualsChart from '@/components/charts/BudgetVsActualsChart';
+import { useBudgetData } from '@/hooks/useBudgetData';
 
 // Static dummy data based on the PDF
 const dashboardData = {
@@ -194,6 +196,9 @@ const dashboardData = {
 };
 
 export function ComprehensiveAnalyticsDashboard() {
+  // Get budget data
+  const budgetData = useBudgetData();
+
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -432,6 +437,17 @@ export function ComprehensiveAnalyticsDashboard() {
               </Box>
             </CardContent>
           </Card>
+        </Grid>
+      </Grid>
+
+      {/* Budget vs Actuals Chart */}
+      <Grid container spacing={3} sx={{ mb: 3 }}>
+        <Grid item xs={12}>
+          <BudgetVsActualsChart
+            data={budgetData}
+            title="Budget vs Actuals - Monthly Comparison"
+            height={400}
+          />
         </Grid>
       </Grid>
 

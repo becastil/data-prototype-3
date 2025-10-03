@@ -1,0 +1,11 @@
+episode_code,episode_description,typical_cost_range,duration_days,related_diagnoses
+EP001,Cancer of head and neck,"$100000-$500000",180-365,"C77.9,C18.9"
+EP002,Chemotherapy,"$50000-$200000",90-180,C77.9
+EP003,Screening,"$100-$1000",1,"Z00.00"
+EP004,Septicemia,"$30000-$150000",7-30,A41.9
+EP005,Vascular disorder,"$5000-$50000",30-90,"I25.10,I25.110"
+EP006,Back pain,"$500-$15000",7-60,M54.5
+EP007,Medical examination,"$200-$800",1,"Z00.00"
+EP008,Respiratory failure,"$20000-$100000",7-21,J96.00
+EP009,Injury treatment,"$1000-$25000",1-30,S06.0X0A
+EP010,Chronic disease management,"$2000-$10000",365,"E11.9,I10,E78.5"

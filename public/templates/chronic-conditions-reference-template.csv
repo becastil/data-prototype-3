@@ -1,0 +1,8 @@
+condition_name,icd10_codes,compliance_criteria,target_pmpy,risk_level
+Hypertension,"I10,I11.0,I11.9","Regular BP monitoring,Medication adherence",2500.00,Medium
+Lipid Metabolism,"E78.0,E78.5","Annual lipid panel,Statin therapy",1800.00,Low
+Depression,"F32.9,F33.1","Therapy sessions,Medication adherence",3500.00,Medium
+Asthma,"J45.909,J45.41","Inhaler usage,Annual spirometry",2200.00,Medium
+Diabetes,"E11.9,E11.65","HbA1c testing,Medication adherence",5500.00,High
+Hypothyroidism,E03.9,"TSH monitoring,Thyroid hormone replacement",1200.00,Low
+Ischemic Heart Disease,"I25.10,I25.110","Cardiology follow-up,Medication adherence",8500.00,High

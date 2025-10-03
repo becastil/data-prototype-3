@@ -1,0 +1,21 @@
+icd10_code,diagnosis_description,category,severity,is_chronic
+E11.9,Type 2 diabetes mellitus without complications,Diabetes,Moderate,Yes
+E11.65,Type 2 diabetes with hyperglycemia,Diabetes,Moderate,Yes
+I10,Essential (primary) hypertension,Hypertension,Moderate,Yes
+I11.0,Hypertensive heart disease with heart failure,Hypertension,High,Yes
+E78.5,Hyperlipidemia unspecified,Lipid Metabolism,Low,Yes
+E78.0,Pure hypercholesterolemia,Lipid Metabolism,Moderate,Yes
+F32.9,Major depressive disorder single episode unspecified,Depression,Moderate,Yes
+F33.1,Major depressive disorder recurrent moderate,Depression,High,Yes
+J45.909,Unspecified asthma uncomplicated,Asthma,Moderate,Yes
+J45.41,Moderate persistent asthma with acute exacerbation,Asthma,High,Yes
+E03.9,Hypothyroidism unspecified,Hypothyroidism,Low,Yes
+I25.10,Atherosclerotic heart disease without angina,Ischemic Heart Disease,High,Yes
+I25.110,Atherosclerotic heart disease with angina,Ischemic Heart Disease,High,Yes
+C77.9,Cancer of head and neck,Cancer,Critical,No
+C18.9,Malignant neoplasm of colon unspecified,Cancer,Critical,No
+A41.9,Sepsis unspecified organism,Septicemia,Critical,No
+J96.00,Acute respiratory failure unspecified,Respiratory,Critical,No
+M54.5,Low back pain,Back pain,Low,No
+S06.0X0A,Concussion without loss of consciousness,Injury,Moderate,No
+Z00.00,General adult medical examination without abnormal findings,Screening,Low,No

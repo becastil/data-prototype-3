@@ -1,0 +1,11 @@
+pos_code,pos_description,cost_category,average_cost_range
+11,Patient Visit,Outpatient,"$100-$500"
+21,Procedures,Inpatient,"$5000-$50000"
+22,Drugs,Pharmacy,"$50-$5000"
+23,Detention,Inpatient,"$1000-$10000"
+24,Testing,Outpatient,"$200-$2000"
+31,Clinic Visit,Outpatient,"$75-$400"
+41,Substance Abuse,Specialty,"$500-$5000"
+51,Behavioral Health,Specialty,"$150-$2000"
+61,Pregnancy,Specialty,"$2000-$15000"
+71,Recovery,Specialty,"$500-$8000"

@@ -1,0 +1,7 @@
+member_id,enrollment_date,termination_date,year_month,age,gender,zip_code,chronic_conditions,preventive_screenings_completed,predicted_cost_range,is_active
+M12345,2023-01-01,,2024-01,45,M,12345,"Diabetes,Hypertension","Preventive Care Visit,Diabetes Screening","$25K-$49.9K",Yes
+M12346,2023-01-01,,2024-01,62,F,12346,"Cancer",Preventive Care Visit,">$100K",Yes
+M12347,2023-06-01,,2024-01,38,M,12347,Hypertension,"Preventive Care Visit,Lipid Disorder Screening","<$25K",Yes
+M12348,2023-01-01,,2024-02,28,F,12348,None,Preventive Care Visit,"<$25K",Yes
+M12349,2023-01-01,,2024-02,55,M,12349,"Asthma,Lipid Metabolism","Preventive Care Visit,Lipid Disorder Screening,Colorectal Cancer Screening","$50K-$99.9K",Yes
+M12350,2023-01-01,2024-01-31,2024-01,50,F,12350,Hypothyroidism,Preventive Care Visit,"<$25K",No

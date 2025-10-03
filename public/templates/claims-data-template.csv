@@ -1,0 +1,6 @@
+claim_id,member_id,service_date,year_month,medical_payment,rx_payment,total_payment,diagnosis_code,diagnosis_description,place_of_service,medical_episode,drug_class,er_category,is_high_cost,cost_tier,claims_count
+CLM001,M12345,2024-01-15,2024-01,5000.00,250.00,5250.00,E11.9,Type 2 diabetes mellitus without complications,Patient Visit,,ANTIDIABETICS,,No,<$25K,1
+CLM002,M12346,2024-01-20,2024-01,125000.00,15000.00,140000.00,C77.9,Cancer of head and neck,Procedures,Cancer of head and neck,ANTINEOPLASTICS,,Yes,>$100K,1
+CLM003,M12347,2024-01-25,2024-01,350.00,75.00,425.00,I10,Essential (primary) hypertension,Clinic Visit,,ANTIHYPERTENSIVES,,No,<$25K,1
+CLM004,M12348,2024-02-01,2024-02,2500.00,0.00,2500.00,S06.0X0A,Concussion without loss of consciousness,ER - Injury,,,Injury,No,<$25K,1
+CLM005,M12349,2024-02-10,2024-02,45000.00,8000.00,53000.00,J96.00,Acute respiratory failure,Procedures,Septicemia,,,No,$50K-$99.9K,1
