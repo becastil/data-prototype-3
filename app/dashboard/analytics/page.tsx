@@ -270,6 +270,14 @@ export default function AnalyticsPage() {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button
             component={Link}
+            href="/dashboard/analytics/interactive"
+            variant="outlined"
+            color="secondary"
+          >
+            Interactive Dashboard Builder
+          </Button>
+          <Button
+            component={Link}
             href="/dashboard/upload"
             variant="outlined"
           >
