@@ -5,7 +5,7 @@ import RGL from 'react-grid-layout';
 import { Box, Paper, IconButton, Typography, Menu, MenuItem, Button, Chip } from '@mui/material';
 
 // Type assertion to fix React 18 compatibility
-const GridLayout = RGL as any;
+const GridLayout = RGL as React.ComponentClass<RGL.ReactGridLayoutProps>;
 import CloseIcon from '@mui/icons-material/Close';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
