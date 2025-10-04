@@ -1,8 +1,11 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import GridLayout from 'react-grid-layout';
+import RGL from 'react-grid-layout';
 import { Box, Paper, IconButton, Typography, Menu, MenuItem, Button, Chip } from '@mui/material';
+
+// Type assertion to fix React 18 compatibility
+const GridLayout = RGL as any;
 import CloseIcon from '@mui/icons-material/Close';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -74,7 +77,7 @@ export function DraggableChartGrid({
     onLayoutChange?.(updatedCharts);
   }, [charts, onLayoutChange]);
 
-  const handleLayoutChange = useCallback((layout: GridLayout.Layout[]) => {
+  const handleLayoutChange = useCallback((layout: RGL.Layout[]) => {
     const updatedCharts = charts.map(chart => {
       const layoutItem = layout.find(l => l.i === chart.id);
       if (layoutItem) {
