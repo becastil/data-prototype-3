@@ -44,7 +44,10 @@
       "mcp__render__list_logs",
       "Bash(npx eslint:*)",
       "Bash(findstr:*)",
-      "Bash(code --version)"
+      "Bash(code --version)",
+      "Bash(npm ls:*)",
+      "Bash(npm run lint)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
