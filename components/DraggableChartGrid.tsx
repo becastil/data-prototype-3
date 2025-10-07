@@ -4,8 +4,7 @@ import { useState, useCallback } from 'react';
 import RGL from 'react-grid-layout';
 import { Box, Paper, IconButton, Typography, Menu, MenuItem, Button, Chip } from '@mui/material';
 
-// Type assertion to fix React 18 compatibility
-const GridLayout = RGL as React.ComponentClass<RGL.ReactGridLayoutProps>;
+// Using RGL directly to avoid React 18 type assertion issues
 import CloseIcon from '@mui/icons-material/Close';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -152,7 +151,7 @@ export function DraggableChartGrid({
       </Menu>
 
       {/* Draggable Grid */}
-      <GridLayout
+      <RGL
         className="layout"
         layout={layout}
         cols={12}
@@ -222,7 +221,7 @@ export function DraggableChartGrid({
             </Paper>
           </div>
         ))}
-      </GridLayout>
+      </RGL>
 
       {/* Empty State */}
       {charts.length === 0 && (
