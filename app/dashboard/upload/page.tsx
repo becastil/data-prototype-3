@@ -174,23 +174,75 @@ export default function UploadPage() {
               <Typography variant="subtitle2" gutterBottom>
                 Download Templates:
               </Typography>
-              <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
-                <MuiLink 
-                  href="/api/upload?template=experience" 
-                  download="experience-data-template.csv"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
-                >
-                  <GetAppIcon fontSize="small" />
-                  Experience Data Template
-                </MuiLink>
-                <MuiLink 
-                  href="/api/upload?template=high-cost-claimant" 
-                  download="high-cost-claimants-template.csv"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
-                >
-                  <GetAppIcon fontSize="small" />
-                  High-Cost Claimants Template
-                </MuiLink>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                  <MuiLink
+                    href="/api/upload?template=experience"
+                    download="experience-data-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    Experience Data
+                  </MuiLink>
+                  <MuiLink
+                    href="/api/upload?template=high-cost-claimant"
+                    download="high-cost-claimants-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    High-Cost Claimants
+                  </MuiLink>
+                  <MuiLink
+                    href="/api/upload?template=monthly-costs"
+                    download="monthly-costs-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    Monthly Costs
+                  </MuiLink>
+                  <MuiLink
+                    href="/api/upload?template=diagnosis-cost"
+                    download="diagnosis-by-cost-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    Diagnosis by Cost
+                  </MuiLink>
+                  <MuiLink
+                    href="/api/upload?template=diagnosis-utilization"
+                    download="diagnosis-by-utilization-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    Diagnosis by Utilization
+                  </MuiLink>
+                </Box>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                  <MuiLink
+                    href="/api/upload?template=drug-classes"
+                    download="drug-classes-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    Drug Classes
+                  </MuiLink>
+                  <MuiLink
+                    href="/api/upload?template=preventive-screenings"
+                    download="preventive-screenings-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    Preventive Screenings
+                  </MuiLink>
+                  <MuiLink
+                    href="/api/upload?template=chronic-condition"
+                    download="chronic-condition-compliance-template.csv"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    <GetAppIcon fontSize="small" />
+                    Chronic Condition Compliance
+                  </MuiLink>
+                </Box>
               </Box>
             </Alert>
 
