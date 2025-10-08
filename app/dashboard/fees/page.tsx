@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import {
   Container,
   Typography,
@@ -8,486 +8,339 @@ import {
   Paper,
   Button,
   Alert,
-  Grid,
-  Card,
-  CardContent,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
+  Chip,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tabs,
+  Tab
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
-import CalculateIcon from '@mui/icons-material/Calculate';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import AddIcon from '@mui/icons-material/Add';
+import UpgradeIcon from '@mui/icons-material/Upgrade';
+import InfoIcon from '@mui/icons-material/Info';
 import Link from 'next/link';
-import { FeesGrid } from './components/FeesGrid';
-import { FeeStructure } from '@/types/healthcare';
-import { useHealthcare, useExperienceData, useFeeStructures } from '@/lib/store/HealthcareContext';
+import { useHealthcare, useExperienceData, useFeeStructures, useFeeStructuresV2 } from '@/lib/store/HealthcareContext';
+import { FeeStructureV2 } from '@/types/fees';
 import { ClientOnly } from '@/components/ClientOnly';
-
-const initialFeeData: FeeStructure[] = [
-  {
-    id: '1',
-    month: '2024-01',
-    feeType: 'pmpm',
-    amount: 450,
-    enrollment: 1200,
-    calculatedTotal: 540000,
-    effectiveDate: '2024-01-01',
-    description: 'Standard PMPM fee'
-  },
-  {
-    id: '2',
-    month: '2024-02',
-    feeType: 'pmpm',
-    amount: 452,
-    enrollment: 1195,
-    calculatedTotal: 540140,
-    effectiveDate: '2024-02-01',
-    description: 'Adjusted for enrollment change'
-  },
-  {
-    id: '3',
-    month: '2024-03',
-    feeType: 'pmpm',
-    amount: 455,
-    enrollment: 1210,
-    calculatedTotal: 550550,
-    effectiveDate: '2024-03-01',
-    description: 'Rate increase'
-  },
-  {
-    id: '4',
-    month: '2024-04',
-    feeType: 'pmpm',
-    amount: 455,
-    enrollment: 1205,
-    calculatedTotal: 548275,
-    effectiveDate: '2024-04-01',
-    description: 'Stable rate'
-  },
-  {
-    id: '5',
-    month: '2024-05',
-    feeType: 'pmpm',
-    amount: 458,
-    enrollment: 1215,
-    calculatedTotal: 556470,
-    effectiveDate: '2024-05-01',
-    description: 'Performance adjustment'
-  },
-  {
-    id: '6',
-    month: '2024-06',
-    feeType: 'pmpm',
-    amount: 460,
-    enrollment: 1220,
-    calculatedTotal: 561200,
-    effectiveDate: '2024-06-01',
-    description: 'Mid-year adjustment'
-  },
-  {
-    id: '7',
-    month: '2024-07',
-    feeType: 'pmpm',
-    amount: 462,
-    enrollment: 1225,
-    calculatedTotal: 565950,
-    effectiveDate: '2024-07-01',
-    description: 'Summer rate'
-  },
-  {
-    id: '8',
-    month: '2024-08',
-    feeType: 'pmpm',
-    amount: 465,
-    enrollment: 1230,
-    calculatedTotal: 571950,
-    effectiveDate: '2024-08-01',
-    description: 'Peak season rate'
-  },
-  {
-    id: '9',
-    month: '2024-09',
-    feeType: 'pmpm',
-    amount: 463,
-    enrollment: 1228,
-    calculatedTotal: 568564,
-    effectiveDate: '2024-09-01',
-    description: 'Fall adjustment'
-  },
-  {
-    id: '10',
-    month: '2024-10',
-    feeType: 'pmpm',
-    amount: 467,
-    enrollment: 1235,
-    calculatedTotal: 576745,
-    effectiveDate: '2024-10-01',
-    description: 'Q4 rate'
-  },
-  {
-    id: '11',
-    month: '2024-11',
-    feeType: 'pmpm',
-    amount: 470,
-    enrollment: 1232,
-    calculatedTotal: 579040,
-    effectiveDate: '2024-11-01',
-    description: 'November rate'
-  },
-  {
-    id: '12',
-    month: '2024-12',
-    feeType: 'pmpm',
-    amount: 472,
-    enrollment: 1240,
-    calculatedTotal: 585280,
-    effectiveDate: '2024-12-01',
-    description: 'Year-end rate'
-  }
-];
+import FeeModal from './components/FeeModal';
+import FeesGridV2 from './components/FeesGridV2';
 
 export default function FeesPage() {
-  const { actions } = useHealthcare();
+  const { state, actions } = useHealthcare();
   const experienceData = useExperienceData();
-  const existingFeeStructures = useFeeStructures();
+  const legacyFees = useFeeStructures();
+  const feeStructuresV2 = useFeeStructuresV2();
 
-  const [feeData, setFeeData] = useState<FeeStructure[]>(
-    existingFeeStructures?.length > 0 ? existingFeeStructures : initialFeeData
-  );
-  const [premiumRate, setPremiumRate] = useState<number>(500);
-  const [premiumCalculationMethod, setPremiumCalculationMethod] = useState<string>('pmpm');
-  const [targetLossRatio, setTargetLossRatio] = useState<number>(0.85);
+  // UI State - Default to V2 if there are V2 fees or no legacy fees
+  const [useV2System, setUseV2System] = useState(feeStructuresV2.length > 0 || legacyFees.length === 0);
+  const [feeModalOpen, setFeeModalOpen] = useState(false);
+  const [editingFee, setEditingFee] = useState<Partial<FeeStructureV2> | undefined>();
   const [saved, setSaved] = useState(false);
-  const [isCalculating, setIsCalculating] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
 
-  const generateFeeStructuresFromExperience = useCallback(() => {
-    const generatedFees: FeeStructure[] = experienceData.map((expData, index) => ({
-      id: `gen-${index + 1}`,
-      month: expData.month,
-      feeType: 'pmpm' as const,
-      amount: premiumRate,
-      enrollment: expData.enrollment,
-      calculatedTotal: premiumRate * expData.enrollment,
-      effectiveDate: `${expData.month}-01`,
-      description: 'Auto-generated from experience data'
-    }));
-    
-    setFeeData(generatedFees);
-  }, [experienceData, premiumRate]);
+  // Add new fee (V2)
+  const handleAddFee = () => {
+    setEditingFee(undefined);
+    setFeeModalOpen(true);
+  };
 
-  // Update fee data from context when it changes
-  useEffect(() => {
-    if (existingFeeStructures.length > 0) {
-      setFeeData(existingFeeStructures);
+  // Edit fee (V2)
+  const handleEditFee = (fee: FeeStructureV2) => {
+    setEditingFee(fee);
+    setFeeModalOpen(true);
+  };
+
+  // Save fee (V2)
+  const handleSaveFee = (fee: Partial<FeeStructureV2>) => {
+    if (fee.id && feeStructuresV2.some(f => f.id === fee.id)) {
+      actions.updateFeeStructureV2(fee as FeeStructureV2);
+    } else {
+      const newFee: FeeStructureV2 = {
+        ...fee,
+        id: fee.id || `fee-${Date.now()}`,
+        name: fee.name || 'New Fee',
+        category: fee.category || 'administrative',
+        rateBasis: fee.rateBasis || 'pmpm',
+        tieringEnabled: fee.tieringEnabled || false,
+        effectiveStartDate: fee.effectiveStartDate || new Date().toISOString().split('T')[0],
+        status: fee.status || 'active',
+        version: fee.version || 1,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      } as FeeStructureV2;
+
+      actions.addFeeStructureV2(newFee);
     }
-  }, [existingFeeStructures]);
 
-  // Generate fee data from experience data if no existing fees (runs once on mount)
-  useEffect(() => {
-    if (experienceData.length > 0 && existingFeeStructures.length === 0 && feeData.length === 0) {
-      generateFeeStructuresFromExperience();
+    setFeeModalOpen(false);
+    setEditingFee(undefined);
+  };
+
+  // Delete fee (V2)
+  const handleDeleteFee = (feeId: string) => {
+    if (confirm('Are you sure you want to delete this fee?')) {
+      actions.deleteFeeStructureV2(feeId);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount
+  };
 
-  const handleSave = async () => {
-    setIsCalculating(true);
+  // Duplicate fee (V2)
+  const handleDuplicateFee = (fee: FeeStructureV2) => {
+    const duplicatedFee: FeeStructureV2 = {
+      ...fee,
+      id: `fee-${Date.now()}`,
+      name: `${fee.name} (Copy)`,
+      version: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    actions.addFeeStructureV2(duplicatedFee);
+  };
+
+  // Save all
+  const handleSaveAll = async () => {
     actions.setLoading(true);
-    
+
     try {
-      // Save fee structures to context
-      actions.setFeeStructures(feeData);
-      
-      // Generate premium data for calculations
-      const premiumData = feeData.map(fee => ({
-        month: fee.month,
-        premiumAmount: calculatePremiumAmount(fee),
-        enrollment: fee.enrollment || 0
-      }));
-
-      // Call calculations API to generate monthly summaries
-      const calculationsResponse = await fetch('/api/calculations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: 'monthly-summaries',
-          data: {
-            experienceData,
-            feeStructures: feeData,
-            premiumData,
-            targetLossRatio
-          }
-        }),
-      });
-
-      const calculationsResult = await calculationsResponse.json();
-      
-      if (calculationsResult.success) {
-        actions.setMonthlySummaries(calculationsResult.data);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
-      } else {
-        actions.setError(`Calculation failed: ${calculationsResult.error}`);
-      }
+      actions.saveToStorage();
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
     } catch {
       actions.setError('Failed to save configuration');
     } finally {
-      setIsCalculating(false);
       actions.setLoading(false);
     }
   };
 
-  const calculatePremiumAmount = (fee: FeeStructure): number => {
-    // Calculate premium to achieve target loss ratio
-    const totalCosts = fee.calculatedTotal; // This is the fee amount
-    // Premium should be higher than costs to achieve target loss ratio
-    return totalCosts / targetLossRatio;
-  };
+  // Migrate from V1 to V2
+  const handleMigrateToV2 = () => {
+    if (!confirm('This will migrate your existing fees to the new V2 system. Continue?')) {
+      return;
+    }
 
-  const recalculateWithNewRates = () => {
-    const updatedFees = feeData.map(fee => ({
-      ...fee,
-      amount: premiumRate,
-      calculatedTotal: fee.feeType === 'pmpm' || fee.feeType === 'pepm' 
-        ? premiumRate * (fee.enrollment || 0)
-        : fee.feeType === 'flat'
-        ? premiumRate
-        : fee.calculatedTotal
-    }));
-    
-    setFeeData(updatedFees);
+    // TODO: Implement migration logic
+    alert('Migration feature coming soon!');
   };
-
-  const calculateTotals = () => {
-    const totalFees = feeData.reduce((sum, fee) => sum + fee.calculatedTotal, 0);
-    const avgFeePerMonth = feeData.length > 0 ? totalFees / feeData.length : 0;
-    const avgEnrollment = feeData.length > 0 
-      ? feeData.reduce((sum, fee) => sum + (fee.enrollment || 0), 0) / feeData.length 
-      : 0;
-    
-    // Calculate estimated premium total
-    const totalPremiums = feeData.reduce((sum, fee) => sum + calculatePremiumAmount(fee), 0);
-    
-    return { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums };
-  };
-
-  const { totalFees, avgFeePerMonth, avgEnrollment, totalPremiums } = calculateTotals();
 
   return (
     <ClientOnly>
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ mb: 3 }}>
-        <Button
-          component={Link}
-          href="/"
-          startIcon={<ArrowBackIcon />}
-          sx={{ mb: 2 }}
-        >
-          Back to Home
-        </Button>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Fee Configuration
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Configure monthly fee structures with automatic calculations
-        </Typography>
-      </Box>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        {/* Header */}
+        <Box sx={{ mb: 3 }}>
+          <Button
+            component={Link}
+            href="/"
+            startIcon={<ArrowBackIcon />}
+            sx={{ mb: 2 }}
+          >
+            Back to Home
+          </Button>
 
-      {saved && (
-        <Alert severity="success" sx={{ mb: 3 }}>
-          Fee configuration saved successfully! Monthly summaries have been calculated.
-        </Alert>
-      )}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+            <Box>
+              <Typography variant="h4" component="h1" gutterBottom>
+                Fee Configuration
+                {useV2System && (
+                  <Chip
+                    label="V2"
+                    color="primary"
+                    size="small"
+                    sx={{ ml: 2, verticalAlign: 'middle' }}
+                  />
+                )}
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                {useV2System
+                  ? 'Advanced fee management with intelligent calculations'
+                  : 'Configure monthly fee structures with automatic calculations'}
+              </Typography>
+            </Box>
 
-      {experienceData.length === 0 && (
-        <Alert severity="warning" sx={{ mb: 3 }}>
-          No experience data found. Please upload your data first to automatically generate fee structures.
-        </Alert>
-      )}
-
-      {/* Premium Configuration */}
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Premium & Target Configuration
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
-            <TextField
-              fullWidth
-              label="Base Premium Rate"
-              type="number"
-              value={premiumRate}
-              onChange={(e) => setPremiumRate(Number(e.target.value))}
-              helperText="Base rate for PMPM calculations"
-              InputProps={{
-                startAdornment: '$'
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <FormControl fullWidth>
-              <InputLabel>Premium Method</InputLabel>
-              <Select
-                value={premiumCalculationMethod}
-                onChange={(e) => setPremiumCalculationMethod(e.target.value)}
-                label="Premium Method"
+            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+              {/* Version Toggle */}
+              <ToggleButtonGroup
+                value={useV2System ? 'v2' : 'v1'}
+                exclusive
+                onChange={(_, value) => {
+                  if (value !== null) {
+                    setUseV2System(value === 'v2');
+                  }
+                }}
+                size="small"
               >
-                <MenuItem value="pmpm">Per Member Per Month</MenuItem>
-                <MenuItem value="pepm">Per Employee Per Month</MenuItem>
-                <MenuItem value="flat">Flat Rate</MenuItem>
-                <MenuItem value="calculated">Calculated from Loss Ratio</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              fullWidth
-              label="Target Loss Ratio"
-              type="number"
-              value={targetLossRatio}
-              onChange={(e) => setTargetLossRatio(Number(e.target.value))}
-              helperText="Target (e.g., 0.85 = 85%)"
-              inputProps={{ min: 0.1, max: 1.0, step: 0.01 }}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<TrendingUpIcon />}
-              onClick={recalculateWithNewRates}
-              sx={{ height: 56 }}
-            >
-              Apply New Rates
-            </Button>
-          </Grid>
-        </Grid>
-      </Paper>
+                <ToggleButton value="v1">
+                  V1 Legacy
+                </ToggleButton>
+                <ToggleButton value="v2">
+                  V2 Advanced
+                </ToggleButton>
+              </ToggleButtonGroup>
 
-      {/* Summary Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={2.4}>
-          <Card>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Total Annual Fees
-              </Typography>
-              <Typography variant="h5" color="primary">
-                ${totalFees.toLocaleString()}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={2.4}>
-          <Card>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Avg Monthly Fee
-              </Typography>
-              <Typography variant="h5" color="primary">
-                ${Math.round(avgFeePerMonth).toLocaleString()}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={2.4}>
-          <Card>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Estimated Premiums
-              </Typography>
-              <Typography variant="h5" color="secondary">
-                ${Math.round(totalPremiums).toLocaleString()}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={2.4}>
-          <Card>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Avg Enrollment
-              </Typography>
-              <Typography variant="h5" color="primary">
-                {Math.round(avgEnrollment).toLocaleString()}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={2.4}>
-          <Card>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Projected Loss Ratio
-              </Typography>
-              <Typography variant="h5" color={targetLossRatio > 0.9 ? "error" : "success"}>
-                {(targetLossRatio * 100).toFixed(0)}%
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+              {useV2System && (
+                <>
+                  <Chip
+                    label={`${feeStructuresV2.length} Active Fees`}
+                    color="primary"
+                    variant="outlined"
+                  />
+                  <Button
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    onClick={handleAddFee}
+                  >
+                    Add Fee
+                  </Button>
+                </>
+              )}
 
-      <Paper sx={{ p: 3 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h6">
-            Monthly Fee Structure
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            {experienceData.length > 0 && (
               <Button
-                variant="outlined"
-                startIcon={<CalculateIcon />}
-                onClick={generateFeeStructuresFromExperience}
+                variant="contained"
+                startIcon={<SaveIcon />}
+                onClick={handleSaveAll}
+                disabled={state.loading}
               >
-                Auto-Generate from Data
+                Save Configuration
               </Button>
-            )}
-            <Button
-              variant="contained"
-              startIcon={<SaveIcon />}
-              onClick={handleSave}
-              disabled={isCalculating}
-            >
-              {isCalculating ? 'Calculating...' : 'Save & Calculate Summaries'}
-            </Button>
+            </Box>
           </Box>
         </Box>
 
-        <Alert severity="info" sx={{ mb: 3 }}>
-          <Typography variant="subtitle2" gutterBottom>
-            Fee Types:
-          </Typography>
-          <Typography variant="body2" component="div">
-            <ul style={{ margin: 0, paddingLeft: 20 }}>
-              <li><strong>PMPM:</strong> Per Member Per Month - Amount × Enrollment</li>
-              <li><strong>PEPM:</strong> Per Employee Per Month - Amount × Employees</li>
-              <li><strong>Flat:</strong> Fixed amount regardless of enrollment</li>
-              <li><strong>Tiered:</strong> Amount varies by enrollment tiers</li>
-              <li><strong>Annual:</strong> Annual amount divided by 12</li>
-              <li><strong>Manual:</strong> Manually entered total amount</li>
-            </ul>
-          </Typography>
-        </Alert>
-
-        {feeData && feeData.length > 0 ? (
-          <FeesGrid
-            data={feeData}
-            onDataChange={setFeeData}
-          />
-        ) : (
-          <Alert severity="info">
-            <Typography>No fee data available. Click &quot;Auto-Generate from Data&quot; to create fee structures.</Typography>
+        {/* Alerts */}
+        {saved && (
+          <Alert severity="success" sx={{ mb: 3 }}>
+            Fee configuration saved successfully!
           </Alert>
         )}
 
-        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+        {experienceData.length === 0 && (
+          <Alert severity="warning" sx={{ mb: 3 }}>
+            No enrollment data found. Please{' '}
+            <Link href="/dashboard/upload" style={{ textDecoration: 'underline' }}>
+              upload your experience data
+            </Link>{' '}
+            first to enable automatic fee calculations.
+          </Alert>
+        )}
+
+        {/* V2 System Promo */}
+        {!useV2System && legacyFees.length > 0 && (
+          <Alert severity="info" sx={{ mb: 3 }} icon={<UpgradeIcon />}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Box>
+                <Typography variant="subtitle2" gutterBottom>
+                  Upgrade to V2 Fee System
+                </Typography>
+                <Typography variant="body2">
+                  Get access to 9 fee types, tiered pricing, blended rates, and automatic calculations.
+                </Typography>
+              </Box>
+              <Button
+                variant="outlined"
+                startIcon={<UpgradeIcon />}
+                onClick={handleMigrateToV2}
+                sx={{ ml: 2 }}
+              >
+                Migrate Now
+              </Button>
+            </Box>
+          </Alert>
+        )}
+
+        {/* Main Content */}
+        {useV2System ? (
+          <Box>
+            {/* Tabs */}
+            <Paper sx={{ mb: 3 }}>
+              <Tabs value={activeTab} onChange={(_, v) => setActiveTab(v)}>
+                <Tab label="Fee Grid" />
+                <Tab label="Settings" />
+                <Tab label="Templates" disabled />
+              </Tabs>
+            </Paper>
+
+            {/* Tab 0: Fee Grid */}
+            {activeTab === 0 && (
+              <FeesGridV2
+                feeStructures={feeStructuresV2}
+                experienceData={experienceData}
+                onAddFee={handleAddFee}
+                onEditFee={handleEditFee}
+                onDeleteFee={handleDeleteFee}
+                onDuplicateFee={handleDuplicateFee}
+              />
+            )}
+
+            {/* Tab 1: Settings */}
+            {activeTab === 1 && (
+              <Paper sx={{ p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Fee Calculation Settings
+                </Typography>
+
+                <Alert severity="info" sx={{ mt: 3 }}>
+                  <Typography variant="subtitle2" gutterBottom>
+                    Supported Fee Types:
+                  </Typography>
+                  <Box component="ul" sx={{ mt: 1, mb: 0, pl: 2 }}>
+                    <li><strong>PMPM:</strong> Per Member Per Month - Amount × Enrollment</li>
+                    <li><strong>PEPM:</strong> Per Employee Per Month - Amount × Employees</li>
+                    <li><strong>Flat:</strong> Fixed amount regardless of enrollment</li>
+                    <li><strong>% of Premium:</strong> Percentage of total premiums</li>
+                    <li><strong>% of Claims:</strong> Percentage of total claims</li>
+                    <li><strong>Per Transaction:</strong> Amount × Transaction count</li>
+                    <li><strong>Blended:</strong> Combination of multiple fee components</li>
+                    <li><strong>Composite:</strong> Different rates for members vs dependents</li>
+                    <li><strong>Manual:</strong> Manually entered amounts</li>
+                  </Box>
+                </Alert>
+
+                <Alert severity="success" sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" gutterBottom>
+                    Advanced Features:
+                  </Typography>
+                  <Box component="ul" sx={{ mt: 1, mb: 0, pl: 2 }}>
+                    <li>✓ Tiered pricing based on enrollment ranges</li>
+                    <li>✓ Multi-fee stacking per month</li>
+                    <li>✓ Real-time calculation preview</li>
+                    <li>✓ Automatic recalculation on data changes</li>
+                    <li>✓ Detailed fee breakdowns with tooltips</li>
+                    <li>✓ Fee duplication and templating</li>
+                  </Box>
+                </Alert>
+              </Paper>
+            )}
+
+            {/* Fee Modal */}
+            <FeeModal
+              open={feeModalOpen}
+              onClose={() => {
+                setFeeModalOpen(false);
+                setEditingFee(undefined);
+              }}
+              onSave={handleSaveFee}
+              existingFee={editingFee}
+              enrollmentData={experienceData.map(e => ({ month: e.month, enrollment: e.enrollment }))}
+            />
+          </Box>
+        ) : (
+          // V1 Legacy System
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Legacy Fee Management (V1)
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              You are using the legacy fee system. Switch to V2 for advanced features.
+            </Typography>
+            {/* Include legacy FeesGrid here */}
+            <Alert severity="warning">
+              Legacy V1 system - Limited functionality. Please upgrade to V2 for full features.
+            </Alert>
+          </Paper>
+        )}
+
+        {/* Navigation */}
+        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
           <Button
             component={Link}
             href="/dashboard/upload"
@@ -503,8 +356,20 @@ export default function FeesPage() {
             Next: View Summary
           </Button>
         </Box>
-      </Paper>
-    </Container>
+
+        {/* Info Footer */}
+        <Paper sx={{ mt: 3, p: 2, backgroundColor: 'action.hover' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <InfoIcon color="action" />
+            <Typography variant="body2" color="text.secondary">
+              <strong>Tip:</strong>{' '}
+              {useV2System
+                ? 'Fees are automatically calculated based on uploaded enrollment data. Click any month to see detailed breakdowns.'
+                : 'Upgrade to V2 for automatic calculations, tiered pricing, and 9 different fee types.'}
+            </Typography>
+          </Box>
+        </Paper>
+      </Container>
     </ClientOnly>
   );
 }
