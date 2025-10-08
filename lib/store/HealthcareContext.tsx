@@ -2,11 +2,13 @@
 
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import { ExperienceData, HighCostClaimant, FeeStructure, MonthlySummary, DashboardConfig } from '@/types/healthcare';
+import { FeeStructureV2 } from '@/types/fees';
 
 interface HealthcareState {
   experienceData: ExperienceData[];
   highCostClaimants: HighCostClaimant[];
   feeStructures: FeeStructure[];
+  feeStructuresV2: FeeStructureV2[];
   monthlySummaries: MonthlySummary[];
   dashboardConfig: DashboardConfig;
   loading: boolean;
@@ -20,6 +22,10 @@ type HealthcareAction =
   | { type: 'SET_EXPERIENCE_DATA'; payload: ExperienceData[] }
   | { type: 'SET_HIGH_COST_CLAIMANTS'; payload: HighCostClaimant[] }
   | { type: 'SET_FEE_STRUCTURES'; payload: FeeStructure[] }
+  | { type: 'SET_FEE_STRUCTURES_V2'; payload: FeeStructureV2[] }
+  | { type: 'ADD_FEE_STRUCTURE_V2'; payload: FeeStructureV2 }
+  | { type: 'UPDATE_FEE_STRUCTURE_V2'; payload: FeeStructureV2 }
+  | { type: 'DELETE_FEE_STRUCTURE_V2'; payload: string }
   | { type: 'SET_MONTHLY_SUMMARIES'; payload: MonthlySummary[] }
   | { type: 'UPDATE_DASHBOARD_CONFIG'; payload: Partial<DashboardConfig> }
   | { type: 'CLEAR_ALL_DATA' }
@@ -41,6 +47,7 @@ const initialState: HealthcareState = {
   experienceData: [],
   highCostClaimants: [],
   feeStructures: [],
+  feeStructuresV2: [],
   monthlySummaries: [],
   dashboardConfig: initialDashboardConfig,
   loading: false,
@@ -73,13 +80,47 @@ function healthcareReducer(state: HealthcareState, action: HealthcareAction): He
       };
     
     case 'SET_FEE_STRUCTURES':
-      return { 
-        ...state, 
-        feeStructures: action.payload, 
+      return {
+        ...state,
+        feeStructures: action.payload,
         dataLastUpdated: new Date().toISOString(),
-        error: null 
+        error: null
       };
-    
+
+    case 'SET_FEE_STRUCTURES_V2':
+      return {
+        ...state,
+        feeStructuresV2: action.payload,
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
+    case 'ADD_FEE_STRUCTURE_V2':
+      return {
+        ...state,
+        feeStructuresV2: [...state.feeStructuresV2, action.payload],
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
+    case 'UPDATE_FEE_STRUCTURE_V2':
+      return {
+        ...state,
+        feeStructuresV2: state.feeStructuresV2.map(fee =>
+          fee.id === action.payload.id ? action.payload : fee
+        ),
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
+    case 'DELETE_FEE_STRUCTURE_V2':
+      return {
+        ...state,
+        feeStructuresV2: state.feeStructuresV2.filter(fee => fee.id !== action.payload),
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
     case 'SET_MONTHLY_SUMMARIES':
       return { 
         ...state, 
@@ -116,6 +157,10 @@ interface HealthcareContextType {
     setExperienceData: (data: ExperienceData[]) => void;
     setHighCostClaimants: (data: HighCostClaimant[]) => void;
     setFeeStructures: (data: FeeStructure[]) => void;
+    setFeeStructuresV2: (data: FeeStructureV2[]) => void;
+    addFeeStructureV2: (fee: FeeStructureV2) => void;
+    updateFeeStructureV2: (fee: FeeStructureV2) => void;
+    deleteFeeStructureV2: (feeId: string) => void;
     setMonthlySummaries: (data: MonthlySummary[]) => void;
     updateDashboardConfig: (config: Partial<DashboardConfig>) => void;
     clearAllData: () => void;
@@ -189,6 +234,10 @@ export function HealthcareProvider({ children }: { children: React.ReactNode }) 
     setExperienceData: (data: ExperienceData[]) => dispatch({ type: 'SET_EXPERIENCE_DATA', payload: data }),
     setHighCostClaimants: (data: HighCostClaimant[]) => dispatch({ type: 'SET_HIGH_COST_CLAIMANTS', payload: data }),
     setFeeStructures: (data: FeeStructure[]) => dispatch({ type: 'SET_FEE_STRUCTURES', payload: data }),
+    setFeeStructuresV2: (data: FeeStructureV2[]) => dispatch({ type: 'SET_FEE_STRUCTURES_V2', payload: data }),
+    addFeeStructureV2: (fee: FeeStructureV2) => dispatch({ type: 'ADD_FEE_STRUCTURE_V2', payload: fee }),
+    updateFeeStructureV2: (fee: FeeStructureV2) => dispatch({ type: 'UPDATE_FEE_STRUCTURE_V2', payload: fee }),
+    deleteFeeStructureV2: (feeId: string) => dispatch({ type: 'DELETE_FEE_STRUCTURE_V2', payload: feeId }),
     setMonthlySummaries: (data: MonthlySummary[]) => dispatch({ type: 'SET_MONTHLY_SUMMARIES', payload: data }),
     updateDashboardConfig: (config: Partial<DashboardConfig>) => dispatch({ type: 'UPDATE_DASHBOARD_CONFIG', payload: config }),
     clearAllData: () => dispatch({ type: 'CLEAR_ALL_DATA' }),
@@ -240,4 +289,9 @@ export function useDashboardConfig() {
 export function useLoadingState() {
   const { state } = useHealthcare();
   return { loading: state.loading, error: state.error };
+}
+
+export function useFeeStructuresV2() {
+  const { state } = useHealthcare();
+  return state.feeStructuresV2;
 }

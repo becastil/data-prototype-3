@@ -201,6 +201,7 @@ export interface MonthlyFeeInstance {
     baseCalculation: number;
     tierAdjustment?: number;
     seasonalAdjustment?: number;
+    escalationAdjustment?: number;
     constraintAdjustment?: number;
     proRatingAdjustment?: number;
     components?: { label: string; amount: number }[]; // For blended rates
