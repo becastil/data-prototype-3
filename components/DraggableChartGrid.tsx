@@ -189,25 +189,41 @@ export function DraggableChartGrid({
                   p: 1,
                   borderBottom: '1px solid #e0e0e0',
                   backgroundColor: '#fafafa',
-                  cursor: 'move'
                 }}
-                className="drag-handle"
               >
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                {/* Drag Handle - left side only */}
+                <Box
+                  className="drag-handle"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    cursor: 'move',
+                    flex: 1
+                  }}
+                >
                   <DragIndicatorIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
                   {getChartIcon(chart.type)}
                   <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                     {chart.title}
                   </Typography>
                 </Box>
+
+                {/* Close button - NOT inside drag handle */}
                 <IconButton
                   size="small"
-                  onClick={() => handleRemoveChart(chart.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemoveChart(chart.id);
+                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
                   className="chart-controls"
                   sx={{
-                    opacity: 0,
+                    opacity: 0.6,
                     transition: 'opacity 0.2s',
+                    pointerEvents: 'auto',
                     '&:hover': {
+                      opacity: 1,
                       backgroundColor: 'error.light',
                       color: 'error.contrastText'
                     }
