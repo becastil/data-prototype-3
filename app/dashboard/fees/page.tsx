@@ -133,20 +133,19 @@ function FeesPageContent() {
   };
 
   return (
-    <ClientOnly>
-      <Container maxWidth="xl" sx={{ py: 4 }}>
-        {/* Header */}
-        <Box sx={{ mb: 3 }}>
-          <Button
-            component={Link}
-            href="/"
-            startIcon={<ArrowBackIcon />}
-            sx={{ mb: 2 }}
-          >
-            Back to Home
-          </Button>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      {/* Header */}
+      <Box sx={{ mb: 3 }}>
+        <Button
+          component={Link}
+          href="/"
+          startIcon={<ArrowBackIcon />}
+          sx={{ mb: 2 }}
+        >
+          Back to Home
+        </Button>
 
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
             <Box>
               <Typography variant="h4" component="h1" gutterBottom>
                 Fee Configuration
@@ -383,7 +382,7 @@ function FeesPageContent() {
             </Typography>
           </Box>
         </Paper>
-      </Container>
+    </Container>
   );
 }
 
