@@ -12,28 +12,32 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Tabs,
-  Tab
+  Tab,
+  CircularProgress
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import InfoIcon from '@mui/icons-material/Info';
+import ErrorIcon from '@mui/icons-material/Error';
 import Link from 'next/link';
 import { useHealthcare, useExperienceData, useFeeStructures, useFeeStructuresV2 } from '@/lib/store/HealthcareContext';
 import { FeeStructureV2 } from '@/types/fees';
 import { ClientOnly } from '@/components/ClientOnly';
 import FeeModal from './components/FeeModal';
 import FeesGridV2 from './components/FeesGridV2';
+import { FeesGrid } from './components/FeesGrid';
 
-export default function FeesPage() {
+function FeesPageContent() {
   const { state, actions } = useHealthcare();
-  const experienceData = useExperienceData();
-  const legacyFees = useFeeStructures();
-  const feeStructuresV2 = useFeeStructuresV2();
+  const experienceData = useExperienceData() || [];
+  const legacyFees = useFeeStructures() || [];
+  const feeStructuresV2 = useFeeStructuresV2() || [];
 
   // UI State - Default to V2 for all users
   const [useV2System, setUseV2System] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [feeModalOpen, setFeeModalOpen] = useState(false);
   const [editingFee, setEditingFee] = useState<Partial<FeeStructureV2> | undefined>();
   const [saved, setSaved] = useState(false);
@@ -53,28 +57,33 @@ export default function FeesPage() {
 
   // Save fee (V2)
   const handleSaveFee = (fee: Partial<FeeStructureV2>) => {
-    if (fee.id && feeStructuresV2.some(f => f.id === fee.id)) {
-      actions.updateFeeStructureV2(fee as FeeStructureV2);
-    } else {
-      const newFee: FeeStructureV2 = {
-        ...fee,
-        id: fee.id || `fee-${Date.now()}`,
-        name: fee.name || 'New Fee',
-        category: fee.category || 'administrative',
-        rateBasis: fee.rateBasis || 'pmpm',
-        tieringEnabled: fee.tieringEnabled || false,
-        effectiveStartDate: fee.effectiveStartDate || new Date().toISOString().split('T')[0],
-        status: fee.status || 'active',
-        version: fee.version || 1,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      } as FeeStructureV2;
+    try {
+      if (fee.id && feeStructuresV2.some(f => f.id === fee.id)) {
+        actions.updateFeeStructureV2(fee as FeeStructureV2);
+      } else {
+        const newFee: FeeStructureV2 = {
+          ...fee,
+          id: fee.id || `fee-${Date.now()}`,
+          name: fee.name || 'New Fee',
+          category: fee.category || 'administrative',
+          rateBasis: fee.rateBasis || 'pmpm',
+          tieringEnabled: fee.tieringEnabled || false,
+          effectiveStartDate: fee.effectiveStartDate || new Date().toISOString().split('T')[0],
+          status: fee.status || 'active',
+          version: fee.version || 1,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        } as FeeStructureV2;
 
-      actions.addFeeStructureV2(newFee);
+        actions.addFeeStructureV2(newFee);
+      }
+
+      setFeeModalOpen(false);
+      setEditingFee(undefined);
+      setError(null);
+    } catch (err) {
+      setError('Failed to save fee: ' + (err instanceof Error ? err.message : 'Unknown error'));
     }
-
-    setFeeModalOpen(false);
-    setEditingFee(undefined);
   };
 
   // Delete fee (V2)
@@ -207,6 +216,12 @@ export default function FeesPage() {
         </Box>
 
         {/* Alerts */}
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }} icon={<ErrorIcon />} onClose={() => setError(null)}>
+            {error}
+          </Alert>
+        )}
+
         {saved && (
           <Alert severity="success" sx={{ mb: 3 }}>
             Fee configuration saved successfully!
@@ -325,18 +340,17 @@ export default function FeesPage() {
           </Box>
         ) : (
           // V1 Legacy System
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Legacy Fee Management (V1)
-            </Typography>
-            <Typography variant="body2" color="text.secondary" paragraph>
-              You are using the legacy fee system. Switch to V2 for advanced features.
-            </Typography>
-            {/* Include legacy FeesGrid here */}
-            <Alert severity="warning">
-              Legacy V1 system - Limited functionality. Please upgrade to V2 for full features.
+          <Box>
+            <Alert severity="info" sx={{ mb: 3 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                You are using the legacy fee system
+              </Typography>
+              <Typography variant="body2">
+                Switch to V2 Advanced for access to 9 fee types, tiered pricing, and automatic calculations.
+              </Typography>
             </Alert>
-          </Paper>
+            <FeesGrid />
+          </Box>
         )}
 
         {/* Navigation */}
@@ -370,6 +384,13 @@ export default function FeesPage() {
           </Box>
         </Paper>
       </Container>
+  );
+}
+
+export default function FeesPage() {
+  return (
+    <ClientOnly>
+      <FeesPageContent />
     </ClientOnly>
   );
 }
