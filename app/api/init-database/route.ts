@@ -24,7 +24,8 @@ export async function POST(request: NextRequest) {
 
     try {
       sqlContent = readFileSync(sqlFilePath, 'utf-8');
-    } catch (error) {
+    } catch {
+      // Error reading file - likely doesn't exist
       return NextResponse.json({
         success: false,
         error: 'Could not read init-db.sql file. Make sure it exists in scripts/init-db.sql'
