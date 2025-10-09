@@ -172,3 +172,60 @@ Import trace for requested module:
 [2m[  5.65ms][22m  [2m ↳ [22mUpdate PostCSS AST
 
  ✓ Compiled in 2.6s (1371 modules)
+
+[2m[284.53ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.04ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.54ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[112.86ms][22m  [2m ↳ [22mScan for candidates
+[2m[155.46ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  3.94ms][22m  [2m ↳ [22mBuild utilities
+[2m[  9.93ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2s (1371 modules)
+
+[2m[213.35ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.82ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[104.18ms][22m  [2m ↳ [22mScan for candidates
+[2m[100.84ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.28ms][22m  [2m ↳ [22mBuild utilities
+[2m[  4.85ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1849ms (1371 modules)
+[Error: ENOENT: no such file or directory, stat 'C:\Users\becas\data-prototype-3\.next\cache\webpack\client-development\2.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\becas\\data-prototype-3\\.next\\cache\\webpack\\client-development\\2.pack.gz'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, stat 'C:\Users\becas\data-prototype-3\.next\cache\webpack\client-development\2.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\becas\\data-prototype-3\\.next\\cache\\webpack\\client-development\\2.pack.gz'
+}
+ ⨯ unhandledRejection:  [Error: ENOENT: no such file or directory, stat 'C:\Users\becas\data-prototype-3\.next\cache\webpack\client-development\2.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\becas\\data-prototype-3\\.next\\cache\\webpack\\client-development\\2.pack.gz'
+}
+[Error: ENOENT: no such file or directory, stat 'C:\Users\becas\data-prototype-3\.next\cache\webpack\client-development\4.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\becas\\data-prototype-3\\.next\\cache\\webpack\\client-development\\4.pack.gz'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, stat 'C:\Users\becas\data-prototype-3\.next\cache\webpack\client-development\4.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\becas\\data-prototype-3\\.next\\cache\\webpack\\client-development\\4.pack.gz'
+}
+ ⨯ unhandledRejection:  [Error: ENOENT: no such file or directory, stat 'C:\Users\becas\data-prototype-3\.next\cache\webpack\client-development\4.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\becas\\data-prototype-3\\.next\\cache\\webpack\\client-development\\4.pack.gz'
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, stat 'C:\Users\becas\data-prototype-3\.next\cache\webpack\client-development\2.pack.gz'
