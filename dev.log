@@ -976,3 +976,13 @@ Import trace for requested module:
 [2m[  2.90ms][22m  [2m ↳ [22mUpdate PostCSS AST
 
  ✓ Compiled in 1103ms (1366 modules)
+
+[2m[1048.30ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[   0.12ms][22m  [2m ↳ [22mQuick bail check
+[2m[   6.16ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 504.91ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 375.68ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[   1.79ms][22m  [2m ↳ [22mBuild utilities
+[2m[ 158.86ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 8s (1362 modules)
