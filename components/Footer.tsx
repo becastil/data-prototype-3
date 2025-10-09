@@ -13,33 +13,25 @@ export function Footer() {
         py: 4,
         px: 2,
         mt: 'auto',
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-        borderTop: '1px solid',
-        borderColor: 'divider'
+        backgroundColor: '#fafafa',
+        borderTop: '1px solid #e0e0e0'
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              C&E Reporting Platform
-            </Typography>
             <Typography variant="body2" color="text.secondary">
-              Professional claims and expenses reporting with automated calculations and interactive analytics.
+              Claims and expenses reporting
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              Quick Links
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
               <MuiLink
                 component={Link}
                 href="/"
                 variant="body2"
                 color="text.secondary"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
               >
                 Home
               </MuiLink>
@@ -48,7 +40,7 @@ export function Footer() {
                 href="/dashboard/upload"
                 variant="body2"
                 color="text.secondary"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
               >
                 Upload Data
               </MuiLink>
@@ -57,50 +49,47 @@ export function Footer() {
                 href="/dashboard/analytics"
                 variant="body2"
                 color="text.secondary"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
               >
                 Analytics
               </MuiLink>
             </Box>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              Legal
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
               <MuiLink
                 component={Link}
                 href="/legal/privacy"
                 variant="body2"
                 color="text.secondary"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
               >
-                Privacy Policy
+                Privacy
               </MuiLink>
               <MuiLink
                 component={Link}
                 href="/legal/terms"
                 variant="body2"
                 color="text.secondary"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
               >
-                Terms of Service
+                Terms
               </MuiLink>
               <MuiLink
                 component={Link}
                 href="/contact"
                 variant="body2"
                 color="text.secondary"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
               >
-                Contact Support
+                Contact
               </MuiLink>
             </Box>
           </Grid>
         </Grid>
-        <Divider sx={{ my: 3 }} />
+        <Divider sx={{ my: 2, borderColor: '#e0e0e0' }} />
         <Typography variant="body2" color="text.secondary" align="center">
-          © {currentYear} C&E Reporting Platform. All rights reserved.
+          © {currentYear} C&E Reporting Platform
         </Typography>
       </Container>
     </Box>

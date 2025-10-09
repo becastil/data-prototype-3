@@ -13,14 +13,14 @@ import "./globals.css";
 export const dynamic = 'force-dynamic';
 
 const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
+  weight: ['400', '600'],
   subsets: ['latin'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
   title: "C&E Reporting Platform",
-  description: "Professional claims and expenses reporting with automated calculations and interactive analytics",
+  description: "Claims and expenses reporting",
 };
 
 export default function RootLayout({

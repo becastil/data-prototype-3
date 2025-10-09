@@ -6,79 +6,85 @@ import { CssBaseline } from '@mui/material';
 import { ReactNode, useMemo } from 'react';
 
 export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
-  // Create theme on client side to avoid serialization issues
+  // Create minimalist theme on client side to avoid serialization issues
   const healthcareTheme = useMemo(() => createTheme({
   palette: {
     primary: {
-      main: '#1976d2', // Medical blue
+      main: '#1976d2', // Blue accent for buttons only
       light: '#42a5f5',
       dark: '#1565c0',
     },
     secondary: {
-      main: '#2e7d32', // Healthcare green
-      light: '#4caf50',
-      dark: '#1b5e20',
+      main: '#666666', // Medium gray
+      light: '#999999',
+      dark: '#333333',
     },
     background: {
-      default: '#f5f5f5',
+      default: '#ffffff',
       paper: '#ffffff',
     },
+    text: {
+      primary: '#1a1a1a',
+      secondary: '#666666',
+    },
     error: {
-      main: '#d32f2f',
+      main: '#1a1a1a',
     },
     warning: {
-      main: '#ff6f00',
+      main: '#1a1a1a',
     },
     info: {
-      main: '#0288d1',
+      main: '#1a1a1a',
     },
     success: {
-      main: '#2e7d32',
+      main: '#1a1a1a',
     },
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h1: {
-      fontSize: '2.5rem',
-      fontWeight: 500,
-      color: '#1976d2',
+      fontSize: '2rem',
+      fontWeight: 600,
+      color: '#1a1a1a',
     },
     h2: {
-      fontSize: '2rem',
-      fontWeight: 500,
-      color: '#1976d2',
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      color: '#1a1a1a',
     },
     h3: {
-      fontSize: '1.75rem',
-      fontWeight: 500,
-      color: '#1976d2',
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      color: '#1a1a1a',
     },
     h4: {
-      fontSize: '1.5rem',
-      fontWeight: 500,
-      color: '#1976d2',
+      fontSize: '1.125rem',
+      fontWeight: 600,
+      color: '#1a1a1a',
     },
     h5: {
-      fontSize: '1.25rem',
-      fontWeight: 500,
-      color: '#1976d2',
+      fontSize: '1.125rem',
+      fontWeight: 600,
+      color: '#1a1a1a',
     },
     h6: {
-      fontSize: '1.1rem',
-      fontWeight: 500,
-      color: '#1976d2',
+      fontSize: '1rem',
+      fontWeight: 600,
+      color: '#1a1a1a',
     },
     body1: {
       fontSize: '1rem',
-      lineHeight: 1.5,
+      lineHeight: 1.8,
+      fontWeight: 400,
     },
     body2: {
       fontSize: '0.875rem',
-      lineHeight: 1.43,
+      lineHeight: 1.6,
+      fontWeight: 400,
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 4,
   },
   breakpoints: {
     values: {
@@ -93,18 +99,18 @@ export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
     MuiCard: {
       styleOverrides: {
         root: {
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-          borderRadius: '12px',
-          border: '1px solid #e0e0e0',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+          borderRadius: '4px',
+          border: '1px solid #e8e8e8',
         },
       },
     },
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: '24px',
+          padding: '20px',
           '&:last-child': {
-            paddingBottom: '24px',
+            paddingBottom: '20px',
           },
         },
       },
@@ -113,39 +119,54 @@ export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
       styleOverrides: {
         root: {
           textTransform: 'none',
-          borderRadius: '8px',
+          borderRadius: '4px',
           padding: '10px 20px',
           fontSize: '0.875rem',
-          fontWeight: 500,
+          fontWeight: 400,
         },
         contained: {
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          boxShadow: 'none',
           '&:hover': {
-            boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+            boxShadow: 'none',
           },
         },
+        outlined: {
+          borderWidth: '2px',
+          borderColor: '#1976d2',
+          color: '#1976d2',
+          backgroundColor: '#ffffff',
+          '&:hover': {
+            borderWidth: '2px',
+            backgroundColor: '#1976d2',
+            color: '#ffffff',
+          },
+        },
+      },
+      defaultProps: {
+        variant: 'outlined',
       },
     },
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: '6px',
-          fontSize: '0.75rem',
-          fontWeight: 500,
+          display: 'none', // Hide chips by default for minimalist design
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          boxShadow: 'none',
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          boxShadow: 'none',
+          backgroundColor: '#ffffff',
+          borderBottom: '1px solid #e0e0e0',
+          color: '#333333',
         },
       },
     },
@@ -154,7 +175,7 @@ export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
         root: {
           '& .MuiTableCell-head': {
             backgroundColor: '#f5f5f5',
-            color: '#1976d2',
+            color: '#1a1a1a',
             fontWeight: 600,
             fontSize: '0.875rem',
           },
@@ -172,7 +193,7 @@ export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            borderRadius: '8px',
+            borderRadius: '4px',
           },
         },
       },
@@ -180,7 +201,7 @@ export function ClientThemeProvider({ children }: ClientThemeProviderProps) {
     MuiAlert: {
       styleOverrides: {
         root: {
-          borderRadius: '8px',
+          borderRadius: '4px',
         },
       },
     },
