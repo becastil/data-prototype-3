@@ -348,7 +348,12 @@ function FeesPageContent() {
                 Switch to V2 Advanced for access to 9 fee types, tiered pricing, and automatic calculations.
               </Typography>
             </Alert>
-            <FeesGrid />
+            <FeesGrid
+              data={legacyFees}
+              onDataChange={(newData) => {
+                actions.setFeeStructures(newData);
+              }}
+            />
           </Box>
         )}
 

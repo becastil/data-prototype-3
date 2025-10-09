@@ -242,7 +242,8 @@ export function useFeeCalculations({
     } else {
       setNeedsRecalculation(true);
     }
-  }, [dataHash, autoRecalculate, calculateAll]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataHash, autoRecalculate]);
 
   return {
     // Data
