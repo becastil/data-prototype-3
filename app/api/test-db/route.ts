@@ -23,7 +23,7 @@ export async function GET() {
     const dbVersion = versionResult[0]?.version;
 
     // Test 4: Count records in main tables (if they exist)
-    let recordCounts: Record<string, number> = {};
+    const recordCounts: Record<string, number> = {};
 
     if (tableNames.includes('experience_data')) {
       const count = await sql`SELECT COUNT(*) as count FROM experience_data`;

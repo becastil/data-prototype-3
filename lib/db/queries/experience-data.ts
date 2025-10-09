@@ -154,7 +154,7 @@ export async function getTotalClaims(startMonth?: string, endMonth?: string, use
     FROM experience_data
   `;
 
-  const conditions: any[] = [];
+  const conditions: ReturnType<typeof sql>[] = [];
 
   if (userId) conditions.push(sql`user_id = ${userId}`);
   if (startMonth) conditions.push(sql`month >= ${startMonth}`);

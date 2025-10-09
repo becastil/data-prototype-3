@@ -7,12 +7,12 @@ import { insertManyMonthlySummaries, upsertMonthlySummary } from '@/lib/db/queri
 import { insertDashboardConfig } from '@/lib/db/queries/config';
 
 interface MigrationData {
-  experienceData?: any[];
-  highCostClaimants?: any[];
-  feeStructures?: any[];
-  feeStructuresV2?: any[];
-  monthlySummaries?: any[];
-  dashboardConfig?: any;
+  experienceData?: Record<string, unknown>[];
+  highCostClaimants?: Record<string, unknown>[];
+  feeStructures?: Record<string, unknown>[];
+  feeStructuresV2?: Record<string, unknown>[];
+  monthlySummaries?: Record<string, unknown>[];
+  dashboardConfig?: Record<string, unknown>;
   userId?: string;
 }
 

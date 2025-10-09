@@ -150,7 +150,7 @@ export async function GET(request: NextRequest) {
         database: databaseSize
       },
       message: 'Statistics retrieved successfully'
-    } as ApiResponse<any>);
+    });
 
   } catch (error) {
     console.error('GET /api/stats error:', error);

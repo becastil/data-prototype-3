@@ -129,12 +129,12 @@ export interface InsertFeeStructureV2Params {
   feeType: 'flat' | 'pepm' | 'pmpm' | 'tiered' | 'annual' | 'percentage';
   baseAmount?: number;
   percentage?: number;
-  tiers?: any; // JSONB field
+  tiers?: Record<string, unknown>; // JSONB field
   effectiveStartDate: string;
   effectiveEndDate?: string;
   isActive?: boolean;
   description?: string;
-  metadata?: any; // JSONB field
+  metadata?: Record<string, unknown>; // JSONB field
 }
 
 /**
