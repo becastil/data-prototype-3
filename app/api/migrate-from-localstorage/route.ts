@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ApiResponse } from '@/types/api';
-import { insertManyExperienceData, upsertExperienceData } from '@/lib/db/queries/experience-data';
-import { insertManyHighCostClaimants } from '@/lib/db/queries/claimants';
-import { insertManyFeeStructures, insertFeeStructureV2 } from '@/lib/db/queries/fees';
-import { insertManyMonthlySummaries, upsertMonthlySummary } from '@/lib/db/queries/summaries';
-import { insertDashboardConfig } from '@/lib/db/queries/config';
+import { upsertExperienceData, InsertExperienceDataParams } from '@/lib/db/queries/experience-data';
+import { insertManyHighCostClaimants, InsertHighCostClaimantParams } from '@/lib/db/queries/claimants';
+import { insertFeeStructureV2, InsertFeeStructureV2Params, insertManyFeeStructures, InsertFeeStructureParams } from '@/lib/db/queries/fees';
+import { upsertMonthlySummary, InsertMonthlySummaryParams } from '@/lib/db/queries/summaries';
+import { insertDashboardConfig, InsertDashboardConfigParams } from '@/lib/db/queries/config';
 
 interface MigrationData {
   experienceData?: Record<string, unknown>[];
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         // Use upsert to avoid duplicates
         for (const record of recordsToInsert) {
           try {
-            await upsertExperienceData(record);
+            await upsertExperienceData(record as unknown as InsertExperienceDataParams);
             result.experienceData++;
           } catch (error) {
             result.errors.push(`Experience data error: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
         const recordsToInsert = highCostClaimants.map(record => ({
           ...record,
           userId: userId || record.userId
-        }));
+        })) as unknown as InsertHighCostClaimantParams[];
 
         const inserted = await insertManyHighCostClaimants(recordsToInsert);
         result.highCostClaimants = inserted.length;
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
         const recordsToInsert = feeStructures.map(record => ({
           ...record,
           userId: userId || record.userId
-        }));
+        })) as unknown as InsertFeeStructureParams[];
 
         const inserted = await insertManyFeeStructures(recordsToInsert);
         result.feeStructures = inserted.length;
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
             await insertFeeStructureV2({
               ...record,
               userId: userId || record.userId
-            });
+            } as unknown as InsertFeeStructureV2Params);
             result.feeStructuresV2++;
           } catch (error) {
             result.errors.push(`Fee structure V2 error: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
             await upsertMonthlySummary({
               ...record,
               userId: userId || record.userId
-            });
+            } as unknown as InsertMonthlySummaryParams);
             result.monthlySummaries++;
           } catch (error) {
             result.errors.push(`Monthly summary error: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
           ...dashboardConfig,
           userId: userId || dashboardConfig.userId,
           isActive: true
-        });
+        } as unknown as InsertDashboardConfigParams);
         result.dashboardConfig = 1;
       } catch (error) {
         result.errors.push(`Dashboard config migration failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
