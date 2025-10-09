@@ -1,0 +1,56 @@
+
+> healthcare-dashboard@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.56.1:3000
+
+ ✓ Starting...
+ ✓ Ready in 3s
+ ○ Compiling /dashboard/fees ...
+
+[2m[1985.78ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[   1.47ms][22m  [2m ↳ [22mQuick bail check
+[2m[1307.94ms][22m  [2m ↳ [22mSetup compiler
+[2m[   3.40ms][22m    [2m ↳ [22mPostCSS AST -> Tailwind CSS AST
+[2m[1304.10ms][22m    [2m ↳ [22mCreate compiler
+[2m[   0.43ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[   3.12ms][22m  [2m ↳ [22mSetup scanner
+[2m[ 218.15ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 315.86ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  92.25ms][22m  [2m ↳ [22mBuild utilities
+[2m[  27.24ms][22m  [2m ↳ [22mTransform Tailwind CSS AST into PostCSS AST
+[2m[   8.03ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled /dashboard/fees in 35.3s (2059 modules)
+
+[2m[67.26ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[ 0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[ 0.42ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[33.85ms][22m  [2m ↳ [22mScan for candidates
+[2m[30.07ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[ 0.79ms][22m  [2m ↳ [22mBuild utilities
+[2m[ 1.74ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1251ms (2050 modules)
+
+[2m[104.79ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.12ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.15ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 44.73ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 51.45ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  3.40ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.04ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1071ms (944 modules)
+
+[2m[63.09ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[ 0.03ms][22m  [2m ↳ [22mQuick bail check
+[2m[ 0.40ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[29.56ms][22m  [2m ↳ [22mScan for candidates
+[2m[25.44ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[ 1.51ms][22m  [2m ↳ [22mBuild utilities
+[2m[ 5.62ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 628ms (944 modules)
