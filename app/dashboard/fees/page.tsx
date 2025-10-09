@@ -32,8 +32,8 @@ export default function FeesPage() {
   const legacyFees = useFeeStructures();
   const feeStructuresV2 = useFeeStructuresV2();
 
-  // UI State - Default to V2 if there are V2 fees or no legacy fees
-  const [useV2System, setUseV2System] = useState(feeStructuresV2.length > 0 || legacyFees.length === 0);
+  // UI State - Default to V2 for all users
+  const [useV2System, setUseV2System] = useState(true);
   const [feeModalOpen, setFeeModalOpen] = useState(false);
   const [editingFee, setEditingFee] = useState<Partial<FeeStructureV2> | undefined>();
   const [saved, setSaved] = useState(false);
