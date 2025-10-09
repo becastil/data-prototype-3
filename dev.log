@@ -54,3 +54,121 @@
 [2m[ 5.62ms][22m  [2m ↳ [22mUpdate PostCSS AST
 
  ✓ Compiled in 628ms (944 modules)
+
+[2m[55.94ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[ 0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[ 0.35ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[26.14ms][22m  [2m ↳ [22mScan for candidates
+[2m[25.33ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[ 0.80ms][22m  [2m ↳ [22mBuild utilities
+[2m[ 3.06ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 644ms (944 modules)
+
+[2m[114.54ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.37ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 57.74ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 51.13ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  0.80ms][22m  [2m ↳ [22mBuild utilities
+[2m[  4.20ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 646ms (944 modules)
+
+[2m[307.82ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.44ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[150.46ms][22m  [2m ↳ [22mScan for candidates
+[2m[148.15ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.03ms][22m  [2m ↳ [22mBuild utilities
+[2m[  5.67ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1131ms (944 modules)
+
+[2m[273.12ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.71ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[127.19ms][22m  [2m ↳ [22mScan for candidates
+[2m[140.27ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.13ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.40ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1143ms (945 modules)
+
+[2m[116.95ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.37ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 56.13ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 57.22ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  0.61ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.39ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 9.7s (1371 modules)
+
+[2m[362.22ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.06ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.46ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[176.53ms][22m  [2m ↳ [22mScan for candidates
+[2m[178.94ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.18ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.37ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ⨯ ./app/dashboard/fees/page.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4mC:\Users\becas\data-prototype-3\app\dashboard\fees\page.tsx[0m:388:1]
+ [2m385[0m |         </Paper>
+ [2m386[0m |       </Container>
+ [2m387[0m |   );
+ [2m388[0m | }
+     : [35;1m^[0m
+ [2m389[0m | 
+ [2m390[0m | export default function FeesPage() {
+ [2m391[0m |   return (
+     `----
+  [31mx[0m Expected '</', got 'return'
+     ,-[[36;1;4mC:\Users\becas\data-prototype-3\app\dashboard\fees\page.tsx[0m:391:1]
+ [2m388[0m | }
+ [2m389[0m | 
+ [2m390[0m | export default function FeesPage() {
+ [2m391[0m |   return (
+     : [35;1m  ^^^^^^[0m
+ [2m392[0m |     <ClientOnly>
+ [2m393[0m |       <FeesPageContent />
+ [2m394[0m |     </ClientOnly>
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/dashboard/fees/page.tsx
+
+[2m[421.80ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.25ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.54ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[216.03ms][22m  [2m ↳ [22mScan for candidates
+[2m[186.56ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  6.74ms][22m  [2m ↳ [22mBuild utilities
+[2m[  9.45ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 6.6s (1371 modules)
+
+[2m[608.23ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.08ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.98ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[321.34ms][22m  [2m ↳ [22mScan for candidates
+[2m[267.90ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  4.63ms][22m  [2m ↳ [22mBuild utilities
+[2m[ 12.71ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 3s (1371 modules)
+
+[2m[359.98ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.04ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.14ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[201.42ms][22m  [2m ↳ [22mScan for candidates
+[2m[148.78ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.37ms][22m  [2m ↳ [22mBuild utilities
+[2m[  5.65ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.6s (1371 modules)
