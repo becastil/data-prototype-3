@@ -696,3 +696,53 @@ Import trace for requested module:
 [2m[  1.83ms][22m  [2m ↳ [22mUpdate PostCSS AST
 
  ✓ Compiled in 720ms (1366 modules)
+
+[2m[507.02ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.05ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.82ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[264.55ms][22m  [2m ↳ [22mScan for candidates
+[2m[234.35ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.98ms][22m  [2m ↳ [22mBuild utilities
+[2m[  4.61ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.6s (1366 modules)
+
+[2m[515.04ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.04ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.40ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[253.28ms][22m  [2m ↳ [22mScan for candidates
+[2m[252.06ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.63ms][22m  [2m ↳ [22mBuild utilities
+[2m[  5.05ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1736ms (1366 modules)
+
+[2m[438.40ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.03ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.07ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[217.22ms][22m  [2m ↳ [22mScan for candidates
+[2m[211.56ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.70ms][22m  [2m ↳ [22mBuild utilities
+[2m[  5.97ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1443ms (1366 modules)
+
+[2m[135.25ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.51ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 71.85ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 59.40ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.02ms][22m  [2m ↳ [22mBuild utilities
+[2m[  1.99ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 598ms (1366 modules)
+
+[2m[133.31ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.44ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 67.03ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 62.49ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  0.92ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.21ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 565ms (1366 modules)
