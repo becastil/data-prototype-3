@@ -1,5 +1,5 @@
 import sql from '../connection';
-import { FeeStructure } from '@/types/healthcare';
+import type { FeeStructure } from '@/types/healthcare';
 
 export interface InsertFeeStructureParams {
   userId?: string;
@@ -141,8 +141,14 @@ export interface InsertFeeStructureV2Params {
  * Insert a fee structure V2
  */
 export async function insertFeeStructureV2(data: InsertFeeStructureV2Params) {
+  const insertData = {
+    ...data,
+    tiers: data.tiers ? JSON.stringify(data.tiers) : null,
+    metadata: data.metadata ? JSON.stringify(data.metadata) : null,
+  };
+
   const result = await sql`
-    INSERT INTO fee_structures_v2 ${sql(data)}
+    INSERT INTO fee_structures_v2 ${sql(insertData)}
     RETURNING *
   `;
   return result[0];
@@ -197,9 +203,15 @@ export async function getFeeStructureV2ById(id: string) {
  * Update fee structure V2
  */
 export async function updateFeeStructureV2(id: string, data: Partial<InsertFeeStructureV2Params>) {
+  const updateData = {
+    ...data,
+    tiers: data.tiers ? JSON.stringify(data.tiers) : undefined,
+    metadata: data.metadata ? JSON.stringify(data.metadata) : undefined,
+  };
+
   const result = await sql`
     UPDATE fee_structures_v2
-    SET ${sql(data)}
+    SET ${sql(updateData)}
     WHERE id = ${id}
     RETURNING *
   `;

@@ -1,5 +1,5 @@
 import sql from '../connection';
-import { MonthlySummary } from '@/types/healthcare';
+import type { MonthlySummary } from '@/types/healthcare';
 
 export interface InsertMonthlySummaryParams {
   userId?: string;

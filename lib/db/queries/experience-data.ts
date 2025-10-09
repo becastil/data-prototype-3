@@ -1,5 +1,5 @@
 import sql from '../connection';
-import { ExperienceData } from '@/types/healthcare';
+import type { ExperienceData } from '@/types/healthcare';
 
 export interface InsertExperienceDataParams {
   userId?: string;
@@ -144,7 +144,25 @@ export async function deleteAllExperienceData(userId?: string) {
  * Get total claims for a specific period
  */
 export async function getTotalClaims(startMonth?: string, endMonth?: string, userId?: string) {
-  let query = sql`
+  const conditions: string[] = [];
+  const params: string[] = [];
+
+  if (userId) {
+    conditions.push('user_id = $' + (params.length + 1));
+    params.push(userId);
+  }
+  if (startMonth) {
+    conditions.push('month >= $' + (params.length + 1));
+    params.push(startMonth);
+  }
+  if (endMonth) {
+    conditions.push('month <= $' + (params.length + 1));
+    params.push(endMonth);
+  }
+
+  const whereClause = conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : '';
+
+  const result = await sql.unsafe(`
     SELECT
       SUM(domestic_medical_ip + domestic_medical_op + non_domestic_medical +
           prescription_drugs + dental + vision + mental_health + preventive_care +
@@ -152,19 +170,9 @@ export async function getTotalClaims(startMonth?: string, endMonth?: string, use
           physical_therapy + dme + home_health) AS total_claims,
       SUM(enrollment) AS total_enrollment
     FROM experience_data
-  `;
+    ${whereClause}
+  `, params);
 
-  const conditions: ReturnType<typeof sql>[] = [];
-
-  if (userId) conditions.push(sql`user_id = ${userId}`);
-  if (startMonth) conditions.push(sql`month >= ${startMonth}`);
-  if (endMonth) conditions.push(sql`month <= ${endMonth}`);
-
-  if (conditions.length > 0) {
-    query = sql`${query} WHERE ${sql.join(conditions, ' AND ')}`;
-  }
-
-  const result = await query;
   return result[0];
 }
 

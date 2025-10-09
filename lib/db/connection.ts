@@ -16,13 +16,6 @@ const sql = postgres(connectionString, {
   idle_timeout: 20, // Close idle connections after 20 seconds
   connect_timeout: 10, // Connection timeout in seconds
   ssl: process.env.NODE_ENV === 'production' ? 'require' : false, // Require SSL in production
-  // Transform column names from snake_case to camelCase automatically
-  transform: {
-    column: {
-      to: postgres.toCamel,
-      from: postgres.toSnake,
-    },
-  },
   // Enable debugging in development
   debug: process.env.NODE_ENV === 'development' ? console.log : undefined,
 });

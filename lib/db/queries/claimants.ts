@@ -1,5 +1,5 @@
 import sql from '../connection';
-import { HighCostClaimant } from '@/types/healthcare';
+import type { HighCostClaimant } from '@/types/healthcare';
 
 export interface InsertHighCostClaimantParams {
   userId?: string;
