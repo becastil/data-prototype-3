@@ -157,7 +157,7 @@ export function AdjustableLineItems({
 
       {adjustments.length === 0 ? (
         <Alert severity="info">
-          No adjustments configured. Click "Add Adjustment" to create monthly adjustments for claims settlements, rebates, or reimbursements.
+          No adjustments configured. Click &quot;Add Adjustment&quot; to create monthly adjustments for claims settlements, rebates, or reimbursements.
         </Alert>
       ) : (
         <TableContainer>
@@ -230,7 +230,7 @@ export function AdjustableLineItems({
               <Select
                 value={formData.type || 'uc-settlement'}
                 label="Adjustment Type"
-                onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value as UserAdjustableLineItem['type'] })}
               >
                 {ADJUSTMENT_TYPES.map((type) => (
                   <MenuItem key={type.value} value={type.value}>
