@@ -21,18 +21,21 @@ import UpgradeIcon from '@mui/icons-material/Upgrade';
 import InfoIcon from '@mui/icons-material/Info';
 import ErrorIcon from '@mui/icons-material/Error';
 import Link from 'next/link';
-import { useHealthcare, useExperienceData, useFeeStructures, useFeeStructuresV2 } from '@/lib/store/HealthcareContext';
+import { useHealthcare, useExperienceData, useFeeStructures, useFeeStructuresV2, useUserAdjustments } from '@/lib/store/HealthcareContext';
 import { FeeStructureV2 } from '@/types/fees';
 import { ClientOnly } from '@/components/ClientOnly';
 import FeeModal from './components/FeeModal';
 import FeesGridV2 from './components/FeesGridV2';
 import { FeesGrid } from './components/FeesGrid';
+import { AdjustableLineItems } from './components/AdjustableLineItems';
+import { AdminFeesManager } from './components/AdminFeesManager';
 
 function FeesPageContent() {
   const { state, actions } = useHealthcare();
   const experienceData = useExperienceData() || [];
   const legacyFees = useFeeStructures() || [];
   const feeStructuresV2 = useFeeStructuresV2() || [];
+  const userAdjustments = useUserAdjustments() || [];
 
   // UI State - Default to V2 for all users
   const [useV2System, setUseV2System] = useState(true);
@@ -267,8 +270,9 @@ function FeesPageContent() {
             <Paper sx={{ mb: 3 }}>
               <Tabs value={activeTab} onChange={(_, v) => setActiveTab(v)}>
                 <Tab label="Fee Grid" />
+                <Tab label="Admin Fees" />
+                <Tab label="Adjustments" />
                 <Tab label="Settings" />
-                <Tab label="Templates" disabled />
               </Tabs>
             </Paper>
 
@@ -284,8 +288,37 @@ function FeesPageContent() {
               />
             )}
 
-            {/* Tab 1: Settings */}
+            {/* Tab 1: Admin Fees Manager */}
             {activeTab === 1 && (
+              <AdminFeesManager
+                fees={feeStructuresV2}
+                onAdd={(fee) => actions.addFeeStructureV2(fee)}
+                onUpdate={(fee) => actions.updateFeeStructureV2(fee)}
+                onDelete={(feeId) => actions.deleteFeeStructureV2(feeId)}
+                sampleEnrollment={
+                  experienceData.length > 0
+                    ? {
+                        eeCount: experienceData[experienceData.length - 1].enrollment,
+                        memberCount: experienceData[experienceData.length - 1].enrollment
+                      }
+                    : undefined
+                }
+              />
+            )}
+
+            {/* Tab 2: Adjustable Line Items */}
+            {activeTab === 2 && (
+              <AdjustableLineItems
+                adjustments={userAdjustments}
+                onAdd={(adj) => actions.addUserAdjustment(adj)}
+                onUpdate={(adj) => actions.updateUserAdjustment(adj)}
+                onDelete={(id) => actions.deleteUserAdjustment(id)}
+                availableMonths={experienceData.map(exp => exp.month)}
+              />
+            )}
+
+            {/* Tab 3: Settings */}
+            {activeTab === 3 && (
               <Paper sx={{ p: 3 }}>
                 <Typography variant="h6" gutterBottom>
                   Fee Calculation Settings

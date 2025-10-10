@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import { ExperienceData, HighCostClaimant, FeeStructure, MonthlySummary, DashboardConfig } from '@/types/healthcare';
 import { FeeStructureV2 } from '@/types/fees';
+import { UserAdjustableLineItem, BudgetData } from '@/types/summary';
 
 interface HealthcareState {
   experienceData: ExperienceData[];
@@ -11,6 +12,8 @@ interface HealthcareState {
   feeStructuresV2: FeeStructureV2[];
   monthlySummaries: MonthlySummary[];
   dashboardConfig: DashboardConfig;
+  userAdjustments: UserAdjustableLineItem[];
+  budgetData: BudgetData[];
   loading: boolean;
   error: string | null;
   dataLastUpdated: string | null;
@@ -28,6 +31,11 @@ type HealthcareAction =
   | { type: 'DELETE_FEE_STRUCTURE_V2'; payload: string }
   | { type: 'SET_MONTHLY_SUMMARIES'; payload: MonthlySummary[] }
   | { type: 'UPDATE_DASHBOARD_CONFIG'; payload: Partial<DashboardConfig> }
+  | { type: 'SET_USER_ADJUSTMENTS'; payload: UserAdjustableLineItem[] }
+  | { type: 'ADD_USER_ADJUSTMENT'; payload: UserAdjustableLineItem }
+  | { type: 'UPDATE_USER_ADJUSTMENT'; payload: UserAdjustableLineItem }
+  | { type: 'DELETE_USER_ADJUSTMENT'; payload: string }
+  | { type: 'SET_BUDGET_DATA'; payload: BudgetData[] }
   | { type: 'CLEAR_ALL_DATA' }
   | { type: 'LOAD_FROM_STORAGE'; payload: HealthcareState };
 
@@ -50,6 +58,8 @@ const initialState: HealthcareState = {
   feeStructuresV2: [],
   monthlySummaries: [],
   dashboardConfig: initialDashboardConfig,
+  userAdjustments: [],
+  budgetData: [],
   loading: false,
   error: null,
   dataLastUpdated: null,
@@ -130,17 +140,59 @@ function healthcareReducer(state: HealthcareState, action: HealthcareAction): He
       };
     
     case 'UPDATE_DASHBOARD_CONFIG':
-      return { 
-        ...state, 
-        dashboardConfig: { ...state.dashboardConfig, ...action.payload } 
+      return {
+        ...state,
+        dashboardConfig: { ...state.dashboardConfig, ...action.payload }
       };
-    
+
+    case 'SET_USER_ADJUSTMENTS':
+      return {
+        ...state,
+        userAdjustments: action.payload,
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
+    case 'ADD_USER_ADJUSTMENT':
+      return {
+        ...state,
+        userAdjustments: [...state.userAdjustments, action.payload],
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
+    case 'UPDATE_USER_ADJUSTMENT':
+      return {
+        ...state,
+        userAdjustments: state.userAdjustments.map(adj =>
+          adj.id === action.payload.id ? action.payload : adj
+        ),
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
+    case 'DELETE_USER_ADJUSTMENT':
+      return {
+        ...state,
+        userAdjustments: state.userAdjustments.filter(adj => adj.id !== action.payload),
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
+    case 'SET_BUDGET_DATA':
+      return {
+        ...state,
+        budgetData: action.payload,
+        dataLastUpdated: new Date().toISOString(),
+        error: null
+      };
+
     case 'CLEAR_ALL_DATA':
-      return { 
-        ...initialState, 
-        dashboardConfig: state.dashboardConfig 
+      return {
+        ...initialState,
+        dashboardConfig: state.dashboardConfig
       };
-    
+
     case 'LOAD_FROM_STORAGE':
       return action.payload;
     
@@ -163,6 +215,11 @@ interface HealthcareContextType {
     deleteFeeStructureV2: (feeId: string) => void;
     setMonthlySummaries: (data: MonthlySummary[]) => void;
     updateDashboardConfig: (config: Partial<DashboardConfig>) => void;
+    setUserAdjustments: (data: UserAdjustableLineItem[]) => void;
+    addUserAdjustment: (adjustment: UserAdjustableLineItem) => void;
+    updateUserAdjustment: (adjustment: UserAdjustableLineItem) => void;
+    deleteUserAdjustment: (adjustmentId: string) => void;
+    setBudgetData: (data: BudgetData[]) => void;
     clearAllData: () => void;
     saveToStorage: () => void;
     loadFromStorage: () => void;
@@ -240,6 +297,11 @@ export function HealthcareProvider({ children }: { children: React.ReactNode }) 
     deleteFeeStructureV2: (feeId: string) => dispatch({ type: 'DELETE_FEE_STRUCTURE_V2', payload: feeId }),
     setMonthlySummaries: (data: MonthlySummary[]) => dispatch({ type: 'SET_MONTHLY_SUMMARIES', payload: data }),
     updateDashboardConfig: (config: Partial<DashboardConfig>) => dispatch({ type: 'UPDATE_DASHBOARD_CONFIG', payload: config }),
+    setUserAdjustments: (data: UserAdjustableLineItem[]) => dispatch({ type: 'SET_USER_ADJUSTMENTS', payload: data }),
+    addUserAdjustment: (adjustment: UserAdjustableLineItem) => dispatch({ type: 'ADD_USER_ADJUSTMENT', payload: adjustment }),
+    updateUserAdjustment: (adjustment: UserAdjustableLineItem) => dispatch({ type: 'UPDATE_USER_ADJUSTMENT', payload: adjustment }),
+    deleteUserAdjustment: (adjustmentId: string) => dispatch({ type: 'DELETE_USER_ADJUSTMENT', payload: adjustmentId }),
+    setBudgetData: (data: BudgetData[]) => dispatch({ type: 'SET_BUDGET_DATA', payload: data }),
     clearAllData: () => dispatch({ type: 'CLEAR_ALL_DATA' }),
     saveToStorage,
     loadFromStorage,
@@ -294,4 +356,14 @@ export function useLoadingState() {
 export function useFeeStructuresV2() {
   const { state } = useHealthcare();
   return state.feeStructuresV2;
+}
+
+export function useUserAdjustments() {
+  const { state } = useHealthcare();
+  return state.userAdjustments;
+}
+
+export function useBudgetData() {
+  const { state } = useHealthcare();
+  return state.budgetData;
 }

@@ -986,3 +986,321 @@ Import trace for requested module:
 [2m[ 158.86ms][22m  [2m ↳ [22mUpdate PostCSS AST
 
  ✓ Compiled in 8s (1362 modules)
+
+[2m[229.09ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.19ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.03ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[115.51ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 89.81ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[ 15.02ms][22m  [2m ↳ [22mBuild utilities
+[2m[  5.27ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 3.2s (1362 modules)
+
+[2m[237.79ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.03ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.96ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[118.18ms][22m  [2m ↳ [22mScan for candidates
+[2m[113.83ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.12ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.37ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2s (1362 modules)
+
+[2m[285.33ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.75ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[150.76ms][22m  [2m ↳ [22mScan for candidates
+[2m[128.23ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.50ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.59ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1065ms (1362 modules)
+
+[2m[210.09ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.64ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[117.49ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 88.31ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.12ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.23ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1045ms (1362 modules)
+
+[2m[237.15ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.69ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[102.68ms][22m  [2m ↳ [22mScan for candidates
+[2m[129.79ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.20ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.47ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 990ms (1362 modules)
+
+[2m[279.35ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.32ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[115.85ms][22m  [2m ↳ [22mScan for candidates
+[2m[154.90ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.88ms][22m  [2m ↳ [22mBuild utilities
+[2m[  4.77ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1101ms (1362 modules)
+
+[2m[326.46ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.53ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[172.12ms][22m  [2m ↳ [22mScan for candidates
+[2m[148.67ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.73ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.94ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1752ms (1362 modules)
+
+[2m[281.09ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.04ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.06ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[141.66ms][22m  [2m ↳ [22mScan for candidates
+[2m[133.11ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.34ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.37ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1175ms (1362 modules)
+
+[2m[462.93ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.03ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.16ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[236.54ms][22m  [2m ↳ [22mScan for candidates
+[2m[220.29ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.04ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.26ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.4s (1362 modules)
+
+[2m[510.86ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.04ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.03ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[248.05ms][22m  [2m ↳ [22mScan for candidates
+[2m[251.84ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.20ms][22m  [2m ↳ [22mBuild utilities
+[2m[  8.12ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1739ms (1362 modules)
+
+[2m[531.05ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.06ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.96ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[257.72ms][22m  [2m ↳ [22mScan for candidates
+[2m[265.25ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.63ms][22m  [2m ↳ [22mBuild utilities
+[2m[  4.58ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1694ms (1362 modules)
+
+[2m[333.09ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.03ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.70ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[197.19ms][22m  [2m ↳ [22mScan for candidates
+[2m[128.24ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.85ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.53ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1991ms (1362 modules)
+
+[2m[308.95ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.72ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[142.28ms][22m  [2m ↳ [22mScan for candidates
+[2m[161.24ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.23ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.08ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1013ms (1362 modules)
+
+[2m[311.81ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.40ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[131.61ms][22m  [2m ↳ [22mScan for candidates
+[2m[171.10ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.38ms][22m  [2m ↳ [22mBuild utilities
+[2m[  4.85ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1638ms (1362 modules)
+
+[2m[196.81ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.38ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 94.00ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 97.52ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.91ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.69ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 846ms (1362 modules)
+
+[2m[319.31ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.05ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.83ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[200.78ms][22m  [2m ↳ [22mScan for candidates
+[2m[112.18ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.05ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.08ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+
+[2m[287.98ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.64ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[108.43ms][22m  [2m ↳ [22mScan for candidates
+[2m[173.10ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.43ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.96ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.6s (1362 modules)
+
+[2m[454.05ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.07ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[214.65ms][22m  [2m ↳ [22mScan for candidates
+[2m[230.61ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  4.27ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.00ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.8s (1362 modules)
+
+[2m[384.65ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.07ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.97ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[211.85ms][22m  [2m ↳ [22mScan for candidates
+[2m[165.79ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.92ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.51ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1130ms (1362 modules)
+
+[2m[267.92ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.03ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.89ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[130.14ms][22m  [2m ↳ [22mScan for candidates
+[2m[127.61ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.47ms][22m  [2m ↳ [22mBuild utilities
+[2m[  6.37ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1728ms (1362 modules)
+
+[2m[275.90ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.14ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[135.94ms][22m  [2m ↳ [22mScan for candidates
+[2m[128.76ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  3.74ms][22m  [2m ↳ [22mBuild utilities
+[2m[  5.70ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1100ms (1362 modules)
+
+[2m[310.47ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  3.97ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[145.46ms][22m  [2m ↳ [22mScan for candidates
+[2m[152.30ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.45ms][22m  [2m ↳ [22mBuild utilities
+[2m[  5.72ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.6s (1362 modules)
+
+[2m[246.62ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.68ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[117.12ms][22m  [2m ↳ [22mScan for candidates
+[2m[124.69ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.28ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.47ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1139ms (1362 modules)
+
+[2m[273.70ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.04ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.64ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[139.46ms][22m  [2m ↳ [22mScan for candidates
+[2m[129.80ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  0.95ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.17ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1078ms (1362 modules)
+
+[2m[315.32ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.96ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[161.65ms][22m  [2m ↳ [22mScan for candidates
+[2m[146.43ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.62ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.89ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.3s (1370 modules)
+
+[2m[246.62ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.47ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[113.83ms][22m  [2m ↳ [22mScan for candidates
+[2m[129.53ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  0.60ms][22m  [2m ↳ [22mBuild utilities
+[2m[  1.81ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1094ms (1370 modules)
+
+[2m[334.39ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.59ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[178.85ms][22m  [2m ↳ [22mScan for candidates
+[2m[149.99ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.03ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.56ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+
+[2m[316.50ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.52ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[176.99ms][22m  [2m ↳ [22mScan for candidates
+[2m[134.57ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.15ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.93ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 2.9s (1370 modules)
+
+[2m[203.84ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.02ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.50ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[ 96.24ms][22m  [2m ↳ [22mScan for candidates
+[2m[102.14ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.11ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.53ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1754ms (1370 modules)
+
+[2m[435.02ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.04ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.68ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[208.34ms][22m  [2m ↳ [22mScan for candidates
+[2m[219.70ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  0.87ms][22m  [2m ↳ [22mBuild utilities
+[2m[  3.73ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1097ms (1370 modules)
+
+[2m[244.87ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.01ms][22m  [2m ↳ [22mQuick bail check
+[2m[  0.52ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[114.94ms][22m  [2m ↳ [22mScan for candidates
+[2m[124.97ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  1.90ms][22m  [2m ↳ [22mBuild utilities
+[2m[  2.27ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1003ms (1370 modules)
+
+[2m[489.88ms][22m [@tailwindcss/postcss] app\globals.css
+[2m[  0.10ms][22m  [2m ↳ [22mQuick bail check
+[2m[  1.99ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[252.06ms][22m  [2m ↳ [22mScan for candidates
+[2m[223.80ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[  2.80ms][22m  [2m ↳ [22mBuild utilities
+[2m[  7.77ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled in 1018ms (1370 modules)
