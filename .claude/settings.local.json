@@ -54,7 +54,11 @@
       "Bash(then if ! grep -q \"export const dynamic\" \"$file\")",
       "Bash(then sed -i \"1s/^/export const dynamic = ''force-dynamic'';\\n\\n/\" \"$file\")",
       "Bash(fi)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(del \"c:\\Users\\becas\\data-prototype-3\\app\\dashboard\\hcc\\page.tsx\")",
+      "Bash(if exist \"c:\\Users\\becas\\data-prototype-3\\jest.config.js\" del \"c:\\Users\\becas\\data-prototype-3\\jest.config.js\")",
+      "Bash(del:*)",
+      "Bash(npm test:*)"
     ],
     "deny": [],
     "ask": []

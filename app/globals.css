@@ -1,20 +1,609 @@
 @import "tailwindcss";
 
+/* ============================================
+   UBER-INSPIRED DESIGN SYSTEM
+   Based on Uber's Base Design System
+   - Primary: Black (#000000)
+   - Accent: Blue (#276EF1)
+   - Success: Green (#166C3B)
+   - Error: Red (#BB032A)
+   - Background: Light Gray (#F6F6F6)
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
+  /* === UBER COLOR PALETTE === */
+  --uber-black: #000000;
+  --uber-white: #FFFFFF;
+  --uber-gray-50: #FAFAFA;
+  --uber-gray-100: #F6F6F6;
+  --uber-gray-200: #EEEEEE;
+  --uber-gray-300: #E0E0E0;
+  --uber-gray-400: #BDBDBD;
+  --uber-gray-500: #9E9E9E;
+  --uber-gray-600: #757575;
+  --uber-gray-700: #616161;
+  --uber-gray-800: #424242;
+  --uber-gray-900: #212121;
+
+  --uber-blue: #276EF1;
+  --uber-blue-light: #5B93FF;
+  --uber-blue-dark: #1A4DB8;
+
+  --uber-green: #166C3B;
+  --uber-green-light: #22A84E;
+  --uber-green-dark: #0F4D29;
+  --uber-green-bg: #EAF6ED;
+
+  --uber-red: #BB032A;
+  --uber-red-light: #E63950;
+  --uber-red-dark: #8B0220;
+  --uber-red-bg: #FFF0EE;
+
+  --uber-yellow: #FDB924;
+  --uber-yellow-light: #FFCA3D;
+  --uber-yellow-dark: #D89600;
+  --uber-yellow-bg: #FDF2DC;
+
+  /* === SEMANTIC COLORS === */
+  --background: var(--uber-gray-50);
+  --foreground: var(--uber-black);
+  --card-bg: var(--uber-white);
+  --border-color: var(--uber-gray-200);
+  --hover-bg: var(--uber-gray-100);
+
+  /* === UBER TYPOGRAPHY SCALE === */
+  --font-uber-move: "Uber Move Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-uber-move);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 40px;
+  --text-5xl: 48px;
+  --text-6xl: 60px;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
+
+  /* === UBER SPACING SCALE === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* === UBER BORDER RADIUS === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* === UBER SHADOWS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* === TRANSITIONS === */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-uber-black: var(--uber-black);
+  --color-uber-white: var(--uber-white);
+  --color-uber-gray-50: var(--uber-gray-50);
+  --color-uber-gray-100: var(--uber-gray-100);
+  --color-uber-gray-200: var(--uber-gray-200);
+  --color-uber-gray-300: var(--uber-gray-300);
+  --color-uber-gray-400: var(--uber-gray-400);
+  --color-uber-gray-500: var(--uber-gray-500);
+  --color-uber-gray-600: var(--uber-gray-600);
+  --color-uber-gray-700: var(--uber-gray-700);
+  --color-uber-gray-800: var(--uber-gray-800);
+  --color-uber-gray-900: var(--uber-gray-900);
+  --color-uber-blue: var(--uber-blue);
+  --color-uber-blue-light: var(--uber-blue-light);
+  --color-uber-blue-dark: var(--uber-blue-dark);
+  --color-uber-green: var(--uber-green);
+  --color-uber-green-light: var(--uber-green-light);
+  --color-uber-green-dark: var(--uber-green-dark);
+  --color-uber-green-bg: var(--uber-green-bg);
+  --color-uber-red: var(--uber-red);
+  --color-uber-red-light: var(--uber-red-light);
+  --color-uber-red-dark: var(--uber-red-dark);
+  --color-uber-red-bg: var(--uber-red-bg);
+  --color-uber-yellow: var(--uber-yellow);
+  --color-uber-yellow-light: var(--uber-yellow-light);
+  --color-uber-yellow-dark: var(--uber-yellow-dark);
+  --color-uber-yellow-bg: var(--uber-yellow-bg);
+  --color-card-bg: var(--card-bg);
+  --color-border: var(--border-color);
+  --color-hover-bg: var(--hover-bg);
+
+  --font-sans: var(--font-uber-move);
+  --font-mono: var(--font-mono);
+}
+
+/* === BASE STYLES === */
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === UBER-STYLE BUTTON CLASSES === */
+.uber-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 500;
+  line-height: 1;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  text-decoration: none;
+  outline: none;
+}
+
+.uber-btn:focus-visible {
+  outline: 2px solid var(--uber-blue);
+  outline-offset: 2px;
+}
+
+.uber-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary Button (Uber Black) */
+.uber-btn-primary {
+  background: var(--uber-black);
+  color: var(--uber-white);
+}
+
+.uber-btn-primary:hover:not(:disabled) {
+  background: var(--uber-gray-800);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.uber-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Secondary Button (White with Border) */
+.uber-btn-secondary {
+  background: var(--uber-white);
+  color: var(--uber-black);
+  border: 1px solid var(--uber-gray-300);
+}
+
+.uber-btn-secondary:hover:not(:disabled) {
+  background: var(--uber-gray-50);
+  border-color: var(--uber-gray-400);
+}
+
+/* Blue Accent Button */
+.uber-btn-blue {
+  background: var(--uber-blue);
+  color: var(--uber-white);
+}
+
+.uber-btn-blue:hover:not(:disabled) {
+  background: var(--uber-blue-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Green Success Button */
+.uber-btn-green {
+  background: var(--uber-green);
+  color: var(--uber-white);
+}
+
+.uber-btn-green:hover:not(:disabled) {
+  background: var(--uber-green-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Ghost Button */
+.uber-btn-ghost {
+  background: transparent;
+  color: var(--uber-black);
+}
+
+.uber-btn-ghost:hover:not(:disabled) {
+  background: var(--uber-gray-100);
+}
+
+/* Button Sizes */
+.uber-btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.uber-btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+}
+
+/* === UBER-STYLE INPUT CLASSES === */
+.uber-input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--line-height-normal);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--uber-gray-300);
+  border-radius: var(--radius-md);
+  background: var(--uber-white);
+  color: var(--uber-black);
+  transition: all var(--transition-base);
+  outline: none;
+}
+
+.uber-input:hover {
+  border-color: var(--uber-gray-400);
+}
+
+.uber-input:focus {
+  border-color: var(--uber-black);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.uber-input::placeholder {
+  color: var(--uber-gray-500);
+}
+
+.uber-input:disabled {
+  background: var(--uber-gray-100);
+  cursor: not-allowed;
+}
+
+/* Select / Dropdown */
+.uber-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23000' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  padding-right: var(--space-10);
+}
+
+/* === UBER-STYLE CARD CLASSES === */
+.uber-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+}
+
+.uber-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.uber-card-flat {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+/* === UBER-STYLE NAVIGATION === */
+.uber-nav {
+  background: var(--uber-black);
+  color: var(--uber-white);
+  padding: var(--space-4) var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+
+.uber-nav-link {
+  color: var(--uber-white);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
+  font-weight: 400;
+}
+
+.uber-nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.uber-nav-link-active {
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: 500;
+}
+
+/* === UBER-STYLE BADGES === */
+.uber-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.uber-badge-green {
+  background: var(--uber-green-bg);
+  color: var(--uber-green-dark);
+}
+
+.uber-badge-blue {
+  background: #E8F2FF;
+  color: var(--uber-blue-dark);
+}
+
+.uber-badge-red {
+  background: var(--uber-red-bg);
+  color: var(--uber-red-dark);
+}
+
+.uber-badge-yellow {
+  background: var(--uber-yellow-bg);
+  color: var(--uber-yellow-dark);
+}
+
+.uber-badge-gray {
+  background: var(--uber-gray-200);
+  color: var(--uber-gray-800);
+}
+
+/* === UBER-STYLE TABLES === */
+.uber-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.uber-table thead {
+  background: var(--uber-black);
+  color: var(--uber-white);
+}
+
+.uber-table thead th {
+  padding: var(--space-4);
+  text-align: left;
+  font-weight: 500;
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+}
+
+.uber-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: background var(--transition-fast);
+}
+
+.uber-table tbody tr:hover {
+  background: var(--hover-bg);
+}
+
+.uber-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.uber-table tbody td {
+  padding: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+/* === UBER-STYLE ALERTS === */
+.uber-alert {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  border-left: 4px solid;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.uber-alert-info {
+  background: #E8F2FF;
+  border-color: var(--uber-blue);
+  color: var(--uber-blue-dark);
+}
+
+.uber-alert-success {
+  background: var(--uber-green-bg);
+  border-color: var(--uber-green);
+  color: var(--uber-green-dark);
+}
+
+.uber-alert-warning {
+  background: var(--uber-yellow-bg);
+  border-color: var(--uber-yellow);
+  color: var(--uber-yellow-dark);
+}
+
+.uber-alert-error {
+  background: var(--uber-red-bg);
+  border-color: var(--uber-red);
+  color: var(--uber-red-dark);
+}
+
+/* === TYPOGRAPHY UTILITIES === */
+.uber-heading-1 {
+  font-size: var(--text-6xl);
+  font-weight: 400;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+}
+
+.uber-heading-2 {
+  font-size: var(--text-5xl);
+  font-weight: 400;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.01em;
+}
+
+.uber-heading-3 {
+  font-size: var(--text-4xl);
+  font-weight: 400;
+  line-height: var(--line-height-tight);
+}
+
+.uber-heading-4 {
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  line-height: var(--line-height-normal);
+}
+
+.uber-text-link {
+  color: var(--uber-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.uber-text-link:hover {
+  color: var(--uber-blue-dark);
+  text-decoration: underline;
+}
+
+/* === UTILITY CLASSES === */
+.uber-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.uber-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: var(--space-6) 0;
+}
+
+.uber-shadow-sm { box-shadow: var(--shadow-sm); }
+.uber-shadow-md { box-shadow: var(--shadow-md); }
+.uber-shadow-lg { box-shadow: var(--shadow-lg); }
+.uber-shadow-xl { box-shadow: var(--shadow-xl); }
+
+.uber-rounded-sm { border-radius: var(--radius-sm); }
+.uber-rounded-md { border-radius: var(--radius-md); }
+.uber-rounded-lg { border-radius: var(--radius-lg); }
+.uber-rounded-xl { border-radius: var(--radius-xl); }
+
+/* === SMOOTH ANIMATIONS === */
+@keyframes uber-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.uber-fade-in {
+  animation: uber-fade-in var(--transition-base);
+}
+
+@keyframes uber-slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.uber-slide-in {
+  animation: uber-slide-in var(--transition-slow);
+}
+
+/* === LOADING SPINNER === */
+@keyframes uber-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.uber-spinner {
+  border: 2px solid var(--uber-gray-200);
+  border-top-color: var(--uber-black);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: uber-spin 0.6s linear infinite;
+}
+
+/* === RESPONSIVE UTILITIES === */
+@media (max-width: 768px) {
+  :root {
+    --text-6xl: 40px;
+    --text-5xl: 36px;
+    --text-4xl: 28px;
+  }
+
+  .uber-container {
+    padding: 0 var(--space-4);
+  }
+}
+
+/* === PRESERVE EXISTING HEALTHCARE-SPECIFIC STYLING === */
+/* These classes ensure existing functionality remains intact */
+.bg-purple-900 {
+  background-color: #581c87 !important;
+}
+
+.bg-red-900 {
+  background-color: #7f1d1d !important;
+}
+
+.bg-blue-700 {
+  background-color: #1d4ed8 !important;
+}
+
+.bg-green-700 {
+  background-color: #15803d !important;
+}
+
+/* Sticky headers for tables */
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
