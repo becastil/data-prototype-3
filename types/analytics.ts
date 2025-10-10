@@ -47,8 +47,8 @@ export interface DashboardTile {
     width: number;
     height: number;
   };
-  data: any;
-  config: Record<string, any>;
+  data: unknown;
+  config: Record<string, unknown>;
   refreshInterval?: number;
 }
 
@@ -103,7 +103,7 @@ export interface DrillDownConfig {
 export interface DrillDownLevel {
   name: string;
   groupBy: string;
-  filters: Record<string, any>;
+  filters: Record<string, unknown>;
   chartConfig: ChartConfiguration;
 }
 
@@ -119,7 +119,7 @@ export interface ComparisonAnalysis {
 export interface CohortAnalysis {
   cohortId: string;
   cohortName: string;
-  definition: Record<string, any>;
+  definition: Record<string, unknown>;
   size: number;
   metrics: PerformanceMetric[];
   timeSeriesData: TimeSeriesData[];
@@ -128,7 +128,7 @@ export interface CohortAnalysis {
 export interface TimeSeriesData {
   date: string;
   value: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface SegmentationAnalysis {
@@ -142,7 +142,7 @@ export interface MemberSegment {
   name: string;
   description: string;
   memberCount: number;
-  criteria: Record<string, any>;
+  criteria: Record<string, unknown>;
   color: string;
 }
 
@@ -305,5 +305,5 @@ export interface AlertAction {
   type: 'notification' | 'email' | 'webhook' | 'escalation';
   status: 'pending' | 'completed' | 'failed';
   executedAt?: string;
-  details: Record<string, any>;
+  details: Record<string, unknown>;
 }

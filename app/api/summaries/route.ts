@@ -15,6 +15,8 @@ import {
   upsertMonthlySummary
 } from '@/lib/db/queries/summaries';
 
+export const dynamic = 'force-dynamic';
+
 // GET: Fetch monthly summaries
 export async function GET(request: NextRequest) {
   try {

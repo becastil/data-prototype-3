@@ -146,13 +146,22 @@ export default function SummaryPage() {
       !fee.name.toLowerCase().includes('consulting')
     );
 
-    const monthlyAdminFees = new Map<string, any[]>();
+    interface AdminFeeItem {
+      id: string;
+      name: string;
+      feeType: 'pmpm' | 'pepm' | 'flat';
+      amount: number;
+      calculatedAmount: number;
+      description?: string;
+    }
+
+    const monthlyAdminFees = new Map<string, Array<AdminFeeItem>>();
 
     adminFees.forEach(fee => {
       transformedExperienceData.forEach(exp => {
         const month = exp.month;
 
-        const feeItem = {
+        const feeItem: AdminFeeItem = {
           id: fee.id,
           name: fee.name,
           feeType: fee.rateBasis === 'pmpm' ? 'pmpm' : fee.rateBasis === 'pepm' ? 'pepm' : 'flat',
@@ -233,6 +242,7 @@ export default function SummaryPage() {
     if (transformedExperienceData.length > 0 && summaryData.length === 0 && !isCalculating) {
       handleCalculateSummaries();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transformedExperienceData.length]); // Only depend on length to avoid infinite loop
 
   // Calculate KPIs from summary data

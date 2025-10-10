@@ -6,6 +6,8 @@ import { insertFeeStructureV2, InsertFeeStructureV2Params, insertManyFeeStructur
 import { upsertMonthlySummary, InsertMonthlySummaryParams } from '@/lib/db/queries/summaries';
 import { insertDashboardConfig, InsertDashboardConfigParams } from '@/lib/db/queries/config';
 
+export const dynamic = 'force-dynamic';
+
 interface MigrationData {
   experienceData?: Record<string, unknown>[];
   highCostClaimants?: Record<string, unknown>[];

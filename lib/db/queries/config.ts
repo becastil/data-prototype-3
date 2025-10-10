@@ -1,5 +1,4 @@
 import sql from '../connection';
-import type { DashboardConfig } from '@/types/healthcare';
 
 export interface InsertDashboardConfigParams {
   userId?: string;

@@ -17,6 +17,8 @@ import {
   deleteFeeStructureV2
 } from '@/lib/db/queries/fees';
 
+export const dynamic = 'force-dynamic';
+
 // GET: Fetch fee structures
 export async function GET(request: NextRequest) {
   try {

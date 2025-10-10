@@ -1,5 +1,4 @@
 import sql from '../connection';
-import type { ExperienceData } from '@/types/healthcare';
 
 export interface InsertExperienceDataParams {
   userId?: string;

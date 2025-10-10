@@ -266,7 +266,7 @@ export interface FeeVersionHistory {
   id: string;
   feeStructureId: string;
   version: number;
-  changes: { field: string; oldValue: any; newValue: any }[];
+  changes: { field: string; oldValue: unknown; newValue: unknown }[];
   changedBy: string;
   changedAt: string;
   changeReason?: string;

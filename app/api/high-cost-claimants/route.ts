@@ -13,6 +13,8 @@ import {
   deleteAllHighCostClaimants
 } from '@/lib/db/queries/claimants';
 
+export const dynamic = 'force-dynamic';
+
 // GET: Fetch high-cost claimants
 export async function GET(request: NextRequest) {
   try {

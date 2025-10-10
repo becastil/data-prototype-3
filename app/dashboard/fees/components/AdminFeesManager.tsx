@@ -23,8 +23,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Alert,
-  Tooltip
+  Alert
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -150,9 +149,6 @@ export function AdminFeesManager({
     }
   };
 
-  const getRateBasisLabel = (rateBasis: string) => {
-    return RATE_BASIS_OPTIONS.find(opt => opt.value === rateBasis)?.label || rateBasis.toUpperCase();
-  };
 
   const adminFees = fees.filter(fee =>
     !fee.name.toLowerCase().includes('stop loss') &&
@@ -187,7 +183,7 @@ export function AdminFeesManager({
 
       {adminFees.length === 0 ? (
         <Alert severity="info">
-          No administrative fees configured. Click "Add Admin Fee" to create PEPM, PMPM, or Flat fee line items.
+          No administrative fees configured. Click &quot;Add Admin Fee&quot; to create PEPM, PMPM, or Flat fee line items.
         </Alert>
       ) : (
         <TableContainer>
@@ -290,9 +286,9 @@ export function AdminFeesManager({
               <Select
                 value={formData.category || 'administrative'}
                 label="Category"
-                onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value as FeeStructureV2['category'] })}
               >
-                {FEE_CATEGORIES.map((cat) => (
+                {FEE_CATEGORIES.map((cat: { value: string; label: string }) => (
                   <MenuItem key={cat.value} value={cat.value}>
                     {cat.label}
                   </MenuItem>
@@ -305,9 +301,9 @@ export function AdminFeesManager({
               <Select
                 value={formData.rateBasis || 'pepm'}
                 label="Rate Basis"
-                onChange={(e) => setFormData({ ...formData, rateBasis: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, rateBasis: e.target.value as FeeStructureV2['rateBasis'] })}
               >
-                {RATE_BASIS_OPTIONS.map((option) => (
+                {RATE_BASIS_OPTIONS.map((option: { value: string; label: string; description: string }) => (
                   <MenuItem key={option.value} value={option.value}>
                     <Box>
                       <Typography variant="body2">{option.label}</Typography>
@@ -334,7 +330,7 @@ export function AdminFeesManager({
                   : 'Amount per member per month'
               }
               InputProps={{
-                startAdornment: <span style={{ marginRight: 8 }}>$</span>
+                startAdornment: <Box component="span" sx={{ mr: 1 }}>$</Box>
               }}
               required
             />
@@ -381,7 +377,7 @@ export function AdminFeesManager({
               <Select
                 value={formData.status || 'active'}
                 label="Status"
-                onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, status: e.target.value as FeeStructureV2['status'] })}
               >
                 <MenuItem value="active">Active</MenuItem>
                 <MenuItem value="pending">Pending</MenuItem>

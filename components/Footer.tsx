@@ -1,7 +1,6 @@
 'use client';
 
-import { Box, Container, Typography, Link as MuiLink, Divider, Grid } from '@mui/material';
-import Link from 'next/link';
+import { Box, Container, Typography } from '@mui/material';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();

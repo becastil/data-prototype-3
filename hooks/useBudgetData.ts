@@ -102,8 +102,14 @@ export function useBudgetData(): BudgetDataPoint[] {
  * @param fixedCostRate - Monthly fixed cost rate (default: varies by month)
  * @param budgetAmount - Monthly budget target (default: calculated from historical avg)
  */
+interface ClaimData {
+  year_month?: string;
+  period?: string;
+  total_payment?: number;
+}
+
 export function useCalculatedBudgetData(
-  claimsData?: any[],
+  claimsData?: ClaimData[],
   fixedCostRate?: number,
   budgetAmount?: number
 ): BudgetDataPoint[] {

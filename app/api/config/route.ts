@@ -11,6 +11,8 @@ import {
   getOrCreateDefaultConfig
 } from '@/lib/db/queries/config';
 
+export const dynamic = 'force-dynamic';
+
 // GET: Fetch dashboard configuration
 export async function GET(request: NextRequest) {
   try {

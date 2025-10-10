@@ -1,5 +1,4 @@
 import sql from '../connection';
-import type { FeeStructure } from '@/types/healthcare';
 
 export interface InsertFeeStructureParams {
   userId?: string;

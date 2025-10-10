@@ -1,6 +1,6 @@
 // API request and response types
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
@@ -38,13 +38,13 @@ export interface UploadFileResponse {
   recordCount: number;
   validationErrors: ValidationError[];
   warnings: ValidationWarning[];
-  preview: Record<string, any>[];
+  preview: Record<string, unknown>[];
 }
 
 export interface ValidationError {
   row: number;
   column: string;
-  value: any;
+  value: unknown;
   message: string;
   severity: 'error' | 'warning';
 }
@@ -52,7 +52,7 @@ export interface ValidationError {
 export interface ValidationWarning {
   row: number;
   column: string;
-  value: any;
+  value: unknown;
   message: string;
   suggestion?: string;
 }
@@ -196,7 +196,7 @@ export interface GenerateReportRequest {
       endDate: string;
     };
     orientation?: 'landscape' | 'portrait';
-    filters?: Record<string, any>;
+    filters?: Record<string, unknown>;
   };
 }
 
@@ -294,7 +294,7 @@ export interface RefreshTokenResponse {
 export interface ExportDataRequest {
   type: 'experience-data' | 'summary-table' | 'dashboard-data';
   format: 'csv' | 'excel' | 'json';
-  filters?: Record<string, any>;
+  filters?: Record<string, unknown>;
   options?: {
     includeHeaders?: boolean;
     dateFormat?: string;
@@ -329,7 +329,7 @@ export interface AuditLogEntry {
   action: string;
   entityType: string;
   entityId: string;
-  changes: Record<string, any>;
+  changes: Record<string, unknown>;
   ipAddress: string;
   userAgent: string;
 }
@@ -340,7 +340,7 @@ export type GetAuditLogResponse = PaginatedResponse<AuditLogEntry>;
 export interface ApiError {
   code: string;
   message: string;
-  details?: Record<string, any>;
+  details?: Record<string, unknown>;
   timestamp: string;
   requestId?: string;
   stack?: string; // Only in development

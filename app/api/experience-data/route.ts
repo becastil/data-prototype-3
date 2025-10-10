@@ -13,6 +13,8 @@ import {
   getTotalClaims
 } from '@/lib/db/queries/experience-data';
 
+export const dynamic = 'force-dynamic';
+
 // GET: Fetch experience data
 export async function GET(request: NextRequest) {
   try {

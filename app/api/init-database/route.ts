@@ -3,6 +3,8 @@ import sql from '@/lib/db/connection';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
+export const dynamic = 'force-dynamic';
+
 // POST: Initialize database with schema
 export async function POST(request: NextRequest) {
   try {

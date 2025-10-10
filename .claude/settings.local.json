@@ -48,7 +48,13 @@
       "Bash(npm ls:*)",
       "Bash(npm run lint)",
       "Bash(git log:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(for:*)",
+      "Bash(do if [ -f \"$file\" ])",
+      "Bash(then if ! grep -q \"export const dynamic\" \"$file\")",
+      "Bash(then sed -i \"1s/^/export const dynamic = ''force-dynamic'';\\n\\n/\" \"$file\")",
+      "Bash(fi)",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []
